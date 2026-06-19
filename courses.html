@@ -716,6 +716,13 @@
       .co-grid { grid-template-columns: 1fr; }
       .modal { border-radius: 14px; }
     }
+    @media print {
+      nav, .hero, .tabs-bar, .panel:not(.active), .modal-overlay { display: none !important; }
+      body { background: #fff; color: #111; }
+      .panel.active { display: block !important; }
+      .panel-inner { padding: 0; }
+      button[onclick="window.print()"] { display: none !important; }
+    }
   </style>
 </head>
 <body>
@@ -739,23 +746,16 @@
       <span>🏛️ <strong>ANITS Engineering College</strong></span>
       <span>📚 <strong>CSE (AI &amp; ML) · Assistant Professor</strong></span>
     </div>
-    <div class="stat-row">
-      <div class="stat-chip"><div class="num">11</div><div class="lbl">Topics</div></div>
-      <div class="stat-chip"><div class="num">110</div><div class="lbl">Quiz Questions</div></div>
-      <div class="stat-chip"><div class="num">14</div><div class="lbl">Lab Experiments</div></div>
-      <div class="stat-chip"><div class="num">2.5</div><div class="lbl">Credits</div></div>
-      <div class="stat-chip"><div class="num">75</div><div class="lbl">Total Hours</div></div>
-    </div>
   </div>
 
   <!-- TABS -->
   <div class="tabs-wrap">
     <div class="tabs">
-      <button class="tab-btn active" onclick="switchTab('topics', this)">
-        <span class="tab-icon">📖</span> Topics &amp; Quizzes
-      </button>
-      <button class="tab-btn" onclick="switchTab('syllabus', this)">
+      <button class="tab-btn active" onclick="switchTab('syllabus', this)">
         <span class="tab-icon">📋</span> Syllabus
+      </button>
+      <button class="tab-btn" onclick="switchTab('topics', this)">
+        <span class="tab-icon">📖</span> Topics &amp; Quizzes
       </button>
       <button class="tab-btn" onclick="switchTab('lab', this)">
         <span class="tab-icon">🔬</span> Lab Manual
@@ -764,7 +764,7 @@
   </div>
 
   <!-- PANEL: TOPICS -->
-  <div id="panel-topics" class="panel active">
+  <div id="panel-topics" class="panel">
     <div class="panel-inner">
 
       <div class="search-bar">
@@ -774,190 +774,147 @@
 
       <div class="topic-grid" id="topicGrid">
 
-        <div class="topic-card" data-topic="introduction java history">
+        <!-- Week 1 & 2 -->
+        <div class="topic-card" data-topic="oop fundamentals object oriented paradigm encapsulation inheritance polymorphism">
           <div class="card-top">
-            <div class="topic-num">01</div>
-            <div class="topic-name">Introduction &amp; Java History</div>
+            <div class="topic-num" style="font-size:.72em">W1-2</div>
+            <div class="topic-name">OOP Fundamentals<br><span style="font-size:.78em;color:var(--muted);font-weight:400">Objects, Classes, Encapsulation, Inheritance, Polymorphism, Dynamic Binding</span></div>
           </div>
           <div class="card-actions">
-            <a class="btn-notes" href="java_01_history.html">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-              Notes
-            </a>
-            <button class="btn-quiz" onclick="openQuiz(0)">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-              Take Quiz
-            </button>
+            <a class="btn-notes" href="java_w01.html"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Notes</a>
+            <button class="btn-quiz" onclick="openQuiz(3)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Take Quiz</button>
           </div>
         </div>
 
-        <div class="topic-card" data-topic="first java application">
+        <!-- Week 3 -->
+        <div class="topic-card" data-topic="java language basics buzzwords data types variables operators control arrays io">
           <div class="card-top">
-            <div class="topic-num">02</div>
-            <div class="topic-name">First Java Application</div>
+            <div class="topic-num" style="font-size:.72em">W3</div>
+            <div class="topic-name">Java Language Basics<br><span style="font-size:.78em;color:var(--muted);font-weight:400">Buzzwords, Data Types, Variables, Operators, Control Structures, Arrays, Console I/O</span></div>
           </div>
           <div class="card-actions">
-            <a class="btn-notes" href="java_02_first_app.html">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-              Notes
-            </a>
-            <button class="btn-quiz" onclick="openQuiz(1)">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-              Take Quiz
-            </button>
+            <a class="btn-notes" href="java_w03.html"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Notes</a>
+            <button class="btn-quiz" onclick="openQuiz(2)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Take Quiz</button>
           </div>
         </div>
 
-        <div class="topic-card" data-topic="language fundamentals">
+        <!-- Week 4 & 5 -->
+        <div class="topic-card" data-topic="classes objects constructors methods overloading parameter passing">
           <div class="card-top">
-            <div class="topic-num">03</div>
-            <div class="topic-name">Language Fundamentals</div>
+            <div class="topic-num" style="font-size:.72em">W4-5</div>
+            <div class="topic-name">Classes, Objects &amp; Constructors<br><span style="font-size:.78em;color:var(--muted);font-weight:400">Constructors, Methods, Overloading, Parameter Passing</span></div>
           </div>
           <div class="card-actions">
-            <a class="btn-notes" href="java_03_lang_fundamentals.html">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-              Notes
-            </a>
-            <button class="btn-quiz" onclick="openQuiz(2)">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-              Take Quiz
-            </button>
+            <a class="btn-notes" href="java_w04.html"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Notes</a>
+            <button class="btn-quiz" onclick="openQuiz(3)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Take Quiz</button>
           </div>
         </div>
 
-        <div class="topic-card" data-topic="object oriented programming oops oop">
+        <!-- Week 6 -->
+        <div class="topic-card" data-topic="static this final string stringbuffer stringbuilder">
           <div class="card-top">
-            <div class="topic-num">04</div>
-            <div class="topic-name">Object Oriented Programming (OOPs)</div>
+            <div class="topic-num" style="font-size:.72em">W6</div>
+            <div class="topic-name">Static, this, final &amp; Strings<br><span style="font-size:.78em;color:var(--muted);font-weight:400">Static members, this reference, final keyword, String Handling</span></div>
           </div>
           <div class="card-actions">
-            <a class="btn-notes" href="java_04_oops.html">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-              Notes
-            </a>
-            <button class="btn-quiz" onclick="openQuiz(3)">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-              Take Quiz
-            </button>
+            <a class="btn-notes" href="java_w06.html"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Notes</a>
+            <button class="btn-quiz" onclick="openQuiz(6)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Take Quiz</button>
           </div>
         </div>
 
-        <div class="topic-card" data-topic="wrapper classes">
+        <!-- Week 7 -->
+        <div class="topic-card" data-topic="inheritance polymorphism super method overriding abstract dynamic dispatch">
           <div class="card-top">
-            <div class="topic-num">05</div>
-            <div class="topic-name">Wrapper Classes</div>
+            <div class="topic-num" style="font-size:.72em">W7</div>
+            <div class="topic-name">Inheritance &amp; Polymorphism<br><span style="font-size:.78em;color:var(--muted);font-weight:400">Types, super, Method Overriding, Abstract Classes, Dynamic Dispatch</span></div>
           </div>
           <div class="card-actions">
-            <a class="btn-notes" href="java_05_wrapper.html">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-              Notes
-            </a>
-            <button class="btn-quiz" onclick="openQuiz(4)">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-              Take Quiz
-            </button>
+            <a class="btn-notes" href="java_w07.html"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Notes</a>
+            <button class="btn-quiz" onclick="openQuiz(3)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Take Quiz</button>
           </div>
         </div>
 
-        <div class="topic-card" data-topic="java packages">
+        <!-- Week 8 -->
+        <div class="topic-card" data-topic="interfaces define implement extend default static methods">
           <div class="card-top">
-            <div class="topic-num">06</div>
-            <div class="topic-name">Java Packages</div>
+            <div class="topic-num" style="font-size:.72em">W8</div>
+            <div class="topic-name">Interfaces<br><span style="font-size:.78em;color:var(--muted);font-weight:400">Defining, Implementing, Extending, Default & Static Methods</span></div>
           </div>
           <div class="card-actions">
-            <a class="btn-notes" href="java_06_packages.html">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-              Notes
-            </a>
-            <button class="btn-quiz" onclick="openQuiz(5)">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-              Take Quiz
-            </button>
+            <a class="btn-notes" href="java_w08.html"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Notes</a>
+            <button class="btn-quiz" onclick="openQuiz(3)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Take Quiz</button>
           </div>
         </div>
 
-        <div class="topic-card" data-topic="string manipulations strings">
+        <!-- Week 9 -->
+        <div class="topic-card" data-topic="packages import access modifiers built-in static import">
           <div class="card-top">
-            <div class="topic-num">07</div>
-            <div class="topic-name">String Manipulations</div>
+            <div class="topic-num" style="font-size:.72em">W9</div>
+            <div class="topic-name">Packages<br><span style="font-size:.78em;color:var(--muted);font-weight:400">Defining, Creating, Accessing, Importing Packages</span></div>
           </div>
           <div class="card-actions">
-            <a class="btn-notes" href="java_07_strings.html">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-              Notes
-            </a>
-            <button class="btn-quiz" onclick="openQuiz(6)">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-              Take Quiz
-            </button>
+            <a class="btn-notes" href="java_w09.html"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Notes</a>
+            <button class="btn-quiz" onclick="openQuiz(5)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Take Quiz</button>
           </div>
         </div>
 
-        <div class="topic-card" data-topic="exception handling exceptions errors">
+        <!-- Week 10 -->
+        <div class="topic-card" data-topic="io streams file reading writing buffered byte character">
           <div class="card-top">
-            <div class="topic-num">08</div>
-            <div class="topic-name">Exception Handling</div>
+            <div class="topic-num" style="font-size:.72em">W10</div>
+            <div class="topic-name">I/O Streams<br><span style="font-size:.78em;color:var(--muted);font-weight:400">Byte & Character Streams, FileReader, BufferedReader, File class</span></div>
           </div>
           <div class="card-actions">
-            <a class="btn-notes" href="java_08_exceptions.html">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-              Notes
-            </a>
-            <button class="btn-quiz" onclick="openQuiz(7)">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-              Take Quiz
-            </button>
+            <a class="btn-notes" href="java_w10.html"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Notes</a>
+            <button class="btn-quiz" onclick="openQuiz(9)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Take Quiz</button>
           </div>
         </div>
 
-        <div class="topic-card" data-topic="multi threading multithreading concurrency">
+        <!-- Week 11 -->
+        <div class="topic-card" data-topic="exception handling try catch finally throw throws user defined">
           <div class="card-top">
-            <div class="topic-num">09</div>
-            <div class="topic-name">Multi Threading</div>
+            <div class="topic-num" style="font-size:.72em">W11</div>
+            <div class="topic-name">Exception Handling<br><span style="font-size:.78em;color:var(--muted);font-weight:400">try/catch/finally, throw, throws, Built-in & User-defined Exceptions</span></div>
           </div>
           <div class="card-actions">
-            <a class="btn-notes" href="java_09_multithreading.html">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-              Notes
-            </a>
-            <button class="btn-quiz" onclick="openQuiz(8)">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-              Take Quiz
-            </button>
+            <a class="btn-notes" href="java_w11.html"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Notes</a>
+            <button class="btn-quiz" onclick="openQuiz(7)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Take Quiz</button>
           </div>
         </div>
 
-        <div class="topic-card" data-topic="io streams input output file">
+        <!-- Week 12 -->
+        <div class="topic-card" data-topic="multithreading thread synchronization priority runnable lifecycle">
           <div class="card-top">
-            <div class="topic-num">10</div>
-            <div class="topic-name">IO Streams</div>
+            <div class="topic-num" style="font-size:.72em">W12</div>
+            <div class="topic-name">Multithreading<br><span style="font-size:.78em;color:var(--muted);font-weight:400">Thread creation, priorities, synchronization, inter-thread communication</span></div>
           </div>
           <div class="card-actions">
-            <a class="btn-notes" href="java_10_io_streams.html">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-              Notes
-            </a>
-            <button class="btn-quiz" onclick="openQuiz(9)">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-              Take Quiz
-            </button>
+            <a class="btn-notes" href="java_w12.html"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Notes</a>
+            <button class="btn-quiz" onclick="openQuiz(8)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Take Quiz</button>
           </div>
         </div>
 
-        <div class="topic-card" data-topic="collections framework arraylist hashset">
+        <!-- Week 13 -->
+        <div class="topic-card" data-topic="collection framework interfaces list set queue map iterator">
           <div class="card-top">
-            <div class="topic-num">11</div>
-            <div class="topic-name">Collections Framework</div>
+            <div class="topic-num" style="font-size:.72em">W13</div>
+            <div class="topic-name">Collection Framework — Interfaces<br><span style="font-size:.78em;color:var(--muted);font-weight:400">Collection, List, Set, Queue, Map interfaces; Iterator</span></div>
           </div>
           <div class="card-actions">
-            <a class="btn-notes" href="java_11_collections.html">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-              Notes
-            </a>
-            <button class="btn-quiz" onclick="openQuiz(10)">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-              Take Quiz
-            </button>
+            <a class="btn-notes" href="java_w13.html"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Notes</a>
+            <button class="btn-quiz" onclick="openQuiz(10)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Take Quiz</button>
+          </div>
+        </div>
+
+        <!-- Week 14 -->
+        <div class="topic-card" data-topic="collection classes arraylist linkedlist hashset treeset priorityqueue hashmap treemap">
+          <div class="card-top">
+            <div class="topic-num" style="font-size:.72em">W14</div>
+            <div class="topic-name">Collection Classes<br><span style="font-size:.78em;color:var(--muted);font-weight:400">ArrayList, LinkedList, HashSet, TreeSet, PriorityQueue, HashMap, TreeMap</span></div>
+          </div>
+          <div class="card-actions">
+            <a class="btn-notes" href="java_w14.html"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Notes</a>
+            <button class="btn-quiz" onclick="openQuiz(10)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Take Quiz</button>
           </div>
         </div>
 
@@ -966,7 +923,7 @@
   </div>
 
   <!-- PANEL: SYLLABUS -->
-  <div id="panel-syllabus" class="panel">
+  <div id="panel-syllabus" class="panel active">
     <div class="panel-inner">
 
       <div class="section-title">📋 Course Syllabus</div>
@@ -1082,6 +1039,18 @@
           </tr>
         </tbody>
       </table>
+
+      <div style="margin-top:32px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px 24px;display:flex;align-items:center;gap:18px;">
+        <div style="font-size:2.2em;flex-shrink:0">📄</div>
+        <div>
+          <div style="font-weight:700;color:var(--text);margin-bottom:4px">Download Syllabus PDF</div>
+          <div style="font-size:.82em;color:var(--muted)">Save this syllabus as a PDF for offline reference</div>
+        </div>
+        <button onclick="window.print()" style="margin-left:auto;padding:10px 22px;background:var(--accent);border:none;border-radius:9px;color:#111;font-weight:700;font-size:.88em;cursor:pointer;display:flex;align-items:center;gap:7px;white-space:nowrap;flex-shrink:0">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Save as PDF
+        </button>
+      </div>
 
     </div>
   </div>
@@ -1205,6 +1174,19 @@
       <div class="footnote">
         ℹ️ Observation book must include: Aim · Algorithm/Procedure · Program Code · Output/Screenshots · Viva-Voce Q&amp;A · Errors Observed.
       </div>
+
+      <div style="margin-top:32px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px 24px;display:flex;align-items:center;gap:18px;">
+        <div style="font-size:2.2em;flex-shrink:0">📄</div>
+        <div>
+          <div style="font-weight:700;color:var(--text);margin-bottom:4px">Download Lab Manual PDF</div>
+          <div style="font-size:.82em;color:var(--muted)">Save this lab manual as a PDF for offline reference</div>
+        </div>
+        <button onclick="window.print()" style="margin-left:auto;padding:10px 22px;background:var(--accent);border:none;border-radius:9px;color:#111;font-weight:700;font-size:.88em;cursor:pointer;display:flex;align-items:center;gap:7px;white-space:nowrap;flex-shrink:0">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Save as PDF
+        </button>
+      </div>
+
     </div>
   </div>
 

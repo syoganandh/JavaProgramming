@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0F1117;--surf:#181C27;--surf2:#1F2333;--bdr:#2A2F42;--acc:#F07C3E;--gold:#E8C06A;--txt:#E8EAF0;--muted:#6B7194;--grn:#4ECBA0;--blu:#5BA8F5;--red:#F05C5C;--prp:#A97DF5}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--txt);line-height:1.7;font-size:15px}
+a{color:var(--acc);text-decoration:none}a:hover{color:var(--gold)}
+.topbar{background:var(--surf);border-bottom:1px solid var(--bdr);padding:12px 32px;display:flex;align-items:center;gap:14px;position:sticky;top:0;z-index:100}
+.back-btn{display:flex;align-items:center;gap:5px;color:var(--muted);font-size:.85em;padding:6px 12px;border:1px solid var(--bdr);border-radius:7px;transition:.2s}
+.back-btn:hover{color:var(--txt);border-color:var(--acc)}
+.brand{margin-left:auto;font-size:.78em;color:var(--muted)}
+.brand span{color:var(--gold);font-weight:700}
+.hero{background:linear-gradient(135deg,#181C27 60%,#1a1530);border-bottom:1px solid var(--bdr);padding:40px 32px 28px}
+.hero .week-badge{display:inline-block;background:rgba(240,124,62,.12);border:1px solid rgba(240,124,62,.3);color:var(--acc);font-size:.75em;font-weight:700;padding:3px 12px;border-radius:20px;letter-spacing:.06em;margin-bottom:12px}
+.hero h1{font-size:2em;font-weight:800;letter-spacing:-.02em;background:linear-gradient(120deg,#E8EAF0 40%,#E8C06A);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px}
+.hero p{color:var(--muted);font-size:.9em}
+.co-pill{display:inline-block;padding:2px 10px;border-radius:5px;font-size:.75em;font-weight:700;margin-left:10px}
+.co1{background:rgba(78,203,160,.12);color:var(--grn)}.co2{background:rgba(91,168,245,.12);color:var(--blu)}
+.co3{background:rgba(169,125,245,.12);color:var(--prp)}.co4{background:rgba(232,192,106,.12);color:var(--gold)}
+.layout{display:grid;grid-template-columns:220px 1fr;gap:0;max-width:1200px;margin:0 auto;min-height:calc(100vh - 180px)}
+.sidebar{padding:24px 16px;border-right:1px solid var(--bdr);position:sticky;top:57px;height:calc(100vh - 57px);overflow-y:auto}
+.sidebar h3{font-size:.7em;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:10px}
+.toc-list{list-style:none}
+.toc-list li a{display:block;padding:5px 8px;font-size:.82em;color:var(--muted);border-radius:6px;transition:.15s}
+.toc-list li a:hover{background:var(--surf2);color:var(--txt)}
+.toc-list li a.active{background:rgba(240,124,62,.1);color:var(--acc)}
+.content{padding:32px 40px 60px;max-width:860px}
+h2{font-size:1.35em;font-weight:700;color:var(--txt);margin:36px 0 14px;padding-bottom:8px;border-bottom:2px solid var(--bdr);display:flex;align-items:center;gap:10px}
+h2::before{content:attr(data-icon);font-size:1.1em}
+h3{font-size:1.05em;font-weight:700;color:var(--gold);margin:22px 0 10px}
+h4{font-size:.95em;font-weight:700;color:var(--acc);margin:16px 0 6px}
+p{margin-bottom:12px;color:#C8CAD8}
+ul,ol{margin:8px 0 12px 22px;color:#C8CAD8}
+li{margin-bottom:5px}
+.note-box{background:rgba(78,203,160,.07);border:1px solid rgba(78,203,160,.25);border-radius:10px;padding:14px 18px;margin:16px 0}
+.warn-box{background:rgba(240,92,92,.07);border:1px solid rgba(240,92,92,.25);border-radius:10px;padding:14px 18px;margin:16px 0}
+.info-box{background:rgba(91,168,245,.07);border:1px solid rgba(91,168,245,.25);border-radius:10px;padding:14px 18px;margin:16px 0}
+.note-box strong,.warn-box strong,.info-box strong{font-size:.78em;text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:6px}
+.note-box strong{color:var(--grn)}.warn-box strong{color:var(--red)}.info-box strong{color:var(--blu)}
+pre{background:var(--surf2);border:1px solid var(--bdr);border-radius:10px;padding:18px 20px;overflow-x:auto;margin:12px 0 20px;font-size:.85em;line-height:1.6}
+code{font-family:'Cascadia Code','Fira Code',Consolas,monospace;color:#C8CAD8}
+pre code{color:#C8CAD8}
+.kw{color:#C792EA}.cm{color:#546E7A;font-style:italic}.str{color:#C3E88D}.num{color:#F78C6C}.cls{color:#FFCB6B}.fn{color:#82AAFF}.ann{color:#F07C3E}
+table{width:100%;border-collapse:collapse;margin:14px 0 20px;font-size:.88em}
+th{background:var(--surf2);color:var(--gold);padding:10px 14px;text-align:left;border-bottom:2px solid var(--bdr)}
+td{padding:9px 14px;border-bottom:1px solid var(--bdr);color:#C8CAD8}
+tr:hover td{background:rgba(255,255,255,.02)}
+.pdf-section{margin-top:48px;padding:24px;background:var(--surf);border:1px solid var(--bdr);border-radius:14px;display:flex;align-items:center;gap:20px}
+.pdf-icon{font-size:2.4em;flex-shrink:0}
+.pdf-info h3{color:var(--txt);font-size:1em;margin-bottom:4px}
+.pdf-info p{color:var(--muted);font-size:.82em;margin:0}
+.pdf-btn{margin-left:auto;padding:11px 24px;background:var(--acc);border:none;border-radius:9px;color:#111;font-weight:700;font-size:.88em;cursor:pointer;display:flex;align-items:center;gap:7px;white-space:nowrap;transition:.15s;flex-shrink:0}
+.pdf-btn:hover{background:var(--gold)}
+.nav-bottom{display:flex;justify-content:space-between;margin-top:40px;padding-top:24px;border-top:1px solid var(--bdr)}
+.nav-btn{display:flex;align-items:center;gap:8px;padding:10px 18px;background:var(--surf);border:1px solid var(--bdr);border-radius:9px;color:var(--muted);font-size:.85em;transition:.2s}
+.nav-btn:hover{border-color:var(--acc);color:var(--txt)}
+.nav-btn.next{flex-direction:row-reverse;text-align:right}
+@media print{
+  .topbar,.sidebar,.pdf-section,.nav-bottom{display:none!important}
+  body{background:#fff;color:#000;font-size:12pt}
+  .hero{background:#f5f5f5;border:none;padding:20px}
+  .hero h1{-webkit-text-fill-color:#1a1a1a;font-size:1.5em}
+  .content{padding:10px;max-width:100%}
+  pre{background:#f5f5f5;border:1px solid #ddd;font-size:9pt}
+  h2{border-bottom:2px solid #ccc;color:#1a1a1a}
+  h3{color:#333}p,li,td{color:#222}
+  .note-box{background:#e8f5e9;border:1px solid #4caf50}
+  .info-box{background:#e3f2fd;border:1px solid #2196f3}
+  .warn-box{background:#fce4ec;border:1px solid #e91e63}
+  .layout{display:block}
+  @page{margin:1.5cm}
+}
+
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a class="back-btn" href="courses.html">← Back to Courses</a>
+  <div class="brand">© 2025 <span>Sampathirao Software Solutions</span></div>
+</div>
+<div class="hero">
+  <div class="week-badge">Week 3 · CO-1</div>
+  <h1>Java Language Basics</h1>
+  <p>Buzzwords, Data Types, Variables, Operators, Control Structures, Arrays, Console I/O, Type Casting, Wrapper Classes &nbsp;<span class="co-pill co1">CO-1</span></p>
+</div>
+<div class="layout">
+  <aside class="sidebar">
+    <h3>Contents</h3>
+    <ul class="toc-list"><li><a href="#java_buzzwords">Java Buzzwords</a></li>
+<li><a href="#data_types">Data Types</a></li>
+<li><a href="#variables">Variables</a></li>
+<li><a href="#operators">Operators</a></li>
+<li><a href="#control_structures">Control Structures</a></li>
+<li><a href="#arrays">Arrays</a></li>
+<li><a href="#console_i_o">Console I/O</a></li>
+<li><a href="#type_casting">Type Casting</a></li>
+<li><a href="#wrapper_classes">Wrapper Classes</a></li></ul>
+  </aside>
+  <main class="content">
+<h2 id="java_buzzwords" data-icon="☕">Java Buzzwords</h2>
+
+<p>Java was designed with specific goals that make it unique. These goals are described as Java's <strong>Buzzwords</strong>:</p>
+<table>
+<tr><th>Buzzword</th><th>Meaning</th></tr>
+<tr><td><strong>Simple</strong></td><td>Syntax similar to C/C++ but without complex features like pointers and operator overloading</td></tr>
+<tr><td><strong>Object-Oriented</strong></td><td>Everything in Java is an object; supports all OOP features</td></tr>
+<tr><td><strong>Platform Independent</strong></td><td>Write Once, Run Anywhere (WORA) — bytecode runs on any JVM</td></tr>
+<tr><td><strong>Secured</strong></td><td>No explicit pointers; bytecode verification; security manager</td></tr>
+<tr><td><strong>Robust</strong></td><td>Strong exception handling; no pointer arithmetic; automatic garbage collection</td></tr>
+<tr><td><strong>Architecture Neutral</strong></td><td>Bytecode is not specific to any processor architecture</td></tr>
+<tr><td><strong>Portable</strong></td><td>Platform-independent + architecture-neutral = portable</td></tr>
+<tr><td><strong>High Performance</strong></td><td>JIT (Just-In-Time) compiler converts bytecode to native code at runtime</td></tr>
+<tr><td><strong>Distributed</strong></td><td>Supports networking protocols; RMI; enterprise distribution</td></tr>
+<tr><td><strong>Multi-threaded</strong></td><td>Built-in support for multithreading</td></tr>
+<tr><td><strong>Dynamic</strong></td><td>Classes loaded dynamically at runtime; supports runtime polymorphism</td></tr>
+</table>
+<div class="note-box"><strong>📌 Key Point</strong>The most important buzzword is <strong>Platform Independence</strong>. Java achieves this via the JVM — Java source → javac compiler → bytecode (.class) → JVM → executes on any OS.</div><h2 id="data_types" data-icon="🔢">Data Types</h2>
+
+<p>Java is a <strong>strongly typed</strong> language — every variable must have a declared type.</p>
+<h3>Primitive Data Types (8 types)</h3>
+<table>
+<tr><th>Type</th><th>Size</th><th>Range</th><th>Default</th><th>Example</th></tr>
+<tr><td>byte</td><td>1 byte (8 bits)</td><td>-128 to 127</td><td>0</td><td>byte b = 10;</td></tr>
+<tr><td>short</td><td>2 bytes</td><td>-32768 to 32767</td><td>0</td><td>short s = 500;</td></tr>
+<tr><td>int</td><td>4 bytes</td><td>-2^31 to 2^31-1</td><td>0</td><td>int i = 1000;</td></tr>
+<tr><td>long</td><td>8 bytes</td><td>-2^63 to 2^63-1</td><td>0L</td><td>long l = 100L;</td></tr>
+<tr><td>float</td><td>4 bytes</td><td>~±3.4×10^38</td><td>0.0f</td><td>float f = 3.14f;</td></tr>
+<tr><td>double</td><td>8 bytes</td><td>~±1.8×10^308</td><td>0.0d</td><td>double d = 3.14;</td></tr>
+<tr><td>char</td><td>2 bytes</td><td>0 to 65535 (Unicode)</td><td>'\u0000'</td><td>char c = 'A';</td></tr>
+<tr><td>boolean</td><td>1 bit</td><td>true / false</td><td>false</td><td>boolean flag = true;</td></tr>
+</table>
+<div class="info-box"><strong>💡 Did You Know</strong>Java uses <strong>Unicode</strong> for <code>char</code> (2 bytes), unlike C/C++ which uses ASCII (1 byte). This is why Java supports international character sets.</div><h2 id="variables" data-icon="📌">Variables</h2>
+
+<h3>Types of Variables in Java</h3>
+<table>
+<tr><th>Type</th><th>Declared Inside</th><th>Default Value</th><th>Lifetime</th></tr>
+<tr><td>Local Variable</td><td>Method / Block</td><td>No default — must initialize</td><td>Until method exits</td></tr>
+<tr><td>Instance Variable</td><td>Class (no static)</td><td>Has default (0, null, false)</td><td>Until object is GC'd</td></tr>
+<tr><td>Static Variable</td><td>Class (with static)</td><td>Has default</td><td>Until class is unloaded</td></tr>
+</table>
+<pre><code><span class="kw">class</span> <span class="cls">Example</span> {
+    <span class="kw">static int</span> count = <span class="num">0</span>;     <span class="cm">// static variable — shared by all objects</span>
+    <span class="kw">int</span> id;                    <span class="cm">// instance variable — per object</span>
+
+    <span class="kw">void</span> <span class="fn">show</span>() {
+        <span class="kw">int</span> local = <span class="num">10</span>;          <span class="cm">// local variable — must be initialized</span>
+        <span class="cls">System</span>.out.println(local);
+    }
+}</code></pre><div class="warn-box"><strong>⚠️ Important</strong>Local variables have NO default value. Using an uninitialized local variable causes a compile-time error.</div><h2 id="operators" data-icon="➕">Operators</h2>
+
+<table>
+<tr><th>Category</th><th>Operators</th><th>Example</th></tr>
+<tr><td>Arithmetic</td><td>+ - * / %</td><td>a + b, a % b</td></tr>
+<tr><td>Relational</td><td>== != &lt; &gt; &lt;= &gt;=</td><td>a == b, a &lt; b</td></tr>
+<tr><td>Logical</td><td>&amp;&amp; || !</td><td>a&amp;&amp;b, !flag</td></tr>
+<tr><td>Bitwise</td><td>&amp; | ^ ~ &lt;&lt; &gt;&gt; &gt;&gt;&gt;</td><td>a &amp; b, a &lt;&lt; 2</td></tr>
+<tr><td>Assignment</td><td>= += -= *= /= %=</td><td>a += 5</td></tr>
+<tr><td>Ternary</td><td>? :</td><td>max = (a&gt;b) ? a : b</td></tr>
+<tr><td>Increment/Decrement</td><td>++ --</td><td>a++, --b</td></tr>
+</table>
+<div class="note-box"><strong>📌 Key Point</strong>Short-circuit evaluation: In <code>&&</code>, if the left operand is <code>false</code>, the right side is NOT evaluated. In <code>||</code>, if left is <code>true</code>, right is skipped.</div><h2 id="control_structures" data-icon="🔄">Control Structures</h2>
+
+<pre><code><span class="cm">// if-else</span>
+<span class="kw">if</span> (marks >= <span class="num">60</span>) {
+    <span class="cls">System</span>.out.println(<span class="str">"Pass"</span>);
+} <span class="kw">else if</span> (marks >= <span class="num">35</span>) {
+    <span class="cls">System</span>.out.println(<span class="str">"Compartment"</span>);
+} <span class="kw">else</span> {
+    <span class="cls">System</span>.out.println(<span class="str">"Fail"</span>);
+}
+
+<span class="cm">// switch</span>
+<span class="kw">switch</span> (day) {
+    <span class="kw">case</span> <span class="num">1</span>: <span class="cls">System</span>.out.println(<span class="str">"Monday"</span>); <span class="kw">break</span>;
+    <span class="kw">case</span> <span class="num">2</span>: <span class="cls">System</span>.out.println(<span class="str">"Tuesday"</span>); <span class="kw">break</span>;
+    <span class="kw">default</span>: <span class="cls">System</span>.out.println(<span class="str">"Other"</span>);
+}
+
+<span class="cm">// for loop</span>
+<span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i < <span class="num">5</span>; i++) { <span class="cls">System</span>.out.print(i + <span class="str">" "</span>); }
+
+<span class="cm">// while</span>
+<span class="kw">while</span> (n > <span class="num">0</span>) { sum += n % <span class="num">10</span>; n /= <span class="num">10</span>; }
+
+<span class="cm">// do-while (executes at least once)</span>
+<span class="kw">do</span> { <span class="cls">System</span>.out.println(<span class="str">"Entered"</span>); } <span class="kw">while</span> (<span class="kw">false</span>);</code></pre><h2 id="arrays" data-icon="📋">Arrays</h2>
+
+<p>An array is a collection of elements of the <strong>same type</strong> stored in contiguous memory locations.</p>
+<pre><code><span class="cm">// 1D Array</span>
+<span class="kw">int</span>[] marks = <span class="kw">new int</span>[<span class="num">5</span>];         <span class="cm">// declaration + creation</span>
+<span class="kw">int</span>[] scores = {<span class="num">85</span>, <span class="num">92</span>, <span class="num">78</span>, <span class="num">95</span>, <span class="num">88</span>}; <span class="cm">// declaration + init</span>
+
+<span class="cm">// Enhanced for loop</span>
+<span class="kw">for</span> (<span class="kw">int</span> s : scores) {
+    <span class="cls">System</span>.out.print(s + <span class="str">" "</span>);
+}
+
+<span class="cm">// 2D Array</span>
+<span class="kw">int</span>[][] matrix = <span class="kw">new int</span>[<span class="num">3</span>][<span class="num">3</span>];
+<span class="kw">int</span>[][] grid = {{<span class="num">1</span>,<span class="num">2</span>,<span class="num">3</span>}, {<span class="num">4</span>,<span class="num">5</span>,<span class="num">6</span>}, {<span class="num">7</span>,<span class="num">8</span>,<span class="num">9</span>}};</code></pre><div class="note-box"><strong>📌 Key Point</strong>Arrays in Java are objects, not primitives. <code>array.length</code> gives the size. Array index starts at 0.</div><h2 id="console_i_o" data-icon="💬">Console I/O</h2>
+
+<pre><code><span class="kw">import</span> java.util.Scanner;
+
+<span class="kw">public class</span> <span class="cls">ConsoleDemo</span> {
+    <span class="kw">public static void</span> <span class="fn">main</span>(<span class="cls">String</span>[] args) {
+        <span class="cm">// Input using Scanner</span>
+        <span class="cls">Scanner</span> sc = <span class="kw">new</span> <span class="cls">Scanner</span>(<span class="cls">System</span>.in);
+        <span class="cls">System</span>.out.print(<span class="str">"Enter name: "</span>);
+        <span class="cls">String</span> name = sc.nextLine();
+        <span class="cls">System</span>.out.print(<span class="str">"Enter age: "</span>);
+        <span class="kw">int</span> age = sc.nextInt();
+
+        <span class="cm">// Output</span>
+        <span class="cls">System</span>.out.println(<span class="str">"Hello, "</span> + name + <span class="str">"! Age: "</span> + age);
+        <span class="cls">System</span>.out.printf(<span class="str">"Formatted: %s is %d years old%n"</span>, name, age);
+
+        sc.close();
+    }
+}</code></pre>
+<h2 id="type_casting" data-icon="🔀">Type Casting</h2>
+
+<p>Type casting is converting a value from one data type to another. Java supports two kinds of casting:</p>
+
+<h3>1. Widening Conversion (Implicit / Automatic)</h3>
+<p>The smaller type is automatically promoted to a larger type. No data loss occurs. Java does this automatically.</p>
+<pre><code><span class="cm">// Widening: byte → short → int → long → float → double</span>
+<span class="kw">byte</span> b = <span class="num">10</span>;
+<span class="kw">short</span> s = b;       <span class="cm">// byte to short — automatic</span>
+<span class="kw">int</span> i = s;         <span class="cm">// short to int — automatic</span>
+<span class="kw">long</span> l = i;        <span class="cm">// int to long — automatic</span>
+<span class="kw">float</span> f = l;       <span class="cm">// long to float — automatic</span>
+<span class="kw">double</span> d = f;      <span class="cm">// float to double — automatic</span>
+<span class="cls">System</span>.out.println(d);  <span class="cm">// Output: 10.0</span></code></pre>
+
+<h3>2. Narrowing Conversion (Explicit / Manual)</h3>
+<p>The larger type must be explicitly cast to a smaller type. Data loss may occur. You must use the cast operator <code>(type)</code>.</p>
+<pre><code><span class="cm">// Narrowing: double → float → long → int → short → byte</span>
+<span class="kw">double</span> d = <span class="num">9.99</span>;
+<span class="kw">int</span> i = (<span class="kw">int</span>) d;     <span class="cm">// explicit cast — fractional part lost</span>
+<span class="cls">System</span>.out.println(i); <span class="cm">// Output: 9 (not 10 — truncated, not rounded)</span>
+
+<span class="kw">int</span> big = <span class="num">130</span>;
+<span class="kw">byte</span> small = (<span class="kw">byte</span>) big; <span class="cm">// 130 overflows byte range (-128 to 127)</span>
+<span class="cls">System</span>.out.println(small); <span class="cm">// Output: -126 (bit truncation)</span></code></pre>
+
+<h3>3. Type Promotion in Expressions</h3>
+<p>Java automatically promotes smaller types to <code>int</code> when used in arithmetic expressions.</p>
+<pre><code><span class="kw">byte</span> a = <span class="num">40</span>, b = <span class="num">50</span>;
+<span class="kw">byte</span> c = (<span class="kw">byte</span>)(a + b);  <span class="cm">// a+b produces int, so explicit cast needed</span>
+
+<span class="kw">char</span> ch = <span class="str">'A'</span>;
+<span class="kw">int</span> val = ch + <span class="num">1</span>;          <span class="cm">// 'A' (65) + 1 = 66 — char promoted to int</span>
+<span class="cls">System</span>.out.println(val);   <span class="cm">// Output: 66</span>
+<span class="cls">System</span>.out.println((<span class="kw">char</span>) val); <span class="cm">// Output: B</span></code></pre>
+
+<h3>4. Casting Between char and int</h3>
+<p><code>char</code> and <code>int</code> are interchangeable via casting — Java stores characters as their Unicode (ASCII) numeric values.</p>
+<pre><code><span class="cm">// char → int (widening, automatic)</span>
+<span class="kw">char</span> ch = <span class="str">'A'</span>;
+<span class="kw">int</span> code = ch;
+<span class="cls">System</span>.out.println(code);       <span class="cm">// Output: 65 (ASCII of 'A')</span>
+
+<span class="cm">// int → char (narrowing, explicit)</span>
+<span class="kw">int</span> n = <span class="num">66</span>;
+<span class="kw">char</span> c = (<span class="kw">char</span>) n;
+<span class="cls">System</span>.out.println(c);          <span class="cm">// Output: B</span>
+
+<span class="cm">// Alphabet traversal using int-to-char casting</span>
+<span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">65</span>; i <= <span class="num">90</span>; i++) {
+    <span class="cls">System</span>.out.print((<span class="kw">char</span>) i + <span class="str">" "</span>);
+}
+<span class="cm">// Output: A B C D E F G H I J K L M N O P Q R S T U V W X Y Z</span></code></pre>
+
+<h3>5. Real-World Example — Grade Calculator</h3>
+<pre><code><span class="kw">public class</span> <span class="cls">GradeCalc</span> {
+    <span class="kw">public static void</span> <span class="fn">main</span>(<span class="cls">String</span>[] args) {
+        <span class="kw">int</span> totalMarks = <span class="num">456</span>;
+        <span class="kw">int</span> subjects    = <span class="num">5</span>;
+
+        <span class="cm">// int division gives int — fractional part lost</span>
+        <span class="kw">int</span> wrongAvg = totalMarks / subjects;
+        <span class="cls">System</span>.out.println(<span class="str">"Wrong avg: "</span> + wrongAvg);   <span class="cm">// 91 (not 91.2)</span>
+
+        <span class="cm">// Cast one operand to double to get accurate result</span>
+        <span class="kw">double</span> correctAvg = (<span class="kw">double</span>) totalMarks / subjects;
+        <span class="cls">System</span>.out.println(<span class="str">"Correct avg: "</span> + correctAvg); <span class="cm">// 91.2</span>
+
+        <span class="cm">// Narrow back to int for display (truncates decimal)</span>
+        <span class="kw">int</span> displayAvg = (<span class="kw">int</span>) correctAvg;
+        <span class="cls">System</span>.out.println(<span class="str">"Display avg: "</span> + displayAvg);  <span class="cm">// 91</span>
+    }
+}</code></pre>
+
+<h3>6. Overflow Behaviour During Narrowing</h3>
+<p>When a value is too large for the target type, Java wraps around (modulo arithmetic) — it does NOT throw an exception.</p>
+<pre><code><span class="kw">int</span> val = <span class="num">257</span>;
+<span class="kw">byte</span> b = (<span class="kw">byte</span>) val;
+<span class="cls">System</span>.out.println(b);   <span class="cm">// Output: 1  (257 % 256 = 1)</span>
+
+<span class="kw">int</span> val2 = <span class="num">300</span>;
+<span class="kw">byte</span> b2 = (<span class="kw">byte</span>) val2;
+<span class="cls">System</span>.out.println(b2);  <span class="cm">// Output: 44  (300 - 256 = 44)</span>
+
+<span class="kw">double</span> pi = <span class="num">3.99999</span>;
+<span class="kw">int</span> i = (<span class="kw">int</span>) pi;
+<span class="cls">System</span>.out.println(i);   <span class="cm">// Output: 3 (truncated, NOT rounded)</span></code></pre>
+
+<h3>7. Casting in Mixed-Type Arithmetic</h3>
+<pre><code><span class="kw">int</span> a = <span class="num">7</span>, b = <span class="num">2</span>;
+
+<span class="cm">// Both int — result is int</span>
+<span class="cls">System</span>.out.println(a / b);              <span class="cm">// 3</span>
+
+<span class="cm">// Cast numerator — result is double</span>
+<span class="cls">System</span>.out.println((<span class="kw">double</span>) a / b);    <span class="cm">// 3.5</span>
+
+<span class="cm">// Cast denominator — result is double</span>
+<span class="cls">System</span>.out.println(a / (<span class="kw">double</span>) b);    <span class="cm">// 3.5</span>
+
+<span class="cm">// Cast result (wrong!) — division already done as int</span>
+<span class="cls">System</span>.out.println((<span class="kw">double</span>)(a / b));   <span class="cm">// 3.0 (NOT 3.5)</span></code></pre>
+
+<div class="warn-box"><strong>⚠️ Common Mistake</strong>Casting the result <code>(double)(a/b)</code> does NOT give a decimal result — the integer division happens first, then the result is cast. Always cast at least one operand: <code>(double)a / b</code>.</div>
+
+<div class="note-box"><strong>📌 Key Point</strong>Widening is safe (no data loss) and done automatically. Narrowing requires explicit cast and may lose data. In expressions, <code>byte</code> and <code>short</code> are always promoted to <code>int</code>.</div>
+
+<table>
+<tr><th>Type</th><th>Direction</th><th>Cast Required?</th><th>Data Loss?</th></tr>
+<tr><td>Widening</td><td>small → large (e.g. int→long)</td><td>No — automatic</td><td>No</td></tr>
+<tr><td>Narrowing</td><td>large → small (e.g. double→int)</td><td>Yes — explicit (type)</td><td>Possible</td></tr>
+</table>
+
+<h2 id="wrapper_classes" data-icon="📦">Wrapper Classes</h2>
+
+<p>Java primitives (<code>int</code>, <code>char</code>, etc.) are not objects. <strong>Wrapper classes</strong> wrap a primitive value inside an object, making them compatible with Java's object-oriented features (Collections, Generics, etc.).</p>
+
+<h3>Primitive vs Wrapper Class</h3>
+<table>
+<tr><th>Primitive</th><th>Wrapper Class</th><th>Package</th></tr>
+<tr><td>byte</td><td>Byte</td><td>java.lang</td></tr>
+<tr><td>short</td><td>Short</td><td>java.lang</td></tr>
+<tr><td>int</td><td>Integer</td><td>java.lang</td></tr>
+<tr><td>long</td><td>Long</td><td>java.lang</td></tr>
+<tr><td>float</td><td>Float</td><td>java.lang</td></tr>
+<tr><td>double</td><td>Double</td><td>java.lang</td></tr>
+<tr><td>char</td><td>Character</td><td>java.lang</td></tr>
+<tr><td>boolean</td><td>Boolean</td><td>java.lang</td></tr>
+</table>
+
+<h3>Autoboxing and Unboxing</h3>
+<p><strong>Autoboxing</strong> is the automatic conversion of a primitive to its wrapper object. <strong>Unboxing</strong> is the reverse — wrapper object to primitive. Java does both automatically (since Java 5).</p>
+<pre><code><span class="cm">// Autoboxing — primitive int automatically wrapped into Integer object</span>
+<span class="kw">int</span> x = <span class="num">42</span>;
+<span class="cls">Integer</span> obj = x;          <span class="cm">// autoboxing: int → Integer</span>
+
+<span class="cm">// Unboxing — Integer object automatically unwrapped to int</span>
+<span class="kw">int</span> y = obj;              <span class="cm">// unboxing: Integer → int</span>
+
+<span class="cm">// Common use: storing primitives in a Collection</span>
+java.util.<span class="cls">ArrayList</span>&lt;<span class="cls">Integer</span>&gt; list = <span class="kw">new</span> java.util.<span class="cls">ArrayList</span>&lt;&gt;();
+list.add(<span class="num">10</span>);             <span class="cm">// autoboxing happens here automatically</span>
+<span class="kw">int</span> val = list.get(<span class="num">0</span>);    <span class="cm">// unboxing happens here automatically</span></code></pre>
+
+<h3>Useful Wrapper Class Methods</h3>
+<pre><code><span class="cm">// Parsing strings to primitives</span>
+<span class="kw">int</span> a = <span class="cls">Integer</span>.<span class="fn">parseInt</span>(<span class="str">"123"</span>);       <span class="cm">// String → int</span>
+<span class="kw">double</span> d = <span class="cls">Double</span>.<span class="fn">parseDouble</span>(<span class="str">"3.14"</span>); <span class="cm">// String → double</span>
+<span class="kw">boolean</span> b = <span class="cls">Boolean</span>.<span class="fn">parseBoolean</span>(<span class="str">"true"</span>);
+
+<span class="cm">// Converting primitives to String</span>
+<span class="cls">String</span> s1 = <span class="cls">Integer</span>.<span class="fn">toString</span>(<span class="num">42</span>);       <span class="cm">// int → String</span>
+<span class="cls">String</span> s2 = <span class="cls">String</span>.<span class="fn">valueOf</span>(<span class="num">3.14</span>);       <span class="cm">// any type → String</span>
+
+<span class="cm">// Useful constants</span>
+<span class="cls">System</span>.out.println(<span class="cls">Integer</span>.MAX_VALUE);  <span class="cm">// 2147483647</span>
+<span class="cls">System</span>.out.println(<span class="cls">Integer</span>.MIN_VALUE);  <span class="cm">// -2147483648</span>
+<span class="cls">System</span>.out.println(<span class="cls">Integer</span>.<span class="fn">toBinaryString</span>(<span class="num">10</span>)); <span class="cm">// "1010"</span>
+<span class="cls">System</span>.out.println(<span class="cls">Integer</span>.<span class="fn">toHexString</span>(<span class="num">255</span>));   <span class="cm">// "ff"</span>
+<span class="cls">System</span>.out.println(<span class="cls">Character</span>.<span class="fn">isDigit</span>(<span class="str">'5'</span>));     <span class="cm">// true</span>
+<span class="cls">System</span>.out.println(<span class="cls">Character</span>.<span class="fn">isLetter</span>(<span class="str">'A'</span>));    <span class="cm">// true</span>
+<span class="cls">System</span>.out.println(<span class="cls">Character</span>.<span class="fn">toUpperCase</span>(<span class="str">'a'</span>)); <span class="cm">// A</span></code></pre>
+
+<div class="info-box"><strong>💡 Why Wrapper Classes?</strong>Collections like <code>ArrayList</code> and <code>HashMap</code> can only store objects, not primitives. Wrapper classes bridge this gap — <code>ArrayList&lt;Integer&gt;</code> works; <code>ArrayList&lt;int&gt;</code> does not.</div>
+
+<div class="warn-box"><strong>⚠️ Null Pointer Risk</strong>Wrapper objects can be <code>null</code>. Unboxing a <code>null</code> wrapper causes a <code>NullPointerException</code> at runtime. Always check for null before unboxing.</div>
+
+    <div class="pdf-section">
+      <div class="pdf-icon">📄</div>
+      <div class="pdf-info">
+        <h3>Download PDF Notes</h3>
+        <p>Save these notes as a PDF for offline reference</p>
+      </div>
+      <button class="pdf-btn" onclick="printNotes()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Save as PDF
+      </button>
+    </div>
+    <div class="nav-bottom">
+      <a class="nav-btn" href="java_w01.html">← Week 1&2: OOP Fundamentals</a>
+      <a class="nav-btn next" href="java_w04.html">Week 4&5: Classes & Objects →</a>
+    </div>
+  </main>
+</div>
+<script>
+function printNotes(){window.print()}
+const sections=document.querySelectorAll('h2[id]');
+const links=document.querySelectorAll('.toc-list a');
+function onScroll(){
+  let cur='';
+  sections.forEach(s=>{if(window.scrollY>=s.offsetTop-80)cur=s.id});
+  links.forEach(l=>l.classList.toggle('active',l.getAttribute('href')==='#'+cur));
+}
+window.addEventListener('scroll',onScroll,{passive:true});
+</script>
+</body></html>

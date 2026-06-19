@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0F1117;--surf:#181C27;--surf2:#1F2333;--bdr:#2A2F42;--acc:#F07C3E;--gold:#E8C06A;--txt:#E8EAF0;--muted:#6B7194;--grn:#4ECBA0;--blu:#5BA8F5;--red:#F05C5C;--prp:#A97DF5}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--txt);line-height:1.7;font-size:15px}
+a{color:var(--acc);text-decoration:none}a:hover{color:var(--gold)}
+.topbar{background:var(--surf);border-bottom:1px solid var(--bdr);padding:12px 32px;display:flex;align-items:center;gap:14px;position:sticky;top:0;z-index:100}
+.back-btn{display:flex;align-items:center;gap:5px;color:var(--muted);font-size:.85em;padding:6px 12px;border:1px solid var(--bdr);border-radius:7px;transition:.2s}
+.back-btn:hover{color:var(--txt);border-color:var(--acc)}
+.brand{margin-left:auto;font-size:.78em;color:var(--muted)}
+.brand span{color:var(--gold);font-weight:700}
+.hero{background:linear-gradient(135deg,#181C27 60%,#1a1530);border-bottom:1px solid var(--bdr);padding:40px 32px 28px}
+.hero .week-badge{display:inline-block;background:rgba(240,124,62,.12);border:1px solid rgba(240,124,62,.3);color:var(--acc);font-size:.75em;font-weight:700;padding:3px 12px;border-radius:20px;letter-spacing:.06em;margin-bottom:12px}
+.hero h1{font-size:2em;font-weight:800;letter-spacing:-.02em;background:linear-gradient(120deg,#E8EAF0 40%,#E8C06A);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px}
+.hero p{color:var(--muted);font-size:.9em}
+.co-pill{display:inline-block;padding:2px 10px;border-radius:5px;font-size:.75em;font-weight:700;margin-left:10px}
+.co1{background:rgba(78,203,160,.12);color:var(--grn)}.co2{background:rgba(91,168,245,.12);color:var(--blu)}
+.co3{background:rgba(169,125,245,.12);color:var(--prp)}.co4{background:rgba(232,192,106,.12);color:var(--gold)}
+.layout{display:grid;grid-template-columns:220px 1fr;gap:0;max-width:1200px;margin:0 auto;min-height:calc(100vh - 180px)}
+.sidebar{padding:24px 16px;border-right:1px solid var(--bdr);position:sticky;top:57px;height:calc(100vh - 57px);overflow-y:auto}
+.sidebar h3{font-size:.7em;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:10px}
+.toc-list{list-style:none}
+.toc-list li a{display:block;padding:5px 8px;font-size:.82em;color:var(--muted);border-radius:6px;transition:.15s}
+.toc-list li a:hover{background:var(--surf2);color:var(--txt)}
+.toc-list li a.active{background:rgba(240,124,62,.1);color:var(--acc)}
+.content{padding:32px 40px 60px;max-width:860px}
+h2{font-size:1.35em;font-weight:700;color:var(--txt);margin:36px 0 14px;padding-bottom:8px;border-bottom:2px solid var(--bdr);display:flex;align-items:center;gap:10px}
+h2::before{content:attr(data-icon);font-size:1.1em}
+h3{font-size:1.05em;font-weight:700;color:var(--gold);margin:22px 0 10px}
+h4{font-size:.95em;font-weight:700;color:var(--acc);margin:16px 0 6px}
+p{margin-bottom:12px;color:#C8CAD8}
+ul,ol{margin:8px 0 12px 22px;color:#C8CAD8}
+li{margin-bottom:5px}
+.note-box{background:rgba(78,203,160,.07);border:1px solid rgba(78,203,160,.25);border-radius:10px;padding:14px 18px;margin:16px 0}
+.warn-box{background:rgba(240,92,92,.07);border:1px solid rgba(240,92,92,.25);border-radius:10px;padding:14px 18px;margin:16px 0}
+.info-box{background:rgba(91,168,245,.07);border:1px solid rgba(91,168,245,.25);border-radius:10px;padding:14px 18px;margin:16px 0}
+.note-box strong,.warn-box strong,.info-box strong{font-size:.78em;text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:6px}
+.note-box strong{color:var(--grn)}.warn-box strong{color:var(--red)}.info-box strong{color:var(--blu)}
+pre{background:var(--surf2);border:1px solid var(--bdr);border-radius:10px;padding:18px 20px;overflow-x:auto;margin:12px 0 20px;font-size:.85em;line-height:1.6}
+code{font-family:'Cascadia Code','Fira Code',Consolas,monospace;color:#C8CAD8}
+pre code{color:#C8CAD8}
+.kw{color:#C792EA}.cm{color:#546E7A;font-style:italic}.str{color:#C3E88D}.num{color:#F78C6C}.cls{color:#FFCB6B}.fn{color:#82AAFF}.ann{color:#F07C3E}
+table{width:100%;border-collapse:collapse;margin:14px 0 20px;font-size:.88em}
+th{background:var(--surf2);color:var(--gold);padding:10px 14px;text-align:left;border-bottom:2px solid var(--bdr)}
+td{padding:9px 14px;border-bottom:1px solid var(--bdr);color:#C8CAD8}
+tr:hover td{background:rgba(255,255,255,.02)}
+.pdf-section{margin-top:48px;padding:24px;background:var(--surf);border:1px solid var(--bdr);border-radius:14px;display:flex;align-items:center;gap:20px}
+.pdf-icon{font-size:2.4em;flex-shrink:0}
+.pdf-info h3{color:var(--txt);font-size:1em;margin-bottom:4px}
+.pdf-info p{color:var(--muted);font-size:.82em;margin:0}
+.pdf-btn{margin-left:auto;padding:11px 24px;background:var(--acc);border:none;border-radius:9px;color:#111;font-weight:700;font-size:.88em;cursor:pointer;display:flex;align-items:center;gap:7px;white-space:nowrap;transition:.15s;flex-shrink:0}
+.pdf-btn:hover{background:var(--gold)}
+.nav-bottom{display:flex;justify-content:space-between;margin-top:40px;padding-top:24px;border-top:1px solid var(--bdr)}
+.nav-btn{display:flex;align-items:center;gap:8px;padding:10px 18px;background:var(--surf);border:1px solid var(--bdr);border-radius:9px;color:var(--muted);font-size:.85em;transition:.2s}
+.nav-btn:hover{border-color:var(--acc);color:var(--txt)}
+.nav-btn.next{flex-direction:row-reverse;text-align:right}
+@media print{
+  .topbar,.sidebar,.pdf-section,.nav-bottom{display:none!important}
+  body{background:#fff;color:#000;font-size:12pt}
+  .hero{background:#f5f5f5;border:none;padding:20px}
+  .hero h1{-webkit-text-fill-color:#1a1a1a;font-size:1.5em}
+  .content{padding:10px;max-width:100%}
+  pre{background:#f5f5f5;border:1px solid #ddd;font-size:9pt}
+  h2{border-bottom:2px solid #ccc;color:#1a1a1a}
+  h3{color:#333}p,li,td{color:#222}
+  .note-box{background:#e8f5e9;border:1px solid #4caf50}
+  .info-box{background:#e3f2fd;border:1px solid #2196f3}
+  .warn-box{background:#fce4ec;border:1px solid #e91e63}
+  .layout{display:block}
+  @page{margin:1.5cm}
+}
+
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a class="back-btn" href="courses.html">← Back to Courses</a>
+  <div class="brand">© 2025 <span>Sampathirao Software Solutions</span></div>
+</div>
+<div class="hero">
+  <div class="week-badge">Week 13 · CO-4</div>
+  <h1>Collection Framework — Interfaces</h1>
+  <p>Collection, List, Set, Queue, and Map interfaces; Iterator &nbsp;<span class="co-pill co4">CO-4</span></p>
+</div>
+<div class="layout">
+  <aside class="sidebar">
+    <h3>Contents</h3>
+    <ul class="toc-list"><li><a href="#what_is_the_collection_framework?">What is the Collection Framework?</a></li>
+<li><a href="#collection_interface">Collection Interface</a></li>
+<li><a href="#list_interface">List Interface</a></li>
+<li><a href="#set_interface">Set Interface</a></li>
+<li><a href="#queue_interface">Queue Interface</a></li>
+<li><a href="#map_interface">Map Interface</a></li>
+<li><a href="#iterator">Iterator</a></li></ul>
+  </aside>
+  <main class="content">
+<h2 id="what_is_the_collection_framework?" data-icon="🗺️">What is the Collection Framework?</h2>
+
+<p>The <strong>Java Collections Framework</strong> provides a unified architecture for representing and manipulating groups of objects. It includes:</p>
+<ul>
+<li><strong>Interfaces</strong> — abstract types (Collection, List, Set, Queue, Map)</li>
+<li><strong>Classes</strong> — concrete implementations (ArrayList, HashMap, TreeSet...)</li>
+<li><strong>Algorithms</strong> — utility methods in <code>Collections</code> class (sort, search, shuffle...)</li>
+</ul>
+<pre><code><span class="cm">Hierarchy:</span>
+Iterable
+  └── Collection
+        ├── List      → ArrayList, LinkedList, Vector, Stack
+        ├── Set       → HashSet, LinkedHashSet, TreeSet
+        └── Queue     → PriorityQueue, ArrayDeque, LinkedList
+
+Map (separate hierarchy)
+  ├── HashMap, LinkedHashMap
+  └── SortedMap → TreeMap</code></pre><div class="note-box"><strong>📌 Key Point</strong>By default, collections hold <strong>heterogeneous objects</strong> (any type). Use <strong>Generics</strong> (e.g., <code>List&lt;String&gt;</code>) to restrict to a single type and get type safety.</div><h2 id="collection_interface" data-icon="📦">Collection Interface</h2>
+
+<p>The root interface of the collection hierarchy. All collection types implement it. Key methods:</p>
+<table>
+<tr><th>Method</th><th>Description</th></tr>
+<tr><td>add(E e)</td><td>Adds element e</td></tr>
+<tr><td>remove(Object o)</td><td>Removes specified element</td></tr>
+<tr><td>size()</td><td>Returns number of elements</td></tr>
+<tr><td>isEmpty()</td><td>Returns true if collection has no elements</td></tr>
+<tr><td>contains(Object o)</td><td>Returns true if element is present</td></tr>
+<tr><td>iterator()</td><td>Returns an Iterator over elements</td></tr>
+<tr><td>clear()</td><td>Removes all elements</td></tr>
+<tr><td>toArray()</td><td>Converts collection to array</td></tr>
+</table>
+<h2 id="list_interface" data-icon="📋">List Interface</h2>
+
+<p><code>List</code> is an <strong>ordered, index-based</strong> collection that allows <strong>duplicates</strong>.</p>
+<table>
+<tr><th>Method</th><th>Description</th></tr>
+<tr><td>get(int index)</td><td>Returns element at index</td></tr>
+<tr><td>set(int index, E e)</td><td>Replaces element at index</td></tr>
+<tr><td>add(int index, E e)</td><td>Inserts at specific position</td></tr>
+<tr><td>remove(int index)</td><td>Removes element at index</td></tr>
+<tr><td>indexOf(Object o)</td><td>Returns first index of element</td></tr>
+<tr><td>subList(from, to)</td><td>Returns a view of portion [from, to)</td></tr>
+</table>
+<pre><code><span class="kw">import</span> java.util.*;
+
+<span class="cls">List</span>&lt;<span class="cls">String</span>&gt; names = <span class="kw">new</span> <span class="cls">ArrayList</span>&lt;&gt;();
+names.<span class="fn">add</span>(<span class="str">"Alice"</span>);
+names.<span class="fn">add</span>(<span class="str">"Bob"</span>);
+names.<span class="fn">add</span>(<span class="num">0</span>, <span class="str">"Zara"</span>);       <span class="cm">// insert at front</span>
+names.<span class="fn">set</span>(<span class="num">1</span>, <span class="str">"Arjun"</span>);       <span class="cm">// replace index 1</span>
+<span class="cls">System</span>.out.println(names);     <span class="cm">// [Zara, Arjun, Bob]</span>
+<span class="cls">System</span>.out.println(names.<span class="fn">get</span>(<span class="num">2</span>)); <span class="cm">// Bob</span></code></pre><h2 id="set_interface" data-icon="🔵">Set Interface</h2>
+
+<p><code>Set</code> is a collection that <strong>does not allow duplicates</strong>. Order depends on implementation.</p>
+<table>
+<tr><th>Implementation</th><th>Ordering</th><th>Null allowed</th><th>Performance</th></tr>
+<tr><td>HashSet</td><td>No guaranteed order</td><td>One null</td><td>O(1) avg</td></tr>
+<tr><td>LinkedHashSet</td><td>Insertion order</td><td>One null</td><td>O(1) avg</td></tr>
+<tr><td>TreeSet</td><td>Sorted (natural/comparator)</td><td>No null</td><td>O(log n)</td></tr>
+</table>
+<pre><code><span class="cls">Set</span>&lt;<span class="cls">String</span>&gt; fruits = <span class="kw">new</span> <span class="cls">HashSet</span>&lt;&gt;();
+fruits.<span class="fn">add</span>(<span class="str">"Apple"</span>);
+fruits.<span class="fn">add</span>(<span class="str">"Mango"</span>);
+fruits.<span class="fn">add</span>(<span class="str">"Apple"</span>); <span class="cm">// duplicate — ignored</span>
+<span class="cls">System</span>.out.println(fruits.<span class="fn">size</span>()); <span class="cm">// 2</span></code></pre><h2 id="queue_interface" data-icon="🔢">Queue Interface</h2>
+
+<p><code>Queue</code> follows <strong>FIFO</strong> (First-In-First-Out) ordering. Key methods:</p>
+<table>
+<tr><th>Method</th><th>Throws exception?</th><th>Returns special value?</th></tr>
+<tr><td>add(e) / offer(e)</td><td>add() throws, offer() returns false</td><td>offer() returns false</td></tr>
+<tr><td>remove() / poll()</td><td>remove() throws, poll() returns null</td><td>poll() returns null if empty</td></tr>
+<tr><td>element() / peek()</td><td>element() throws, peek() returns null</td><td>peek() returns null if empty</td></tr>
+</table>
+<pre><code><span class="cls">Queue</span>&lt;<span class="cls">String</span>&gt; queue = <span class="kw">new</span> <span class="cls">LinkedList</span>&lt;&gt;();
+queue.<span class="fn">offer</span>(<span class="str">"Task 1"</span>);
+queue.<span class="fn">offer</span>(<span class="str">"Task 2"</span>);
+queue.<span class="fn">offer</span>(<span class="str">"Task 3"</span>);
+<span class="cls">System</span>.out.println(queue.<span class="fn">peek</span>());  <span class="cm">// Task 1 (doesn't remove)</span>
+<span class="cls">System</span>.out.println(queue.<span class="fn">poll</span>());  <span class="cm">// Task 1 (removes)</span>
+<span class="cls">System</span>.out.println(queue.<span class="fn">size</span>());  <span class="cm">// 2</span></code></pre><h2 id="map_interface" data-icon="🗝️">Map Interface</h2>
+
+<p><code>Map</code> stores <strong>key-value pairs</strong>. Keys are unique; values can be duplicated. Map does NOT extend Collection.</p>
+<table>
+<tr><th>Method</th><th>Description</th></tr>
+<tr><td>put(K,V)</td><td>Adds key-value pair; overwrites if key exists</td></tr>
+<tr><td>get(K)</td><td>Returns value for key, or null</td></tr>
+<tr><td>remove(K)</td><td>Removes entry by key</td></tr>
+<tr><td>containsKey(K)</td><td>true if key exists</td></tr>
+<tr><td>keySet()</td><td>Returns Set of all keys</td></tr>
+<tr><td>values()</td><td>Returns Collection of all values</td></tr>
+<tr><td>entrySet()</td><td>Returns Set of Map.Entry pairs</td></tr>
+</table>
+<pre><code><span class="cls">Map</span>&lt;<span class="cls">String</span>, <span class="cls">Integer</span>&gt; scores = <span class="kw">new</span> <span class="cls">HashMap</span>&lt;&gt;();
+scores.<span class="fn">put</span>(<span class="str">"Alice"</span>, <span class="num">95</span>);
+scores.<span class="fn">put</span>(<span class="str">"Bob"</span>, <span class="num">88</span>);
+scores.<span class="fn">put</span>(<span class="str">"Alice"</span>, <span class="num">99</span>); <span class="cm">// overwrites Alice's score</span>
+
+<span class="kw">for</span> (<span class="cls">Map.Entry</span>&lt;<span class="cls">String</span>,<span class="cls">Integer</span>&gt; e : scores.<span class="fn">entrySet</span>())
+    <span class="cls">System</span>.out.println(e.<span class="fn">getKey</span>() + <span class="str">" → "</span> + e.<span class="fn">getValue</span>());</code></pre><h2 id="iterator" data-icon="🔁">Iterator</h2>
+
+<p><code>Iterator</code> provides a safe way to traverse collections and remove elements during iteration.</p>
+<pre><code><span class="cls">List</span>&lt;<span class="cls">Integer</span>&gt; nums = <span class="kw">new</span> <span class="cls">ArrayList</span>&lt;&gt;(<span class="cls">Arrays</span>.<span class="fn">asList</span>(<span class="num">1</span>,<span class="num">2</span>,<span class="num">3</span>,<span class="num">4</span>,<span class="num">5</span>));
+<span class="cls">Iterator</span>&lt;<span class="cls">Integer</span>&gt; it = nums.<span class="fn">iterator</span>();
+
+<span class="kw">while</span> (it.<span class="fn">hasNext</span>()) {
+    <span class="kw">int</span> n = it.<span class="fn">next</span>();
+    <span class="kw">if</span> (n % <span class="num">2</span> == <span class="num">0</span>)
+        it.<span class="fn">remove</span>(); <span class="cm">// safe removal during iteration</span>
+}
+<span class="cls">System</span>.out.println(nums); <span class="cm">// [1, 3, 5]</span></code></pre><div class="warn-box"><strong>⚠️ Important</strong>Never modify a collection using <code>list.remove()</code> directly while iterating with an iterator — it throws <code>ConcurrentModificationException</code>. Always use <code>it.remove()</code>.</div>
+    <div class="pdf-section">
+      <div class="pdf-icon">📄</div>
+      <div class="pdf-info">
+        <h3>Download PDF Notes</h3>
+        <p>Save these notes as a PDF for offline reference</p>
+      </div>
+      <button class="pdf-btn" onclick="printNotes()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Save as PDF
+      </button>
+    </div>
+    <div class="nav-bottom">
+      <a class="nav-btn" href="java_w12.html">← Week 12: Multithreading</a>
+      <a class="nav-btn next" href="java_w14.html">Week 14: Collection Classes →</a>
+    </div>
+  </main>
+</div>
+<script>
+function printNotes(){window.print()}
+const sections=document.querySelectorAll('h2[id]');
+const links=document.querySelectorAll('.toc-list a');
+function onScroll(){
+  let cur='';
+  sections.forEach(s=>{if(window.scrollY>=s.offsetTop-80)cur=s.id});
+  links.forEach(l=>l.classList.toggle('active',l.getAttribute('href')==='#'+cur));
+}
+window.addEventListener('scroll',onScroll,{passive:true});
+</script>
+</body></html>

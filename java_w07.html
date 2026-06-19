@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0F1117;--surf:#181C27;--surf2:#1F2333;--bdr:#2A2F42;--acc:#F07C3E;--gold:#E8C06A;--txt:#E8EAF0;--muted:#6B7194;--grn:#4ECBA0;--blu:#5BA8F5;--red:#F05C5C;--prp:#A97DF5}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--txt);line-height:1.7;font-size:15px}
+a{color:var(--acc);text-decoration:none}a:hover{color:var(--gold)}
+.topbar{background:var(--surf);border-bottom:1px solid var(--bdr);padding:12px 32px;display:flex;align-items:center;gap:14px;position:sticky;top:0;z-index:100}
+.back-btn{display:flex;align-items:center;gap:5px;color:var(--muted);font-size:.85em;padding:6px 12px;border:1px solid var(--bdr);border-radius:7px;transition:.2s}
+.back-btn:hover{color:var(--txt);border-color:var(--acc)}
+.brand{margin-left:auto;font-size:.78em;color:var(--muted)}
+.brand span{color:var(--gold);font-weight:700}
+.hero{background:linear-gradient(135deg,#181C27 60%,#1a1530);border-bottom:1px solid var(--bdr);padding:40px 32px 28px}
+.hero .week-badge{display:inline-block;background:rgba(240,124,62,.12);border:1px solid rgba(240,124,62,.3);color:var(--acc);font-size:.75em;font-weight:700;padding:3px 12px;border-radius:20px;letter-spacing:.06em;margin-bottom:12px}
+.hero h1{font-size:2em;font-weight:800;letter-spacing:-.02em;background:linear-gradient(120deg,#E8EAF0 40%,#E8C06A);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px}
+.hero p{color:var(--muted);font-size:.9em}
+.co-pill{display:inline-block;padding:2px 10px;border-radius:5px;font-size:.75em;font-weight:700;margin-left:10px}
+.co1{background:rgba(78,203,160,.12);color:var(--grn)}.co2{background:rgba(91,168,245,.12);color:var(--blu)}
+.co3{background:rgba(169,125,245,.12);color:var(--prp)}.co4{background:rgba(232,192,106,.12);color:var(--gold)}
+.layout{display:grid;grid-template-columns:220px 1fr;gap:0;max-width:1200px;margin:0 auto;min-height:calc(100vh - 180px)}
+.sidebar{padding:24px 16px;border-right:1px solid var(--bdr);position:sticky;top:57px;height:calc(100vh - 57px);overflow-y:auto}
+.sidebar h3{font-size:.7em;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:10px}
+.toc-list{list-style:none}
+.toc-list li a{display:block;padding:5px 8px;font-size:.82em;color:var(--muted);border-radius:6px;transition:.15s}
+.toc-list li a:hover{background:var(--surf2);color:var(--txt)}
+.toc-list li a.active{background:rgba(240,124,62,.1);color:var(--acc)}
+.content{padding:32px 40px 60px;max-width:860px}
+h2{font-size:1.35em;font-weight:700;color:var(--txt);margin:36px 0 14px;padding-bottom:8px;border-bottom:2px solid var(--bdr);display:flex;align-items:center;gap:10px}
+h2::before{content:attr(data-icon);font-size:1.1em}
+h3{font-size:1.05em;font-weight:700;color:var(--gold);margin:22px 0 10px}
+h4{font-size:.95em;font-weight:700;color:var(--acc);margin:16px 0 6px}
+p{margin-bottom:12px;color:#C8CAD8}
+ul,ol{margin:8px 0 12px 22px;color:#C8CAD8}
+li{margin-bottom:5px}
+.note-box{background:rgba(78,203,160,.07);border:1px solid rgba(78,203,160,.25);border-radius:10px;padding:14px 18px;margin:16px 0}
+.warn-box{background:rgba(240,92,92,.07);border:1px solid rgba(240,92,92,.25);border-radius:10px;padding:14px 18px;margin:16px 0}
+.info-box{background:rgba(91,168,245,.07);border:1px solid rgba(91,168,245,.25);border-radius:10px;padding:14px 18px;margin:16px 0}
+.note-box strong,.warn-box strong,.info-box strong{font-size:.78em;text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:6px}
+.note-box strong{color:var(--grn)}.warn-box strong{color:var(--red)}.info-box strong{color:var(--blu)}
+pre{background:var(--surf2);border:1px solid var(--bdr);border-radius:10px;padding:18px 20px;overflow-x:auto;margin:12px 0 20px;font-size:.85em;line-height:1.6}
+code{font-family:'Cascadia Code','Fira Code',Consolas,monospace;color:#C8CAD8}
+pre code{color:#C8CAD8}
+.kw{color:#C792EA}.cm{color:#546E7A;font-style:italic}.str{color:#C3E88D}.num{color:#F78C6C}.cls{color:#FFCB6B}.fn{color:#82AAFF}.ann{color:#F07C3E}
+table{width:100%;border-collapse:collapse;margin:14px 0 20px;font-size:.88em}
+th{background:var(--surf2);color:var(--gold);padding:10px 14px;text-align:left;border-bottom:2px solid var(--bdr)}
+td{padding:9px 14px;border-bottom:1px solid var(--bdr);color:#C8CAD8}
+tr:hover td{background:rgba(255,255,255,.02)}
+.pdf-section{margin-top:48px;padding:24px;background:var(--surf);border:1px solid var(--bdr);border-radius:14px;display:flex;align-items:center;gap:20px}
+.pdf-icon{font-size:2.4em;flex-shrink:0}
+.pdf-info h3{color:var(--txt);font-size:1em;margin-bottom:4px}
+.pdf-info p{color:var(--muted);font-size:.82em;margin:0}
+.pdf-btn{margin-left:auto;padding:11px 24px;background:var(--acc);border:none;border-radius:9px;color:#111;font-weight:700;font-size:.88em;cursor:pointer;display:flex;align-items:center;gap:7px;white-space:nowrap;transition:.15s;flex-shrink:0}
+.pdf-btn:hover{background:var(--gold)}
+.nav-bottom{display:flex;justify-content:space-between;margin-top:40px;padding-top:24px;border-top:1px solid var(--bdr)}
+.nav-btn{display:flex;align-items:center;gap:8px;padding:10px 18px;background:var(--surf);border:1px solid var(--bdr);border-radius:9px;color:var(--muted);font-size:.85em;transition:.2s}
+.nav-btn:hover{border-color:var(--acc);color:var(--txt)}
+.nav-btn.next{flex-direction:row-reverse;text-align:right}
+@media print{
+  .topbar,.sidebar,.pdf-section,.nav-bottom{display:none!important}
+  body{background:#fff;color:#000;font-size:12pt}
+  .hero{background:#f5f5f5;border:none;padding:20px}
+  .hero h1{-webkit-text-fill-color:#1a1a1a;font-size:1.5em}
+  .content{padding:10px;max-width:100%}
+  pre{background:#f5f5f5;border:1px solid #ddd;font-size:9pt}
+  h2{border-bottom:2px solid #ccc;color:#1a1a1a}
+  h3{color:#333}p,li,td{color:#222}
+  .note-box{background:#e8f5e9;border:1px solid #4caf50}
+  .info-box{background:#e3f2fd;border:1px solid #2196f3}
+  .warn-box{background:#fce4ec;border:1px solid #e91e63}
+  .layout{display:block}
+  @page{margin:1.5cm}
+}
+
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a class="back-btn" href="courses.html">← Back to Courses</a>
+  <div class="brand">© 2025 <span>Sampathirao Software Solutions</span></div>
+</div>
+<div class="hero">
+  <div class="week-badge">Week 7 · CO-1</div>
+  <h1>Inheritance & Polymorphism</h1>
+  <p>Types of Inheritance, super, Method Overriding, Abstract Classes, Dynamic Dispatch &nbsp;<span class="co-pill co1">CO-1</span></p>
+</div>
+<div class="layout">
+  <aside class="sidebar">
+    <h3>Contents</h3>
+    <ul class="toc-list"><li><a href="#inheritance_overview">Inheritance Overview</a></li>
+<li><a href="#types_of_inheritance">Types of Inheritance</a></li>
+<li><a href="#super_keyword">super Keyword</a></li>
+<li><a href="#method_overriding">Method Overriding</a></li>
+<li><a href="#final_with_inheritance">final with Inheritance</a></li>
+<li><a href="#abstract_classes">Abstract Classes</a></li>
+<li><a href="#runtime_polymorphism">Runtime Polymorphism</a></li></ul>
+  </aside>
+  <main class="content">
+<h2 id="inheritance_overview" data-icon="🔗">Inheritance Overview</h2>
+
+<p><strong>Inheritance</strong> enables one class to inherit fields and methods from another. It supports <strong>code reusability</strong> and establishes an IS-A relationship.</p>
+<ul>
+<li>Parent class → <strong>Super class / Base class</strong></li>
+<li>Child class → <strong>Sub class / Derived class</strong></li>
+<li>Keyword: <code>extends</code></li>
+</ul>
+<div class="note-box"><strong>📌 Key Point</strong>Java does <strong>not</strong> support multiple inheritance through classes (to avoid the Diamond Problem), but it IS supported through interfaces.</div><h2 id="types_of_inheritance" data-icon="🌳">Types of Inheritance</h2>
+
+<table>
+<tr><th>Type</th><th>Description</th><th>Java Support</th></tr>
+<tr><td>Single</td><td>One child inherits one parent</td><td>✅ Yes</td></tr>
+<tr><td>Multi-level</td><td>A→B→C (chain)</td><td>✅ Yes</td></tr>
+<tr><td>Hierarchical</td><td>One parent, multiple children</td><td>✅ Yes</td></tr>
+<tr><td>Multiple</td><td>One child, multiple parents</td><td>❌ Via classes — ✅ Via interfaces</td></tr>
+<tr><td>Hybrid</td><td>Combination of above</td><td>✅ Via interfaces</td></tr>
+</table>
+<pre><code><span class="cm">// Multi-level inheritance</span>
+<span class="kw">class</span> <span class="cls">Animal</span>   { <span class="kw">void</span> <span class="fn">breathe</span>() { <span class="cls">System</span>.out.println(<span class="str">"Breathes"</span>); } }
+<span class="kw">class</span> <span class="cls">Mammal</span>   <span class="kw">extends</span> <span class="cls">Animal</span>  { <span class="kw">void</span> <span class="fn">walk</span>()    { <span class="cls">System</span>.out.println(<span class="str">"Walks"</span>); } }
+<span class="kw">class</span> <span class="cls">Dog</span>      <span class="kw">extends</span> <span class="cls">Mammal</span>  { <span class="kw">void</span> <span class="fn">bark</span>()    { <span class="cls">System</span>.out.println(<span class="str">"Barks"</span>); } }
+
+<span class="cls">Dog</span> d = <span class="kw">new</span> <span class="cls">Dog</span>();
+d.<span class="fn">breathe</span>(); d.<span class="fn">walk</span>(); d.<span class="fn">bark</span>(); <span class="cm">// all three accessible</span></code></pre><h2 id="super_keyword" data-icon="⬆️">super Keyword</h2>
+
+<p>The <code>super</code> keyword refers to the <strong>immediate parent class</strong>. It is used to:</p>
+<ol>
+<li>Access parent class fields (when shadowed by child)</li>
+<li>Call parent class methods (especially overridden ones)</li>
+<li>Call parent class constructor — <code>super()</code> must be first line</li>
+</ol>
+<pre><code><span class="kw">class</span> <span class="cls">Shape</span> {
+    <span class="cls">String</span> color;
+    <span class="cls">Shape</span>(<span class="cls">String</span> color) { <span class="kw">this</span>.color = color; }
+    <span class="kw">void</span> <span class="fn">draw</span>() { <span class="cls">System</span>.out.println(<span class="str">"Drawing "</span> + color + <span class="str">" shape"</span>); }
+}
+
+<span class="kw">class</span> <span class="cls">Rectangle</span> <span class="kw">extends</span> <span class="cls">Shape</span> {
+    <span class="kw">double</span> width, height;
+
+    <span class="cls">Rectangle</span>(<span class="cls">String</span> color, <span class="kw">double</span> w, <span class="kw">double</span> h) {
+        <span class="kw">super</span>(color);      <span class="cm">// call parent constructor</span>
+        width = w; height = h;
+    }
+
+    <span class="kw">void</span> <span class="fn">draw</span>() {
+        <span class="kw">super</span>.<span class="fn">draw</span>();       <span class="cm">// call parent method</span>
+        <span class="cls">System</span>.out.println(<span class="str">"Rectangle: "</span> + width + <span class="str">"x"</span> + height);
+    }
+}</code></pre><h2 id="method_overriding" data-icon="🔄">Method Overriding</h2>
+
+<p><strong>Method Overriding</strong> occurs when a subclass provides its own implementation of a method already defined in the parent class. Rules:</p>
+<ul>
+<li>Same method name, same parameter list, same or covariant return type</li>
+<li>Access modifier can be same or wider (not more restrictive)</li>
+<li>Cannot override <code>static</code>, <code>final</code>, or <code>private</code> methods</li>
+<li>Use <code>@Override</code> annotation for compile-time safety</li>
+</ul>
+<pre><code><span class="kw">class</span> <span class="cls">Bank</span> {
+    <span class="kw">double</span> <span class="fn">getInterestRate</span>() { <span class="kw">return</span> <span class="num">4.0</span>; }
+}
+<span class="kw">class</span> <span class="cls">SBI</span> <span class="kw">extends</span> <span class="cls">Bank</span> {
+    <span class="ann">@Override</span>
+    <span class="kw">double</span> <span class="fn">getInterestRate</span>() { <span class="kw">return</span> <span class="num">7.0</span>; }
+}
+<span class="kw">class</span> <span class="cls">HDFC</span> <span class="kw">extends</span> <span class="cls">Bank</span> {
+    <span class="ann">@Override</span>
+    <span class="kw">double</span> <span class="fn">getInterestRate</span>() { <span class="kw">return</span> <span class="num">6.5</span>; }
+}</code></pre><h2 id="final_with_inheritance" data-icon="🚫">final with Inheritance</h2>
+
+<table>
+<tr><th>Usage</th><th>Effect</th></tr>
+<tr><td><code>final class</code></td><td>Class cannot be extended at all</td></tr>
+<tr><td><code>final method</code></td><td>Method cannot be overridden in subclass</td></tr>
+<tr><td><code>final variable</code></td><td>Acts as a constant; cannot be changed</td></tr>
+</table>
+<div class="info-box"><strong>💡 Did You Know</strong>The <code>String</code>, <code>Integer</code>, and other wrapper classes are all declared <code>final</code> in Java's standard library.</div><h2 id="abstract_classes" data-icon="🎭">Abstract Classes</h2>
+
+<p>An <strong>abstract class</strong> is a class that cannot be instantiated. It serves as a template, defining methods that subclasses must implement.</p>
+<ul>
+<li>Declared with the <code>abstract</code> keyword</li>
+<li>Can have both abstract (no body) and concrete (with body) methods</li>
+<li>If a class has even one abstract method, the class must also be abstract</li>
+<li>Subclass must override ALL abstract methods, or itself be abstract</li>
+</ul>
+<pre><code><span class="kw">abstract class</span> <span class="cls">Vehicle</span> {
+    <span class="kw">int</span> speed;
+
+    <span class="cm">// abstract method — no body</span>
+    <span class="kw">abstract void</span> <span class="fn">fuelType</span>();
+
+    <span class="cm">// concrete method</span>
+    <span class="kw">void</span> <span class="fn">showSpeed</span>() { <span class="cls">System</span>.out.println(<span class="str">"Speed: "</span> + speed); }
+}
+
+<span class="kw">class</span> <span class="cls">Car</span> <span class="kw">extends</span> <span class="cls">Vehicle</span> {
+    <span class="ann">@Override</span>
+    <span class="kw">void</span> <span class="fn">fuelType</span>() { <span class="cls">System</span>.out.println(<span class="str">"Petrol / Diesel"</span>); }
+}
+
+<span class="kw">class</span> <span class="cls">ElectricCar</span> <span class="kw">extends</span> <span class="cls">Vehicle</span> {
+    <span class="ann">@Override</span>
+    <span class="kw">void</span> <span class="fn">fuelType</span>() { <span class="cls">System</span>.out.println(<span class="str">"Electric Battery"</span>); }
+}</code></pre><h2 id="runtime_polymorphism" data-icon="🚀">Runtime Polymorphism</h2>
+
+<p><strong>Dynamic Method Dispatch</strong> is the mechanism by which an overridden method is called through a parent class reference at runtime. The JVM determines which version to call based on the actual object type — not the reference type.</p>
+<pre><code><span class="kw">public class</span> <span class="cls">Test</span> {
+    <span class="kw">public static void</span> <span class="fn">main</span>(<span class="cls">String</span>[] args) {
+        <span class="cls">Bank</span> b;            <span class="cm">// parent reference</span>
+
+        b = <span class="kw">new</span> <span class="cls">SBI</span>();
+        <span class="cls">System</span>.out.println(<span class="str">"SBI rate: "</span>  + b.<span class="fn">getInterestRate</span>()); <span class="cm">// 7.0</span>
+
+        b = <span class="kw">new</span> <span class="cls">HDFC</span>();
+        <span class="cls">System</span>.out.println(<span class="str">"HDFC rate: "</span> + b.<span class="fn">getInterestRate</span>()); <span class="cm">// 6.5</span>
+
+        <span class="cm">// Array of Bank references → different objects</span>
+        <span class="cls">Bank</span>[] banks = { <span class="kw">new</span> <span class="cls">SBI</span>(), <span class="kw">new</span> <span class="cls">HDFC</span>(), <span class="kw">new</span> <span class="cls">Bank</span>() };
+        <span class="kw">for</span> (<span class="cls">Bank</span> bank : banks)
+            <span class="cls">System</span>.out.println(bank.<span class="fn">getInterestRate</span>()); <span class="cm">// 7.0, 6.5, 4.0</span>
+    }
+}</code></pre><div class="note-box"><strong>📌 Key Point</strong>Runtime polymorphism is one of the most powerful OOP features. It lets you write generic code that works with any subclass — the correct version is chosen automatically at runtime.</div>
+    <div class="pdf-section">
+      <div class="pdf-icon">📄</div>
+      <div class="pdf-info">
+        <h3>Download PDF Notes</h3>
+        <p>Save these notes as a PDF for offline reference</p>
+      </div>
+      <button class="pdf-btn" onclick="printNotes()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Save as PDF
+      </button>
+    </div>
+    <div class="nav-bottom">
+      <a class="nav-btn" href="java_w06.html">← Week 6: Static, this, final & Strings</a>
+      <a class="nav-btn next" href="java_w08.html">Week 8: Interfaces →</a>
+    </div>
+  </main>
+</div>
+<script>
+function printNotes(){window.print()}
+const sections=document.querySelectorAll('h2[id]');
+const links=document.querySelectorAll('.toc-list a');
+function onScroll(){
+  let cur='';
+  sections.forEach(s=>{if(window.scrollY>=s.offsetTop-80)cur=s.id});
+  links.forEach(l=>l.classList.toggle('active',l.getAttribute('href')==='#'+cur));
+}
+window.addEventListener('scroll',onScroll,{passive:true});
+</script>
+</body></html>

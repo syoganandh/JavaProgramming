@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0F1117;--surf:#181C27;--surf2:#1F2333;--bdr:#2A2F42;--acc:#F07C3E;--gold:#E8C06A;--txt:#E8EAF0;--muted:#6B7194;--grn:#4ECBA0;--blu:#5BA8F5;--red:#F05C5C;--prp:#A97DF5}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--txt);line-height:1.7;font-size:15px}
+a{color:var(--acc);text-decoration:none}a:hover{color:var(--gold)}
+.topbar{background:var(--surf);border-bottom:1px solid var(--bdr);padding:12px 32px;display:flex;align-items:center;gap:14px;position:sticky;top:0;z-index:100}
+.back-btn{display:flex;align-items:center;gap:5px;color:var(--muted);font-size:.85em;padding:6px 12px;border:1px solid var(--bdr);border-radius:7px;transition:.2s}
+.back-btn:hover{color:var(--txt);border-color:var(--acc)}
+.brand{margin-left:auto;font-size:.78em;color:var(--muted)}
+.brand span{color:var(--gold);font-weight:700}
+.hero{background:linear-gradient(135deg,#181C27 60%,#1a1530);border-bottom:1px solid var(--bdr);padding:40px 32px 28px}
+.hero .week-badge{display:inline-block;background:rgba(240,124,62,.12);border:1px solid rgba(240,124,62,.3);color:var(--acc);font-size:.75em;font-weight:700;padding:3px 12px;border-radius:20px;letter-spacing:.06em;margin-bottom:12px}
+.hero h1{font-size:2em;font-weight:800;letter-spacing:-.02em;background:linear-gradient(120deg,#E8EAF0 40%,#E8C06A);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px}
+.hero p{color:var(--muted);font-size:.9em}
+.co-pill{display:inline-block;padding:2px 10px;border-radius:5px;font-size:.75em;font-weight:700;margin-left:10px}
+.co1{background:rgba(78,203,160,.12);color:var(--grn)}.co2{background:rgba(91,168,245,.12);color:var(--blu)}
+.co3{background:rgba(169,125,245,.12);color:var(--prp)}.co4{background:rgba(232,192,106,.12);color:var(--gold)}
+.layout{display:grid;grid-template-columns:220px 1fr;gap:0;max-width:1200px;margin:0 auto;min-height:calc(100vh - 180px)}
+.sidebar{padding:24px 16px;border-right:1px solid var(--bdr);position:sticky;top:57px;height:calc(100vh - 57px);overflow-y:auto}
+.sidebar h3{font-size:.7em;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:10px}
+.toc-list{list-style:none}
+.toc-list li a{display:block;padding:5px 8px;font-size:.82em;color:var(--muted);border-radius:6px;transition:.15s}
+.toc-list li a:hover{background:var(--surf2);color:var(--txt)}
+.toc-list li a.active{background:rgba(240,124,62,.1);color:var(--acc)}
+.content{padding:32px 40px 60px;max-width:860px}
+h2{font-size:1.35em;font-weight:700;color:var(--txt);margin:36px 0 14px;padding-bottom:8px;border-bottom:2px solid var(--bdr);display:flex;align-items:center;gap:10px}
+h2::before{content:attr(data-icon);font-size:1.1em}
+h3{font-size:1.05em;font-weight:700;color:var(--gold);margin:22px 0 10px}
+h4{font-size:.95em;font-weight:700;color:var(--acc);margin:16px 0 6px}
+p{margin-bottom:12px;color:#C8CAD8}
+ul,ol{margin:8px 0 12px 22px;color:#C8CAD8}
+li{margin-bottom:5px}
+.note-box{background:rgba(78,203,160,.07);border:1px solid rgba(78,203,160,.25);border-radius:10px;padding:14px 18px;margin:16px 0}
+.warn-box{background:rgba(240,92,92,.07);border:1px solid rgba(240,92,92,.25);border-radius:10px;padding:14px 18px;margin:16px 0}
+.info-box{background:rgba(91,168,245,.07);border:1px solid rgba(91,168,245,.25);border-radius:10px;padding:14px 18px;margin:16px 0}
+.note-box strong,.warn-box strong,.info-box strong{font-size:.78em;text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:6px}
+.note-box strong{color:var(--grn)}.warn-box strong{color:var(--red)}.info-box strong{color:var(--blu)}
+pre{background:var(--surf2);border:1px solid var(--bdr);border-radius:10px;padding:18px 20px;overflow-x:auto;margin:12px 0 20px;font-size:.85em;line-height:1.6}
+code{font-family:'Cascadia Code','Fira Code',Consolas,monospace;color:#C8CAD8}
+pre code{color:#C8CAD8}
+.kw{color:#C792EA}.cm{color:#546E7A;font-style:italic}.str{color:#C3E88D}.num{color:#F78C6C}.cls{color:#FFCB6B}.fn{color:#82AAFF}.ann{color:#F07C3E}
+table{width:100%;border-collapse:collapse;margin:14px 0 20px;font-size:.88em}
+th{background:var(--surf2);color:var(--gold);padding:10px 14px;text-align:left;border-bottom:2px solid var(--bdr)}
+td{padding:9px 14px;border-bottom:1px solid var(--bdr);color:#C8CAD8}
+tr:hover td{background:rgba(255,255,255,.02)}
+.pdf-section{margin-top:48px;padding:24px;background:var(--surf);border:1px solid var(--bdr);border-radius:14px;display:flex;align-items:center;gap:20px}
+.pdf-icon{font-size:2.4em;flex-shrink:0}
+.pdf-info h3{color:var(--txt);font-size:1em;margin-bottom:4px}
+.pdf-info p{color:var(--muted);font-size:.82em;margin:0}
+.pdf-btn{margin-left:auto;padding:11px 24px;background:var(--acc);border:none;border-radius:9px;color:#111;font-weight:700;font-size:.88em;cursor:pointer;display:flex;align-items:center;gap:7px;white-space:nowrap;transition:.15s;flex-shrink:0}
+.pdf-btn:hover{background:var(--gold)}
+.nav-bottom{display:flex;justify-content:space-between;margin-top:40px;padding-top:24px;border-top:1px solid var(--bdr)}
+.nav-btn{display:flex;align-items:center;gap:8px;padding:10px 18px;background:var(--surf);border:1px solid var(--bdr);border-radius:9px;color:var(--muted);font-size:.85em;transition:.2s}
+.nav-btn:hover{border-color:var(--acc);color:var(--txt)}
+.nav-btn.next{flex-direction:row-reverse;text-align:right}
+@media print{
+  .topbar,.sidebar,.pdf-section,.nav-bottom{display:none!important}
+  body{background:#fff;color:#000;font-size:12pt}
+  .hero{background:#f5f5f5;border:none;padding:20px}
+  .hero h1{-webkit-text-fill-color:#1a1a1a;font-size:1.5em}
+  .content{padding:10px;max-width:100%}
+  pre{background:#f5f5f5;border:1px solid #ddd;font-size:9pt}
+  h2{border-bottom:2px solid #ccc;color:#1a1a1a}
+  h3{color:#333}p,li,td{color:#222}
+  .note-box{background:#e8f5e9;border:1px solid #4caf50}
+  .info-box{background:#e3f2fd;border:1px solid #2196f3}
+  .warn-box{background:#fce4ec;border:1px solid #e91e63}
+  .layout{display:block}
+  @page{margin:1.5cm}
+}
+
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a class="back-btn" href="courses.html">← Back to Courses</a>
+  <div class="brand">© 2025 <span>Sampathirao Software Solutions</span></div>
+</div>
+<div class="hero">
+  <div class="week-badge">Week 6 · CO-1</div>
+  <h1>Static, this, final & String Handling</h1>
+  <p>Static fields/methods/blocks, this reference, final keyword, String handling &nbsp;<span class="co-pill co1">CO-1</span></p>
+</div>
+<div class="layout">
+  <aside class="sidebar">
+    <h3>Contents</h3>
+    <ul class="toc-list"><li><a href="#static_members">Static Members</a></li>
+<li><a href="#static_block">Static Block</a></li>
+<li><a href="#this_reference">this Reference</a></li>
+<li><a href="#final_keyword">final Keyword</a></li>
+<li><a href="#string_class">String Class</a></li>
+<li><a href="#stringbuffer_and_stringbuilder">StringBuffer & StringBuilder</a></li>
+<li><a href="#stringtokenizer">StringTokenizer</a></li></ul>
+  </aside>
+  <main class="content">
+<h2 id="static_members" data-icon="⚡">Static Members</h2>
+
+<p>The <code>static</code> keyword belongs to the <strong>class</strong> rather than to any instance. Static members are shared across all objects of a class.</p>
+<table>
+<tr><th>Feature</th><th>Static</th><th>Non-Static (Instance)</th></tr>
+<tr><td>Memory</td><td>Allocated once (class load)</td><td>Allocated per object</td></tr>
+<tr><td>Access</td><td>ClassName.member</td><td>objectRef.member</td></tr>
+<tr><td>Can access</td><td>Only static members directly</td><td>Both static and instance</td></tr>
+<tr><td>Example</td><td>Math.PI, Math.sqrt()</td><td>obj.length, obj.getArea()</td></tr>
+</table>
+<pre><code><span class="kw">class</span> <span class="cls">Counter</span> {
+    <span class="kw">static int</span> count = <span class="num">0</span>; <span class="cm">// shared by all objects</span>
+    <span class="kw">int</span> id;
+
+    <span class="cls">Counter</span>() {
+        count++;
+        id = count;
+    }
+
+    <span class="kw">static void</span> <span class="fn">showCount</span>() {
+        <span class="cm">// can NOT access 'id' here — id is instance variable</span>
+        <span class="cls">System</span>.out.println(<span class="str">"Total objects: "</span> + count);
+    }
+}
+
+<span class="cls">Counter</span> c1 = <span class="kw">new</span> <span class="cls">Counter</span>();
+<span class="cls">Counter</span> c2 = <span class="kw">new</span> <span class="cls">Counter</span>();
+<span class="cls">Counter</span>.<span class="fn">showCount</span>(); <span class="cm">// Output: Total objects: 2</span></code></pre><h2 id="static_block" data-icon="🔲">Static Block</h2>
+
+<p>A <strong>static block</strong> is executed <em>once</em>, when the class is first loaded into memory — before the <code>main()</code> method runs. Used for complex static initializations.</p>
+<pre><code><span class="kw">class</span> <span class="cls">Config</span> {
+    <span class="kw">static</span> <span class="cls">String</span> dbUrl;
+    <span class="kw">static int</span> port;
+
+    <span class="kw">static</span> {  <span class="cm">// runs once at class load time</span>
+        dbUrl = <span class="str">"jdbc:mysql://localhost/college"</span>;
+        port  = <span class="num">3306</span>;
+        <span class="cls">System</span>.out.println(<span class="str">"Config loaded."</span>);
+    }
+}</code></pre><h2 id="this_reference" data-icon="🔑">this Reference</h2>
+
+<p>The <code>this</code> keyword refers to the <strong>current class instance</strong>. Its four main uses:</p>
+<ol>
+<li>Differentiate instance variable from local variable with the same name</li>
+<li>Pass the current object as an argument to a method</li>
+<li>Return the current object from a method (method chaining)</li>
+<li>Call another constructor in the same class using <code>this()</code></li>
+</ol>
+<pre><code><span class="kw">class</span> <span class="cls">Builder</span> {
+    <span class="kw">int</span> x, y;
+
+    <span class="cls">Builder</span> <span class="fn">setX</span>(<span class="kw">int</span> x) { <span class="kw">this</span>.x = x; <span class="kw">return this</span>; } <span class="cm">// method chaining</span>
+    <span class="cls">Builder</span> <span class="fn">setY</span>(<span class="kw">int</span> y) { <span class="kw">this</span>.y = y; <span class="kw">return this</span>; }
+
+    <span class="cls">Builder</span>(<span class="kw">int</span> x) {
+        <span class="kw">this</span>(x, <span class="num">0</span>); <span class="cm">// calls Builder(int,int) — must be first line</span>
+    }
+    <span class="cls">Builder</span>(<span class="kw">int</span> x, <span class="kw">int</span> y) { <span class="kw">this</span>.x = x; <span class="kw">this</span>.y = y; }
+}
+
+<span class="cm">// Method chaining usage</span>
+<span class="cls">Builder</span> b = <span class="kw">new</span> <span class="cls">Builder</span>(<span class="num">0</span>).<span class="fn">setX</span>(<span class="num">10</span>).<span class="fn">setY</span>(<span class="num">20</span>);</code></pre><h2 id="final_keyword" data-icon="🔒">final Keyword</h2>
+
+<p>The <code>final</code> keyword restricts further modification.</p>
+<table>
+<tr><th>Applied To</th><th>Effect</th></tr>
+<tr><td>Variable</td><td>Becomes a constant — cannot be reassigned</td></tr>
+<tr><td>Method</td><td>Cannot be overridden in subclass</td></tr>
+<tr><td>Class</td><td>Cannot be extended (inherited)</td></tr>
+</table>
+<pre><code><span class="kw">final class</span> <span class="cls">Immutable</span> {         <span class="cm">// cannot be subclassed</span>
+    <span class="kw">final double</span> PI = <span class="num">3.14159</span>;    <span class="cm">// constant</span>
+
+    <span class="kw">final void</span> <span class="fn">show</span>() {            <span class="cm">// cannot be overridden</span>
+        <span class="cls">System</span>.out.println(<span class="str">"PI = "</span> + PI);
+    }
+}</code></pre><div class="note-box"><strong>📌 Key Point</strong>The <code>String</code> class in Java is declared <code>final</code> — you cannot extend String. This is why String is immutable.</div><h2 id="string_class" data-icon="📝">String Class</h2>
+
+<p>Strings in Java are <strong>immutable objects</strong> of the <code>java.lang.String</code> class. Once created, their value cannot be changed.</p>
+<h3>Important String Methods</h3>
+<table>
+<tr><th>Method</th><th>Description</th><th>Example</th></tr>
+<tr><td>length()</td><td>Returns string length</td><td>"Java".length() → 4</td></tr>
+<tr><td>charAt(i)</td><td>Returns char at index i</td><td>"Java".charAt(1) → 'a'</td></tr>
+<tr><td>substring(s,e)</td><td>Extracts [s,e)</td><td>"Hello".substring(1,4) → "ell"</td></tr>
+<tr><td>indexOf(str)</td><td>First occurrence index</td><td>"Hello".indexOf("l") → 2</td></tr>
+<tr><td>toUpperCase()</td><td>Converts to uppercase</td><td>"java".toUpperCase() → "JAVA"</td></tr>
+<tr><td>toLowerCase()</td><td>Converts to lowercase</td><td>"JAVA".toLowerCase() → "java"</td></tr>
+<tr><td>trim()</td><td>Removes leading/trailing spaces</td><td>"  hi  ".trim() → "hi"</td></tr>
+<tr><td>replace(o,n)</td><td>Replace all occurrences</td><td>"aaa".replace('a','b') → "bbb"</td></tr>
+<tr><td>equals(s)</td><td>Content comparison</td><td>"hi".equals("hi") → true</td></tr>
+<tr><td>equalsIgnoreCase(s)</td><td>Case-insensitive compare</td><td>"Hi".equalsIgnoreCase("hi") → true</td></tr>
+<tr><td>split(regex)</td><td>Splits into array</td><td>"a,b,c".split(",") → ["a","b","c"]</td></tr>
+<tr><td>contains(s)</td><td>Checks if substring present</td><td>"Hello".contains("ell") → true</td></tr>
+<tr><td>startsWith(s)</td><td>Checks prefix</td><td>"Java".startsWith("Ja") → true</td></tr>
+</table>
+<div class="warn-box"><strong>⚠️ Important</strong>Never compare strings with <code>==</code>. Use <code>.equals()</code>. The <code>==</code> operator compares references (memory addresses), not content.</div><h2 id="stringbuffer_and_stringbuilder" data-icon="⚡">StringBuffer & StringBuilder</h2>
+
+<table>
+<tr><th>Feature</th><th>String</th><th>StringBuffer</th><th>StringBuilder</th></tr>
+<tr><td>Mutable</td><td>No</td><td>Yes</td><td>Yes</td></tr>
+<tr><td>Thread-safe</td><td>Yes (immutable)</td><td>Yes (synchronized)</td><td>No</td></tr>
+<tr><td>Performance</td><td>Slow (creates new object)</td><td>Moderate</td><td>Fastest</td></tr>
+<tr><td>Use when</td><td>Fixed strings</td><td>Multi-threaded env</td><td>Single-threaded</td></tr>
+</table>
+<pre><code><span class="cls">StringBuilder</span> sb = <span class="kw">new</span> <span class="cls">StringBuilder</span>(<span class="str">"Hello"</span>);
+sb.<span class="fn">append</span>(<span class="str">" World"</span>);   <span class="cm">// Hello World</span>
+sb.<span class="fn">insert</span>(<span class="num">5</span>, <span class="str">","</span>);      <span class="cm">// Hello, World</span>
+sb.<span class="fn">reverse</span>();            <span class="cm">// dlroW ,olleH</span>
+sb.<span class="fn">delete</span>(<span class="num">0</span>, <span class="num">6</span>);        <span class="cm">// ,olleH</span>
+sb.<span class="fn">replace</span>(<span class="num">0</span>, <span class="num">1</span>, <span class="str">"!"</span>);  <span class="cm">// !olleH</span>
+<span class="cls">System</span>.out.println(sb.<span class="fn">toString</span>());</code></pre><h2 id="stringtokenizer" data-icon="✂️">StringTokenizer</h2>
+
+<p><code>StringTokenizer</code> (in <code>java.util</code>) splits a string into tokens based on a delimiter.</p>
+<pre><code><span class="kw">import</span> java.util.StringTokenizer;
+
+<span class="cls">String</span> csv = <span class="str">"Ravi,22,Computer Science,9.1"</span>;
+<span class="cls">StringTokenizer</span> st = <span class="kw">new</span> <span class="cls">StringTokenizer</span>(csv, <span class="str">","</span>);
+
+<span class="kw">while</span> (st.<span class="fn">hasMoreTokens</span>()) {
+    <span class="cls">System</span>.out.println(st.<span class="fn">nextToken</span>());
+}
+<span class="cm">// Output: Ravi  22  Computer Science  9.1</span></code></pre>
+    <div class="pdf-section">
+      <div class="pdf-icon">📄</div>
+      <div class="pdf-info">
+        <h3>Download PDF Notes</h3>
+        <p>Save these notes as a PDF for offline reference</p>
+      </div>
+      <button class="pdf-btn" onclick="printNotes()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Save as PDF
+      </button>
+    </div>
+    <div class="nav-bottom">
+      <a class="nav-btn" href="java_w04.html">← Week 4&5: Classes & Objects</a>
+      <a class="nav-btn next" href="java_w07.html">Week 7: Inheritance & Polymorphism →</a>
+    </div>
+  </main>
+</div>
+<script>
+function printNotes(){window.print()}
+const sections=document.querySelectorAll('h2[id]');
+const links=document.querySelectorAll('.toc-list a');
+function onScroll(){
+  let cur='';
+  sections.forEach(s=>{if(window.scrollY>=s.offsetTop-80)cur=s.id});
+  links.forEach(l=>l.classList.toggle('active',l.getAttribute('href')==='#'+cur));
+}
+window.addEventListener('scroll',onScroll,{passive:true});
+</script>
+</body></html>

@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0F1117;--surf:#181C27;--surf2:#1F2333;--bdr:#2A2F42;--acc:#F07C3E;--gold:#E8C06A;--txt:#E8EAF0;--muted:#6B7194;--grn:#4ECBA0;--blu:#5BA8F5;--red:#F05C5C;--prp:#A97DF5}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--txt);line-height:1.7;font-size:15px}
+a{color:var(--acc);text-decoration:none}a:hover{color:var(--gold)}
+.topbar{background:var(--surf);border-bottom:1px solid var(--bdr);padding:12px 32px;display:flex;align-items:center;gap:14px;position:sticky;top:0;z-index:100}
+.back-btn{display:flex;align-items:center;gap:5px;color:var(--muted);font-size:.85em;padding:6px 12px;border:1px solid var(--bdr);border-radius:7px;transition:.2s}
+.back-btn:hover{color:var(--txt);border-color:var(--acc)}
+.brand{margin-left:auto;font-size:.78em;color:var(--muted)}
+.brand span{color:var(--gold);font-weight:700}
+.hero{background:linear-gradient(135deg,#181C27 60%,#1a1530);border-bottom:1px solid var(--bdr);padding:40px 32px 28px}
+.hero .week-badge{display:inline-block;background:rgba(240,124,62,.12);border:1px solid rgba(240,124,62,.3);color:var(--acc);font-size:.75em;font-weight:700;padding:3px 12px;border-radius:20px;letter-spacing:.06em;margin-bottom:12px}
+.hero h1{font-size:2em;font-weight:800;letter-spacing:-.02em;background:linear-gradient(120deg,#E8EAF0 40%,#E8C06A);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px}
+.hero p{color:var(--muted);font-size:.9em}
+.co-pill{display:inline-block;padding:2px 10px;border-radius:5px;font-size:.75em;font-weight:700;margin-left:10px}
+.co1{background:rgba(78,203,160,.12);color:var(--grn)}.co2{background:rgba(91,168,245,.12);color:var(--blu)}
+.co3{background:rgba(169,125,245,.12);color:var(--prp)}.co4{background:rgba(232,192,106,.12);color:var(--gold)}
+.layout{display:grid;grid-template-columns:220px 1fr;gap:0;max-width:1200px;margin:0 auto;min-height:calc(100vh - 180px)}
+.sidebar{padding:24px 16px;border-right:1px solid var(--bdr);position:sticky;top:57px;height:calc(100vh - 57px);overflow-y:auto}
+.sidebar h3{font-size:.7em;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:10px}
+.toc-list{list-style:none}
+.toc-list li a{display:block;padding:5px 8px;font-size:.82em;color:var(--muted);border-radius:6px;transition:.15s}
+.toc-list li a:hover{background:var(--surf2);color:var(--txt)}
+.toc-list li a.active{background:rgba(240,124,62,.1);color:var(--acc)}
+.content{padding:32px 40px 60px;max-width:860px}
+h2{font-size:1.35em;font-weight:700;color:var(--txt);margin:36px 0 14px;padding-bottom:8px;border-bottom:2px solid var(--bdr);display:flex;align-items:center;gap:10px}
+h2::before{content:attr(data-icon);font-size:1.1em}
+h3{font-size:1.05em;font-weight:700;color:var(--gold);margin:22px 0 10px}
+h4{font-size:.95em;font-weight:700;color:var(--acc);margin:16px 0 6px}
+p{margin-bottom:12px;color:#C8CAD8}
+ul,ol{margin:8px 0 12px 22px;color:#C8CAD8}
+li{margin-bottom:5px}
+.note-box{background:rgba(78,203,160,.07);border:1px solid rgba(78,203,160,.25);border-radius:10px;padding:14px 18px;margin:16px 0}
+.warn-box{background:rgba(240,92,92,.07);border:1px solid rgba(240,92,92,.25);border-radius:10px;padding:14px 18px;margin:16px 0}
+.info-box{background:rgba(91,168,245,.07);border:1px solid rgba(91,168,245,.25);border-radius:10px;padding:14px 18px;margin:16px 0}
+.note-box strong,.warn-box strong,.info-box strong{font-size:.78em;text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:6px}
+.note-box strong{color:var(--grn)}.warn-box strong{color:var(--red)}.info-box strong{color:var(--blu)}
+pre{background:var(--surf2);border:1px solid var(--bdr);border-radius:10px;padding:18px 20px;overflow-x:auto;margin:12px 0 20px;font-size:.85em;line-height:1.6}
+code{font-family:'Cascadia Code','Fira Code',Consolas,monospace;color:#C8CAD8}
+pre code{color:#C8CAD8}
+.kw{color:#C792EA}.cm{color:#546E7A;font-style:italic}.str{color:#C3E88D}.num{color:#F78C6C}.cls{color:#FFCB6B}.fn{color:#82AAFF}.ann{color:#F07C3E}
+table{width:100%;border-collapse:collapse;margin:14px 0 20px;font-size:.88em}
+th{background:var(--surf2);color:var(--gold);padding:10px 14px;text-align:left;border-bottom:2px solid var(--bdr)}
+td{padding:9px 14px;border-bottom:1px solid var(--bdr);color:#C8CAD8}
+tr:hover td{background:rgba(255,255,255,.02)}
+.pdf-section{margin-top:48px;padding:24px;background:var(--surf);border:1px solid var(--bdr);border-radius:14px;display:flex;align-items:center;gap:20px}
+.pdf-icon{font-size:2.4em;flex-shrink:0}
+.pdf-info h3{color:var(--txt);font-size:1em;margin-bottom:4px}
+.pdf-info p{color:var(--muted);font-size:.82em;margin:0}
+.pdf-btn{margin-left:auto;padding:11px 24px;background:var(--acc);border:none;border-radius:9px;color:#111;font-weight:700;font-size:.88em;cursor:pointer;display:flex;align-items:center;gap:7px;white-space:nowrap;transition:.15s;flex-shrink:0}
+.pdf-btn:hover{background:var(--gold)}
+.nav-bottom{display:flex;justify-content:space-between;margin-top:40px;padding-top:24px;border-top:1px solid var(--bdr)}
+.nav-btn{display:flex;align-items:center;gap:8px;padding:10px 18px;background:var(--surf);border:1px solid var(--bdr);border-radius:9px;color:var(--muted);font-size:.85em;transition:.2s}
+.nav-btn:hover{border-color:var(--acc);color:var(--txt)}
+.nav-btn.next{flex-direction:row-reverse;text-align:right}
+@media print{
+  .topbar,.sidebar,.pdf-section,.nav-bottom{display:none!important}
+  body{background:#fff;color:#000;font-size:12pt}
+  .hero{background:#f5f5f5;border:none;padding:20px}
+  .hero h1{-webkit-text-fill-color:#1a1a1a;font-size:1.5em}
+  .content{padding:10px;max-width:100%}
+  pre{background:#f5f5f5;border:1px solid #ddd;font-size:9pt}
+  h2{border-bottom:2px solid #ccc;color:#1a1a1a}
+  h3{color:#333}p,li,td{color:#222}
+  .note-box{background:#e8f5e9;border:1px solid #4caf50}
+  .info-box{background:#e3f2fd;border:1px solid #2196f3}
+  .warn-box{background:#fce4ec;border:1px solid #e91e63}
+  .layout{display:block}
+  @page{margin:1.5cm}
+}
+
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a class="back-btn" href="courses.html">← Back to Courses</a>
+  <div class="brand">© 2025 <span>Sampathirao Software Solutions</span></div>
+</div>
+<div class="hero">
+  <div class="week-badge">Week 11 · CO-3</div>
+  <h1>Exception Handling</h1>
+  <p>try/catch/finally, throw, throws, Built-in & User-defined Exceptions &nbsp;<span class="co-pill co3">CO-3</span></p>
+</div>
+<div class="layout">
+  <aside class="sidebar">
+    <h3>Contents</h3>
+    <ul class="toc-list"><li><a href="#what_is_an_exception?">What is an Exception?</a></li>
+<li><a href="#exception_hierarchy">Exception Hierarchy</a></li>
+<li><a href="#try-catch-finally">try-catch-finally</a></li>
+<li><a href="#throw_and_throws">throw & throws</a></li>
+<li><a href="#multiple_catch_blocks">Multiple catch Blocks</a></li>
+<li><a href="#nested_try">Nested try</a></li>
+<li><a href="#user-defined_exceptions">User-defined Exceptions</a></li>
+<li><a href="#common_built-in_exceptions">Common Built-in Exceptions</a></li></ul>
+  </aside>
+  <main class="content">
+<h2 id="what_is_an_exception?" data-icon="❓">What is an Exception?</h2>
+
+<p>An <strong>exception</strong> is an abnormal condition that disrupts the normal flow of a program at <strong>runtime</strong>. Java provides a robust mechanism to handle such conditions gracefully.</p>
+<table>
+<tr><th>Type of Error</th><th>Phase</th><th>Example</th></tr>
+<tr><td>Syntax Error</td><td>Compile time</td><td>Missing semicolon, wrong keyword</td></tr>
+<tr><td>Logical Error</td><td>Runtime (wrong output)</td><td>Wrong formula used</td></tr>
+<tr><td>Runtime Exception</td><td>Runtime (crash)</td><td>Divide by zero, null pointer</td></tr>
+</table>
+<h2 id="exception_hierarchy" data-icon="🌳">Exception Hierarchy</h2>
+
+<p>All exceptions in Java are subclasses of <code>Throwable</code>:</p>
+<pre><code>java.lang.Object
+  └── java.lang.Throwable
+        ├── java.lang.Error          (JVM errors — do NOT handle)
+        │     ├── OutOfMemoryError
+        │     ├── StackOverflowError
+        │     └── VirtualMachineError
+        └── java.lang.Exception      (handle these)
+              ├── Checked Exceptions (compile-time)
+              │     ├── IOException
+              │     ├── SQLException
+              │     └── FileNotFoundException
+              └── RuntimeException   (unchecked)
+                    ├── ArithmeticException
+                    ├── NullPointerException
+                    ├── ArrayIndexOutOfBoundsException
+                    ├── ClassCastException
+                    └── NumberFormatException</code></pre>
+<div class="info-box"><strong>💡 Did You Know</strong><strong>Checked exceptions</strong> must be handled or declared. <strong>Unchecked exceptions</strong> (RuntimeException subclasses) are optional to handle. <strong>Errors</strong> should never be caught.</div><h2 id="try-catch-finally" data-icon="🛡️">try-catch-finally</h2>
+
+<pre><code><span class="kw">public class</span> <span class="cls">ExceptionDemo</span> {
+    <span class="kw">public static void</span> <span class="fn">main</span>(<span class="cls">String</span>[] args) {
+        <span class="kw">int</span>[] arr = {<span class="num">10</span>, <span class="num">20</span>, <span class="num">30</span>};
+
+        <span class="kw">try</span> {
+            <span class="kw">int</span> result = arr[<span class="num">0</span>] / <span class="num">0</span>; <span class="cm">// ArithmeticException</span>
+            arr[<span class="num">5</span>] = <span class="num">99</span>;               <span class="cm">// ArrayIndexOutOfBoundsException</span>
+        } <span class="kw">catch</span> (<span class="cls">ArithmeticException</span> e) {
+            <span class="cls">System</span>.out.println(<span class="str">"Math error: "</span> + e.getMessage());
+        } <span class="kw">catch</span> (<span class="cls">ArrayIndexOutOfBoundsException</span> e) {
+            <span class="cls">System</span>.out.println(<span class="str">"Array error: "</span> + e.getMessage());
+        } <span class="kw">finally</span> {
+            <span class="cls">System</span>.out.println(<span class="str">"Finally always executes!"</span>);
+        }
+    }
+}</code></pre><div class="note-box"><strong>📌 Key Point</strong><code>finally</code> always executes — even if a <code>return</code> is in the try block, or an exception is thrown that is not caught. It is used to release resources.</div><h2 id="throw_and_throws" data-icon="🚀">throw & throws</h2>
+
+<table>
+<tr><th>Keyword</th><th>Purpose</th><th>Used in</th></tr>
+<tr><td><code>throw</code></td><td>Manually throw an exception object</td><td>Inside a method body</td></tr>
+<tr><td><code>throws</code></td><td>Declare that a method may throw an exception</td><td>Method signature</td></tr>
+</table>
+<pre><code><span class="cm">// Using 'throw' to manually throw an exception</span>
+<span class="kw">static void</span> <span class="fn">validateAge</span>(<span class="kw">int</span> age) {
+    <span class="kw">if</span> (age < <span class="num">18</span>)
+        <span class="kw">throw new</span> <span class="cls">IllegalArgumentException</span>(<span class="str">"Age must be 18 or above: "</span> + age);
+    <span class="cls">System</span>.out.println(<span class="str">"Valid age: "</span> + age);
+}
+
+<span class="cm">// Using 'throws' to delegate handling to caller</span>
+<span class="kw">static void</span> <span class="fn">readFile</span>(<span class="cls">String</span> path) <span class="kw">throws</span> <span class="cls">IOException</span> {
+    <span class="cls">BufferedReader</span> br = <span class="kw">new</span> <span class="cls">BufferedReader</span>(<span class="kw">new</span> <span class="cls">FileReader</span>(path));
+    <span class="cls">System</span>.out.println(br.<span class="fn">readLine</span>());
+    br.<span class="fn">close</span>();
+}
+
+<span class="kw">public static void</span> <span class="fn">main</span>(<span class="cls">String</span>[] args) {
+    <span class="kw">try</span> {
+        <span class="fn">validateAge</span>(<span class="num">15</span>);
+        <span class="fn">readFile</span>(<span class="str">"data.txt"</span>);
+    } <span class="kw">catch</span> (<span class="cls">IllegalArgumentException</span> | <span class="cls">IOException</span> e) {
+        <span class="cls">System</span>.out.println(<span class="str">"Error: "</span> + e.getMessage());
+    }
+}</code></pre><h2 id="multiple_catch_blocks" data-icon="🎯">Multiple catch Blocks</h2>
+
+<p>Multiple <code>catch</code> blocks allow handling different exception types separately. Catch order matters — more specific exceptions must come before general ones.</p>
+<pre><code><span class="kw">try</span> {
+    <span class="cls">String</span> s = <span class="kw">null</span>;
+    s.<span class="fn">length</span>();             <span class="cm">// NullPointerException</span>
+    <span class="kw">int</span> x = <span class="cls">Integer</span>.<span class="fn">parseInt</span>(<span class="str">"abc"</span>); <span class="cm">// NumberFormatException</span>
+} <span class="kw">catch</span> (<span class="cls">NullPointerException</span> e) {
+    <span class="cls">System</span>.out.println(<span class="str">"Null: "</span> + e);
+} <span class="kw">catch</span> (<span class="cls">NumberFormatException</span> e) {
+    <span class="cls">System</span>.out.println(<span class="str">"Format: "</span> + e);
+} <span class="kw">catch</span> (<span class="cls">Exception</span> e) {
+    <span class="cm">// catches any other Exception — must be LAST</span>
+    <span class="cls">System</span>.out.println(<span class="str">"General: "</span> + e);
+}</code></pre><div class="warn-box"><strong>⚠️ Important</strong>If a parent exception class (like <code>Exception</code>) appears before a child (like <code>NullPointerException</code>), a compile-time error occurs: 'exception already caught'.</div><h2 id="nested_try" data-icon="🪺">Nested try</h2>
+
+<pre><code><span class="kw">try</span> {
+    <span class="cls">System</span>.out.println(<span class="str">"Outer try"</span>);
+    <span class="kw">try</span> {
+        <span class="kw">int</span> x = <span class="num">10</span> / <span class="num">0</span>;  <span class="cm">// handled in inner catch</span>
+    } <span class="kw">catch</span> (<span class="cls">ArithmeticException</span> e) {
+        <span class="cls">System</span>.out.println(<span class="str">"Inner catch: "</span> + e.getMessage());
+        <span class="kw">throw new</span> <span class="cls">RuntimeException</span>(<span class="str">"Re-thrown"</span>); <span class="cm">// escalate</span>
+    }
+} <span class="kw">catch</span> (<span class="cls">RuntimeException</span> e) {
+    <span class="cls">System</span>.out.println(<span class="str">"Outer catch: "</span> + e.getMessage());
+}</code></pre><h2 id="user-defined_exceptions" data-icon="🛠️">User-defined Exceptions</h2>
+
+<p>Create custom exceptions by extending <code>Exception</code> (checked) or <code>RuntimeException</code> (unchecked).</p>
+<pre><code><span class="cm">// Custom checked exception</span>
+<span class="kw">class</span> <span class="cls">InsufficientFundsException</span> <span class="kw">extends</span> <span class="cls">Exception</span> {
+    <span class="kw">private double</span> amount;
+    <span class="cls">InsufficientFundsException</span>(<span class="kw">double</span> a) {
+        <span class="kw">super</span>(<span class="str">"Insufficient funds. Need: ₹"</span> + a);
+        amount = a;
+    }
+    <span class="kw">double</span> <span class="fn">getAmount</span>() { <span class="kw">return</span> amount; }
+}
+
+<span class="kw">class</span> <span class="cls">BankAccount</span> {
+    <span class="kw">double</span> balance = <span class="num">1000</span>;
+
+    <span class="kw">void</span> <span class="fn">withdraw</span>(<span class="kw">double</span> amt) <span class="kw">throws</span> <span class="cls">InsufficientFundsException</span> {
+        <span class="kw">if</span> (amt > balance)
+            <span class="kw">throw new</span> <span class="cls">InsufficientFundsException</span>(amt - balance);
+        balance -= amt;
+    }
+}</code></pre><h2 id="common_built-in_exceptions" data-icon="📋">Common Built-in Exceptions</h2>
+
+<table>
+<tr><th>Exception</th><th>Cause</th></tr>
+<tr><td>ArithmeticException</td><td>Division by zero</td></tr>
+<tr><td>NullPointerException</td><td>Accessing method/field on null reference</td></tr>
+<tr><td>ArrayIndexOutOfBoundsException</td><td>Array index &lt; 0 or &gt;= length</td></tr>
+<tr><td>NumberFormatException</td><td>Invalid string-to-number conversion</td></tr>
+<tr><td>ClassCastException</td><td>Invalid type casting</td></tr>
+<tr><td>StackOverflowError</td><td>Infinite recursion</td></tr>
+<tr><td>FileNotFoundException</td><td>File path does not exist</td></tr>
+<tr><td>IOException</td><td>General I/O failure</td></tr>
+<tr><td>StringIndexOutOfBoundsException</td><td>String index out of range</td></tr>
+</table>
+
+    <div class="pdf-section">
+      <div class="pdf-icon">📄</div>
+      <div class="pdf-info">
+        <h3>Download PDF Notes</h3>
+        <p>Save these notes as a PDF for offline reference</p>
+      </div>
+      <button class="pdf-btn" onclick="printNotes()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Save as PDF
+      </button>
+    </div>
+    <div class="nav-bottom">
+      <a class="nav-btn" href="java_w10.html">← Week 10: I/O Streams</a>
+      <a class="nav-btn next" href="java_w12.html">Week 12: Multithreading →</a>
+    </div>
+  </main>
+</div>
+<script>
+function printNotes(){window.print()}
+const sections=document.querySelectorAll('h2[id]');
+const links=document.querySelectorAll('.toc-list a');
+function onScroll(){
+  let cur='';
+  sections.forEach(s=>{if(window.scrollY>=s.offsetTop-80)cur=s.id});
+  links.forEach(l=>l.classList.toggle('active',l.getAttribute('href')==='#'+cur));
+}
+window.addEventListener('scroll',onScroll,{passive:true});
+</script>
+</body></html>

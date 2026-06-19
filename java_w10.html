@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0F1117;--surf:#181C27;--surf2:#1F2333;--bdr:#2A2F42;--acc:#F07C3E;--gold:#E8C06A;--txt:#E8EAF0;--muted:#6B7194;--grn:#4ECBA0;--blu:#5BA8F5;--red:#F05C5C;--prp:#A97DF5}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--txt);line-height:1.7;font-size:15px}
+a{color:var(--acc);text-decoration:none}a:hover{color:var(--gold)}
+.topbar{background:var(--surf);border-bottom:1px solid var(--bdr);padding:12px 32px;display:flex;align-items:center;gap:14px;position:sticky;top:0;z-index:100}
+.back-btn{display:flex;align-items:center;gap:5px;color:var(--muted);font-size:.85em;padding:6px 12px;border:1px solid var(--bdr);border-radius:7px;transition:.2s}
+.back-btn:hover{color:var(--txt);border-color:var(--acc)}
+.brand{margin-left:auto;font-size:.78em;color:var(--muted)}
+.brand span{color:var(--gold);font-weight:700}
+.hero{background:linear-gradient(135deg,#181C27 60%,#1a1530);border-bottom:1px solid var(--bdr);padding:40px 32px 28px}
+.hero .week-badge{display:inline-block;background:rgba(240,124,62,.12);border:1px solid rgba(240,124,62,.3);color:var(--acc);font-size:.75em;font-weight:700;padding:3px 12px;border-radius:20px;letter-spacing:.06em;margin-bottom:12px}
+.hero h1{font-size:2em;font-weight:800;letter-spacing:-.02em;background:linear-gradient(120deg,#E8EAF0 40%,#E8C06A);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px}
+.hero p{color:var(--muted);font-size:.9em}
+.co-pill{display:inline-block;padding:2px 10px;border-radius:5px;font-size:.75em;font-weight:700;margin-left:10px}
+.co1{background:rgba(78,203,160,.12);color:var(--grn)}.co2{background:rgba(91,168,245,.12);color:var(--blu)}
+.co3{background:rgba(169,125,245,.12);color:var(--prp)}.co4{background:rgba(232,192,106,.12);color:var(--gold)}
+.layout{display:grid;grid-template-columns:220px 1fr;gap:0;max-width:1200px;margin:0 auto;min-height:calc(100vh - 180px)}
+.sidebar{padding:24px 16px;border-right:1px solid var(--bdr);position:sticky;top:57px;height:calc(100vh - 57px);overflow-y:auto}
+.sidebar h3{font-size:.7em;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:10px}
+.toc-list{list-style:none}
+.toc-list li a{display:block;padding:5px 8px;font-size:.82em;color:var(--muted);border-radius:6px;transition:.15s}
+.toc-list li a:hover{background:var(--surf2);color:var(--txt)}
+.toc-list li a.active{background:rgba(240,124,62,.1);color:var(--acc)}
+.content{padding:32px 40px 60px;max-width:860px}
+h2{font-size:1.35em;font-weight:700;color:var(--txt);margin:36px 0 14px;padding-bottom:8px;border-bottom:2px solid var(--bdr);display:flex;align-items:center;gap:10px}
+h2::before{content:attr(data-icon);font-size:1.1em}
+h3{font-size:1.05em;font-weight:700;color:var(--gold);margin:22px 0 10px}
+h4{font-size:.95em;font-weight:700;color:var(--acc);margin:16px 0 6px}
+p{margin-bottom:12px;color:#C8CAD8}
+ul,ol{margin:8px 0 12px 22px;color:#C8CAD8}
+li{margin-bottom:5px}
+.note-box{background:rgba(78,203,160,.07);border:1px solid rgba(78,203,160,.25);border-radius:10px;padding:14px 18px;margin:16px 0}
+.warn-box{background:rgba(240,92,92,.07);border:1px solid rgba(240,92,92,.25);border-radius:10px;padding:14px 18px;margin:16px 0}
+.info-box{background:rgba(91,168,245,.07);border:1px solid rgba(91,168,245,.25);border-radius:10px;padding:14px 18px;margin:16px 0}
+.note-box strong,.warn-box strong,.info-box strong{font-size:.78em;text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:6px}
+.note-box strong{color:var(--grn)}.warn-box strong{color:var(--red)}.info-box strong{color:var(--blu)}
+pre{background:var(--surf2);border:1px solid var(--bdr);border-radius:10px;padding:18px 20px;overflow-x:auto;margin:12px 0 20px;font-size:.85em;line-height:1.6}
+code{font-family:'Cascadia Code','Fira Code',Consolas,monospace;color:#C8CAD8}
+pre code{color:#C8CAD8}
+.kw{color:#C792EA}.cm{color:#546E7A;font-style:italic}.str{color:#C3E88D}.num{color:#F78C6C}.cls{color:#FFCB6B}.fn{color:#82AAFF}.ann{color:#F07C3E}
+table{width:100%;border-collapse:collapse;margin:14px 0 20px;font-size:.88em}
+th{background:var(--surf2);color:var(--gold);padding:10px 14px;text-align:left;border-bottom:2px solid var(--bdr)}
+td{padding:9px 14px;border-bottom:1px solid var(--bdr);color:#C8CAD8}
+tr:hover td{background:rgba(255,255,255,.02)}
+.pdf-section{margin-top:48px;padding:24px;background:var(--surf);border:1px solid var(--bdr);border-radius:14px;display:flex;align-items:center;gap:20px}
+.pdf-icon{font-size:2.4em;flex-shrink:0}
+.pdf-info h3{color:var(--txt);font-size:1em;margin-bottom:4px}
+.pdf-info p{color:var(--muted);font-size:.82em;margin:0}
+.pdf-btn{margin-left:auto;padding:11px 24px;background:var(--acc);border:none;border-radius:9px;color:#111;font-weight:700;font-size:.88em;cursor:pointer;display:flex;align-items:center;gap:7px;white-space:nowrap;transition:.15s;flex-shrink:0}
+.pdf-btn:hover{background:var(--gold)}
+.nav-bottom{display:flex;justify-content:space-between;margin-top:40px;padding-top:24px;border-top:1px solid var(--bdr)}
+.nav-btn{display:flex;align-items:center;gap:8px;padding:10px 18px;background:var(--surf);border:1px solid var(--bdr);border-radius:9px;color:var(--muted);font-size:.85em;transition:.2s}
+.nav-btn:hover{border-color:var(--acc);color:var(--txt)}
+.nav-btn.next{flex-direction:row-reverse;text-align:right}
+@media print{
+  .topbar,.sidebar,.pdf-section,.nav-bottom{display:none!important}
+  body{background:#fff;color:#000;font-size:12pt}
+  .hero{background:#f5f5f5;border:none;padding:20px}
+  .hero h1{-webkit-text-fill-color:#1a1a1a;font-size:1.5em}
+  .content{padding:10px;max-width:100%}
+  pre{background:#f5f5f5;border:1px solid #ddd;font-size:9pt}
+  h2{border-bottom:2px solid #ccc;color:#1a1a1a}
+  h3{color:#333}p,li,td{color:#222}
+  .note-box{background:#e8f5e9;border:1px solid #4caf50}
+  .info-box{background:#e3f2fd;border:1px solid #2196f3}
+  .warn-box{background:#fce4ec;border:1px solid #e91e63}
+  .layout{display:block}
+  @page{margin:1.5cm}
+}
+
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a class="back-btn" href="courses.html">← Back to Courses</a>
+  <div class="brand">© 2025 <span>Sampathirao Software Solutions</span></div>
+</div>
+<div class="hero">
+  <div class="week-badge">Week 10 · CO-2</div>
+  <h1>I/O Streams</h1>
+  <p>Reading and Writing Files using Byte and Character Streams &nbsp;<span class="co-pill co2">CO-2</span></p>
+</div>
+<div class="layout">
+  <aside class="sidebar">
+    <h3>Contents</h3>
+    <ul class="toc-list"><li><a href="#streams_overview">Streams Overview</a></li>
+<li><a href="#byte_streams">Byte Streams</a></li>
+<li><a href="#character_streams">Character Streams</a></li>
+<li><a href="#filereader_and_filewriter">FileReader & FileWriter</a></li>
+<li><a href="#bufferedreader_and_bufferedwriter">BufferedReader & BufferedWriter</a></li>
+<li><a href="#file_class">File Class</a></li>
+<li><a href="#scanner_for_file_input">Scanner for File Input</a></li></ul>
+  </aside>
+  <main class="content">
+<h2 id="streams_overview" data-icon="🌊">Streams Overview</h2>
+
+<p>Java I/O is based on <strong>streams</strong> — a sequence of data flowing from a source to a destination. All I/O classes are in the <code>java.io</code> package.</p>
+<table>
+<tr><th>Category</th><th>Data Unit</th><th>Base Classes</th><th>Class Names End With</th></tr>
+<tr><td>Byte Stream</td><td>1 byte (8 bits)</td><td>InputStream, OutputStream</td><td>...Stream</td></tr>
+<tr><td>Character Stream</td><td>2 bytes (Unicode)</td><td>Reader, Writer</td><td>...Reader / ...Writer</td></tr>
+</table>
+<div class="note-box"><strong>📌 Key Point</strong>Use <strong>byte streams</strong> for binary data (images, audio, video). Use <strong>character streams</strong> for text files (they handle Unicode automatically).</div><h2 id="byte_streams" data-icon="📥">Byte Streams</h2>
+
+<pre><code><span class="kw">import</span> java.io.*;
+
+<span class="kw">public class</span> <span class="cls">ByteStreamDemo</span> {
+    <span class="kw">public static void</span> <span class="fn">main</span>(<span class="cls">String</span>[] args) <span class="kw">throws</span> <span class="cls">IOException</span> {
+        <span class="cm">// Writing bytes</span>
+        <span class="cls">FileOutputStream</span> fos = <span class="kw">new</span> <span class="cls">FileOutputStream</span>(<span class="str">"data.bin"</span>);
+        fos.<span class="fn">write</span>(<span class="num">65</span>);  <span class="cm">// writes byte value 65 ('A')</span>
+        fos.<span class="fn">write</span>(<span class="kw">new byte</span>[]{<span class="num">72</span>,<span class="num">101</span>,<span class="num">108</span>,<span class="num">108</span>,<span class="num">111</span>}); <span class="cm">// "Hello"</span>
+        fos.<span class="fn">close</span>();
+
+        <span class="cm">// Reading bytes</span>
+        <span class="cls">FileInputStream</span> fis = <span class="kw">new</span> <span class="cls">FileInputStream</span>(<span class="str">"data.bin"</span>);
+        <span class="kw">int</span> b;
+        <span class="kw">while</span> ((b = fis.<span class="fn">read</span>()) != -<span class="num">1</span>) {
+            <span class="cls">System</span>.out.print((<span class="kw">char</span>) b);
+        }
+        fis.<span class="fn">close</span>();
+    }
+}</code></pre><h2 id="character_streams" data-icon="📝">Character Streams</h2>
+
+<pre><code><span class="kw">import</span> java.io.*;
+
+<span class="kw">public class</span> <span class="cls">CharStreamDemo</span> {
+    <span class="kw">public static void</span> <span class="fn">main</span>(<span class="cls">String</span>[] args) <span class="kw">throws</span> <span class="cls">IOException</span> {
+        <span class="cm">// Writing characters</span>
+        <span class="cls">FileWriter</span> fw = <span class="kw">new</span> <span class="cls">FileWriter</span>(<span class="str">"notes.txt"</span>);
+        fw.<span class="fn">write</span>(<span class="str">"Java I/O is simple!
+"</span>);
+        fw.<span class="fn">write</span>(<span class="str">"Character streams handle Unicode."</span>);
+        fw.<span class="fn">close</span>();
+
+        <span class="cm">// Reading characters</span>
+        <span class="cls">FileReader</span> fr = <span class="kw">new</span> <span class="cls">FileReader</span>(<span class="str">"notes.txt"</span>);
+        <span class="kw">int</span> ch;
+        <span class="kw">while</span> ((ch = fr.<span class="fn">read</span>()) != -<span class="num">1</span>) {
+            <span class="cls">System</span>.out.print((<span class="kw">char</span>) ch);
+        }
+        fr.<span class="fn">close</span>();
+    }
+}</code></pre><h2 id="bufferedreader_and_bufferedwriter" data-icon="🚀">BufferedReader & BufferedWriter</h2>
+
+<p>Buffered streams wrap other streams and add an internal buffer, drastically improving I/O performance by reducing the number of disk operations.</p>
+<pre><code><span class="kw">import</span> java.io.*;
+
+<span class="kw">public class</span> <span class="cls">BufferedDemo</span> {
+    <span class="kw">public static void</span> <span class="fn">main</span>(<span class="cls">String</span>[] args) <span class="kw">throws</span> <span class="cls">IOException</span> {
+        <span class="cm">// Buffered writing</span>
+        <span class="cls">BufferedWriter</span> bw = <span class="kw">new</span> <span class="cls">BufferedWriter</span>(<span class="kw">new</span> <span class="cls">FileWriter</span>(<span class="str">"output.txt"</span>));
+        bw.<span class="fn">write</span>(<span class="str">"Line 1: Java is powerful"</span>);
+        bw.<span class="fn">newLine</span>();
+        bw.<span class="fn">write</span>(<span class="str">"Line 2: I/O is efficient"</span>);
+        bw.<span class="fn">flush</span>();   <span class="cm">// ensure buffer is written to disk</span>
+        bw.<span class="fn">close</span>();
+
+        <span class="cm">// Buffered reading — line by line</span>
+        <span class="cls">BufferedReader</span> br = <span class="kw">new</span> <span class="cls">BufferedReader</span>(<span class="kw">new</span> <span class="cls">FileReader</span>(<span class="str">"output.txt"</span>));
+        <span class="cls">String</span> line;
+        <span class="kw">while</span> ((line = br.<span class="fn">readLine</span>()) != <span class="kw">null</span>) {
+            <span class="cls">System</span>.out.println(line);
+        }
+        br.<span class="fn">close</span>();
+    }
+}</code></pre><div class="note-box"><strong>📌 Key Point</strong><code>readLine()</code> returns <code>null</code> at end of file. Always call <code>close()</code> to release file handles, or use try-with-resources (Java 7+).</div><h2 id="file_class" data-icon="📁">File Class</h2>
+
+<p>The <code>File</code> class represents a file or directory path. It does NOT read or write content — it works with file metadata.</p>
+<pre><code><span class="kw">import</span> java.io.File;
+
+<span class="cls">File</span> f = <span class="kw">new</span> <span class="cls">File</span>(<span class="str">"output.txt"</span>);
+
+<span class="cls">System</span>.out.println(f.<span class="fn">exists</span>());       <span class="cm">// true/false</span>
+<span class="cls">System</span>.out.println(f.<span class="fn">getName</span>());      <span class="cm">// output.txt</span>
+<span class="cls">System</span>.out.println(f.<span class="fn">length</span>());      <span class="cm">// size in bytes</span>
+<span class="cls">System</span>.out.println(f.<span class="fn">isFile</span>());       <span class="cm">// true</span>
+<span class="cls">System</span>.out.println(f.<span class="fn">isDirectory</span>()); <span class="cm">// false</span>
+
+<span class="cm">// Create directory</span>
+<span class="kw">new</span> <span class="cls">File</span>(<span class="str">"myFolder"</span>).<span class="fn">mkdir</span>();
+
+<span class="cm">// List files in a directory</span>
+<span class="cls">File</span> dir = <span class="kw">new</span> <span class="cls">File</span>(<span class="str">"."</span>);
+<span class="kw">for</span> (<span class="cls">String</span> name : dir.<span class="fn">list</span>()) <span class="cls">System</span>.out.println(name);</code></pre><h2 id="append_mode_and_try-with-resources" data-icon="📖">Append Mode & try-with-resources</h2>
+
+<pre><code><span class="cm">// Append to existing file (second argument = true)</span>
+<span class="cls">FileWriter</span> fw = <span class="kw">new</span> <span class="cls">FileWriter</span>(<span class="str">"log.txt"</span>, <span class="kw">true</span>);
+fw.<span class="fn">write</span>(<span class="str">"New entry appended\n"</span>);
+fw.<span class="fn">close</span>();
+
+<span class="cm">// try-with-resources — auto closes stream (Java 7+)</span>
+<span class="kw">try</span> (<span class="cls">BufferedReader</span> br = <span class="kw">new</span> <span class="cls">BufferedReader</span>(<span class="kw">new</span> <span class="cls">FileReader</span>(<span class="str">"log.txt"</span>))) {
+    <span class="cls">String</span> line;
+    <span class="kw">while</span> ((line = br.<span class="fn">readLine</span>()) != <span class="kw">null</span>)
+        <span class="cls">System</span>.out.println(line);
+} <span class="cm">// br.close() called automatically</span></code></pre><div class="note-box"><strong>📌 Key Point</strong>Always prefer <strong>try-with-resources</strong> over manual <code>close()</code> calls — it is safer and cleaner.</div>
+    <div class="pdf-section">
+      <div class="pdf-icon">📄</div>
+      <div class="pdf-info">
+        <h3>Download PDF Notes</h3>
+        <p>Save these notes as a PDF for offline reference</p>
+      </div>
+      <button class="pdf-btn" onclick="printNotes()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Save as PDF
+      </button>
+    </div>
+    <div class="nav-bottom">
+      <a class="nav-btn" href="java_w09.html">← Week 9: Packages</a>
+      <a class="nav-btn next" href="java_w11.html">Week 11: Exception Handling →</a>
+    </div>
+  </main>
+</div>
+<script>
+function printNotes(){window.print()}
+const sections=document.querySelectorAll('h2[id]');
+const links=document.querySelectorAll('.toc-list a');
+function onScroll(){
+  let cur='';
+  sections.forEach(s=>{if(window.scrollY>=s.offsetTop-80)cur=s.id});
+  links.forEach(l=>l.classList.toggle('active',l.getAttribute('href')==='#'+cur));
+}
+window.addEventListener('scroll',onScroll,{passive:true});
+</script>
+</body></html>

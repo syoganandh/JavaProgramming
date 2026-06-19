@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0F1117;--surf:#181C27;--surf2:#1F2333;--bdr:#2A2F42;--acc:#F07C3E;--gold:#E8C06A;--txt:#E8EAF0;--muted:#6B7194;--grn:#4ECBA0;--blu:#5BA8F5;--red:#F05C5C;--prp:#A97DF5}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--txt);line-height:1.7;font-size:15px}
+a{color:var(--acc);text-decoration:none}a:hover{color:var(--gold)}
+.topbar{background:var(--surf);border-bottom:1px solid var(--bdr);padding:12px 32px;display:flex;align-items:center;gap:14px;position:sticky;top:0;z-index:100}
+.back-btn{display:flex;align-items:center;gap:5px;color:var(--muted);font-size:.85em;padding:6px 12px;border:1px solid var(--bdr);border-radius:7px;transition:.2s}
+.back-btn:hover{color:var(--txt);border-color:var(--acc)}
+.brand{margin-left:auto;font-size:.78em;color:var(--muted)}
+.brand span{color:var(--gold);font-weight:700}
+.hero{background:linear-gradient(135deg,#181C27 60%,#1a1530);border-bottom:1px solid var(--bdr);padding:40px 32px 28px}
+.hero .week-badge{display:inline-block;background:rgba(240,124,62,.12);border:1px solid rgba(240,124,62,.3);color:var(--acc);font-size:.75em;font-weight:700;padding:3px 12px;border-radius:20px;letter-spacing:.06em;margin-bottom:12px}
+.hero h1{font-size:2em;font-weight:800;letter-spacing:-.02em;background:linear-gradient(120deg,#E8EAF0 40%,#E8C06A);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px}
+.hero p{color:var(--muted);font-size:.9em}
+.co-pill{display:inline-block;padding:2px 10px;border-radius:5px;font-size:.75em;font-weight:700;margin-left:10px}
+.co1{background:rgba(78,203,160,.12);color:var(--grn)}.co2{background:rgba(91,168,245,.12);color:var(--blu)}
+.co3{background:rgba(169,125,245,.12);color:var(--prp)}.co4{background:rgba(232,192,106,.12);color:var(--gold)}
+.layout{display:grid;grid-template-columns:220px 1fr;gap:0;max-width:1200px;margin:0 auto;min-height:calc(100vh - 180px)}
+.sidebar{padding:24px 16px;border-right:1px solid var(--bdr);position:sticky;top:57px;height:calc(100vh - 57px);overflow-y:auto}
+.sidebar h3{font-size:.7em;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:10px}
+.toc-list{list-style:none}
+.toc-list li a{display:block;padding:5px 8px;font-size:.82em;color:var(--muted);border-radius:6px;transition:.15s}
+.toc-list li a:hover{background:var(--surf2);color:var(--txt)}
+.toc-list li a.active{background:rgba(240,124,62,.1);color:var(--acc)}
+.content{padding:32px 40px 60px;max-width:860px}
+h2{font-size:1.35em;font-weight:700;color:var(--txt);margin:36px 0 14px;padding-bottom:8px;border-bottom:2px solid var(--bdr);display:flex;align-items:center;gap:10px}
+h2::before{content:attr(data-icon);font-size:1.1em}
+h3{font-size:1.05em;font-weight:700;color:var(--gold);margin:22px 0 10px}
+h4{font-size:.95em;font-weight:700;color:var(--acc);margin:16px 0 6px}
+p{margin-bottom:12px;color:#C8CAD8}
+ul,ol{margin:8px 0 12px 22px;color:#C8CAD8}
+li{margin-bottom:5px}
+.note-box{background:rgba(78,203,160,.07);border:1px solid rgba(78,203,160,.25);border-radius:10px;padding:14px 18px;margin:16px 0}
+.warn-box{background:rgba(240,92,92,.07);border:1px solid rgba(240,92,92,.25);border-radius:10px;padding:14px 18px;margin:16px 0}
+.info-box{background:rgba(91,168,245,.07);border:1px solid rgba(91,168,245,.25);border-radius:10px;padding:14px 18px;margin:16px 0}
+.note-box strong,.warn-box strong,.info-box strong{font-size:.78em;text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:6px}
+.note-box strong{color:var(--grn)}.warn-box strong{color:var(--red)}.info-box strong{color:var(--blu)}
+pre{background:var(--surf2);border:1px solid var(--bdr);border-radius:10px;padding:18px 20px;overflow-x:auto;margin:12px 0 20px;font-size:.85em;line-height:1.6}
+code{font-family:'Cascadia Code','Fira Code',Consolas,monospace;color:#C8CAD8}
+pre code{color:#C8CAD8}
+.kw{color:#C792EA}.cm{color:#546E7A;font-style:italic}.str{color:#C3E88D}.num{color:#F78C6C}.cls{color:#FFCB6B}.fn{color:#82AAFF}.ann{color:#F07C3E}
+table{width:100%;border-collapse:collapse;margin:14px 0 20px;font-size:.88em}
+th{background:var(--surf2);color:var(--gold);padding:10px 14px;text-align:left;border-bottom:2px solid var(--bdr)}
+td{padding:9px 14px;border-bottom:1px solid var(--bdr);color:#C8CAD8}
+tr:hover td{background:rgba(255,255,255,.02)}
+.pdf-section{margin-top:48px;padding:24px;background:var(--surf);border:1px solid var(--bdr);border-radius:14px;display:flex;align-items:center;gap:20px}
+.pdf-icon{font-size:2.4em;flex-shrink:0}
+.pdf-info h3{color:var(--txt);font-size:1em;margin-bottom:4px}
+.pdf-info p{color:var(--muted);font-size:.82em;margin:0}
+.pdf-btn{margin-left:auto;padding:11px 24px;background:var(--acc);border:none;border-radius:9px;color:#111;font-weight:700;font-size:.88em;cursor:pointer;display:flex;align-items:center;gap:7px;white-space:nowrap;transition:.15s;flex-shrink:0}
+.pdf-btn:hover{background:var(--gold)}
+.nav-bottom{display:flex;justify-content:space-between;margin-top:40px;padding-top:24px;border-top:1px solid var(--bdr)}
+.nav-btn{display:flex;align-items:center;gap:8px;padding:10px 18px;background:var(--surf);border:1px solid var(--bdr);border-radius:9px;color:var(--muted);font-size:.85em;transition:.2s}
+.nav-btn:hover{border-color:var(--acc);color:var(--txt)}
+.nav-btn.next{flex-direction:row-reverse;text-align:right}
+@media print{
+  .topbar,.sidebar,.pdf-section,.nav-bottom{display:none!important}
+  body{background:#fff;color:#000;font-size:12pt}
+  .hero{background:#f5f5f5;border:none;padding:20px}
+  .hero h1{-webkit-text-fill-color:#1a1a1a;font-size:1.5em}
+  .content{padding:10px;max-width:100%}
+  pre{background:#f5f5f5;border:1px solid #ddd;font-size:9pt}
+  h2{border-bottom:2px solid #ccc;color:#1a1a1a}
+  h3{color:#333}p,li,td{color:#222}
+  .note-box{background:#e8f5e9;border:1px solid #4caf50}
+  .info-box{background:#e3f2fd;border:1px solid #2196f3}
+  .warn-box{background:#fce4ec;border:1px solid #e91e63}
+  .layout{display:block}
+  @page{margin:1.5cm}
+}
+
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a class="back-btn" href="courses.html">← Back to Courses</a>
+  <div class="brand">© 2025 <span>Sampathirao Software Solutions</span></div>
+</div>
+<div class="hero">
+  <div class="week-badge">Week 1 & 2 · CO-1</div>
+  <h1>OOP Fundamentals</h1>
+  <p>Object-Oriented Paradigm, Objects & Classes, Encapsulation, Inheritance, Polymorphism, Dynamic Binding &nbsp;<span class="co-pill co1">CO-1</span></p>
+</div>
+<div class="layout">
+  <aside class="sidebar">
+    <h3>Contents</h3>
+    <ul class="toc-list"><li><a href="#what_is_oop?">What is OOP?</a></li>
+<li><a href="#object-oriented_paradigm">Object-Oriented Paradigm</a></li>
+<li><a href="#objects_and_classes">Objects and Classes</a></li>
+<li><a href="#encapsulation">Encapsulation</a></li>
+<li><a href="#abstraction">Abstraction</a></li>
+<li><a href="#inheritance">Inheritance</a></li>
+<li><a href="#polymorphism">Polymorphism</a></li>
+<li><a href="#dynamic_binding">Dynamic Binding</a></li>
+<li><a href="#advantages_of_oop">Advantages of OOP</a></li></ul>
+  </aside>
+  <main class="content">
+<h2 id="what_is_oop?" data-icon="🏛️">What is OOP?</h2>
+
+<p>Object-Oriented Programming (OOP) is a programming paradigm that organizes software design around <strong>data</strong>, or <em>objects</em>, rather than functions and logic. An object is an entity that has state (fields) and behaviour (methods).</p>
+<p>OOP was designed to overcome the limitations of Procedure-Oriented Programming (POP). In POP, data and functions are separate and data can be accessed by any function — making large programs difficult to manage and prone to errors.</p>
+<table>
+<tr><th>POP (Procedure-Oriented)</th><th>OOP (Object-Oriented)</th></tr>
+<tr><td>Program divided into functions</td><td>Program divided into objects</td></tr>
+<tr><td>Data moves freely between functions</td><td>Data is hidden inside objects (encapsulation)</td></tr>
+<tr><td>Top-down approach</td><td>Bottom-up approach</td></tr>
+<tr><td>Less secure — global data</td><td>More secure — data hiding</td></tr>
+<tr><td>Examples: C, Pascal, COBOL</td><td>Examples: Java, C++, Python</td></tr>
+</table>
+<h2 id="object-oriented_paradigm" data-icon="🔭">Object-Oriented Paradigm</h2>
+
+<p>The OOP paradigm is built on four main pillars:</p>
+<ul>
+<li><strong>Encapsulation</strong> — bundling data and methods together; hiding internal details</li>
+<li><strong>Abstraction</strong> — showing only essential features; hiding complexity</li>
+<li><strong>Inheritance</strong> — acquiring properties from a parent class</li>
+<li><strong>Polymorphism</strong> — one interface, many forms</li>
+</ul>
+<h2 id="objects_and_classes" data-icon="📦">Objects and Classes</h2>
+
+<h3>Class</h3>
+<p>A <strong>class</strong> is a blueprint or template for creating objects. It defines the data (fields) and behaviour (methods) that its objects will have. A class does not occupy memory by itself.</p>
+<h3>Object</h3>
+<p>An <strong>object</strong> is an instance of a class — a real-world entity created from the class blueprint. Each object has its own copy of instance variables and shares class methods.</p>
+<pre><code><span class="kw">class</span> <span class="cls">Student</span> {
+    <span class="cm">// Fields (state)</span>
+    <span class="kw">int</span> rollNo;
+    <span class="cls">String</span> name;
+    <span class="kw">double</span> marks;
+
+    <span class="cm">// Method (behaviour)</span>
+    <span class="kw">void</span> <span class="fn">display</span>() {
+        <span class="cls">System</span>.out.println(<span class="str">"Roll: "</span> + rollNo + <span class="str">" Name: "</span> + name);
+    }
+}
+
+<span class="kw">public class</span> <span class="cls">Main</span> {
+    <span class="kw">public static void</span> <span class="fn">main</span>(<span class="cls">String</span>[] args) {
+        <span class="cls">Student</span> s1 = <span class="kw">new</span> <span class="cls">Student</span>(); <span class="cm">// object creation</span>
+        s1.rollNo = <span class="num">101</span>;
+        s1.name = <span class="str">"Arjun"</span>;
+        s1.marks = <span class="num">92.5</span>;
+        s1.<span class="fn">display</span>();
+    }
+}</code></pre><div class="note-box"><strong>📌 Key Point</strong>A class is a logical entity; an object is a physical entity. Memory is allocated only when an object is created using the <code>new</code> keyword.</div><h2 id="encapsulation" data-icon="🔒">Encapsulation</h2>
+
+<p><strong>Encapsulation</strong> is the mechanism of wrapping data (variables) and code (methods) together as a single unit. It protects data from direct access by outside code by making fields <code>private</code> and providing <code>public</code> getter/setter methods.</p>
+<pre><code><span class="kw">class</span> <span class="cls">BankAccount</span> {
+    <span class="kw">private double</span> balance; <span class="cm">// hidden from outside</span>
+
+    <span class="kw">public void</span> <span class="fn">deposit</span>(<span class="kw">double</span> amount) {
+        <span class="kw">if</span> (amount > <span class="num">0</span>) balance += amount;
+    }
+
+    <span class="kw">public double</span> <span class="fn">getBalance</span>() {
+        <span class="kw">return</span> balance; <span class="cm">// controlled access</span>
+    }
+}</code></pre><div class="note-box"><strong>📌 Key Point</strong>Encapsulation = Data Hiding + Data Binding. It increases security and maintains integrity of data.</div><h2 id="abstraction" data-icon="🎭">Abstraction</h2>
+
+<p><strong>Abstraction</strong> means hiding the implementation details and showing only the functionality to the user. It reduces complexity and allows the programmer to focus on <em>what</em> an object does instead of <em>how</em> it does it.</p>
+<p>In Java, abstraction is achieved through:</p>
+<ul>
+<li><strong>Abstract classes</strong> (0% to 100% abstraction)</li>
+<li><strong>Interfaces</strong> (100% abstraction in older Java)</li>
+</ul>
+<div class="info-box"><strong>💡 Did You Know</strong>Example: When you press the accelerator in a car, you don't need to know the internal combustion process — you just use the interface. That's abstraction.</div><h2 id="inheritance" data-icon="🔗">Inheritance</h2>
+
+<p><strong>Inheritance</strong> is the mechanism by which one class acquires the properties (fields) and behaviours (methods) of another class. It promotes <strong>code reusability</strong>.</p>
+<ul>
+<li>The class that is inherited from is called the <strong>Parent / Super / Base</strong> class</li>
+<li>The class that inherits is called the <strong>Child / Sub / Derived</strong> class</li>
+</ul>
+<pre><code><span class="kw">class</span> <span class="cls">Animal</span> {
+    <span class="kw">void</span> <span class="fn">eat</span>() { <span class="cls">System</span>.out.println(<span class="str">"Animal eats"</span>); }
+}
+
+<span class="kw">class</span> <span class="cls">Dog</span> <span class="kw">extends</span> <span class="cls">Animal</span> { <span class="cm">// inherits Animal</span>
+    <span class="kw">void</span> <span class="fn">bark</span>() { <span class="cls">System</span>.out.println(<span class="str">"Dog barks"</span>); }
+}
+
+<span class="cls">Dog</span> d = <span class="kw">new</span> <span class="cls">Dog</span>();
+d.<span class="fn">eat</span>();  <span class="cm">// inherited method</span>
+d.<span class="fn">bark</span>(); <span class="cm">// own method</span></code></pre><h2 id="polymorphism" data-icon="🎨">Polymorphism</h2>
+
+<p><strong>Polymorphism</strong> means "many forms". It allows a single action to behave differently based on the object it is acting upon.</p>
+<h3>Types of Polymorphism in Java</h3>
+<table>
+<tr><th>Type</th><th>Also Called</th><th>Resolved At</th><th>Achieved By</th></tr>
+<tr><td>Compile-time</td><td>Static / Early Binding</td><td>Compile time</td><td>Method Overloading</td></tr>
+<tr><td>Runtime</td><td>Dynamic / Late Binding</td><td>Runtime</td><td>Method Overriding</td></tr>
+</table>
+<pre><code><span class="cm">// Compile-time polymorphism (Overloading)</span>
+<span class="kw">class</span> <span class="cls">Calculator</span> {
+    <span class="kw">int</span> <span class="fn">add</span>(<span class="kw">int</span> a, <span class="kw">int</span> b) { <span class="kw">return</span> a + b; }
+    <span class="kw">double</span> <span class="fn">add</span>(<span class="kw">double</span> a, <span class="kw">double</span> b) { <span class="kw">return</span> a + b; }
+    <span class="kw">int</span> <span class="fn">add</span>(<span class="kw">int</span> a, <span class="kw">int</span> b, <span class="kw">int</span> c) { <span class="kw">return</span> a + b + c; }
+}</code></pre><h2 id="dynamic_binding" data-icon="⚡">Dynamic Binding</h2>
+
+<p><strong>Dynamic Binding</strong> (or Late Binding) means that the method to be called is determined at <strong>runtime</strong>, not compile time. This is the basis of runtime polymorphism in Java.</p>
+<p>When a parent class reference holds a child class object, and an overridden method is called, Java uses the actual object type (not the reference type) to decide which method to call.</p>
+<pre><code><span class="kw">class</span> <span class="cls">Bank</span> {
+    <span class="kw">double</span> <span class="fn">getRate</span>() { <span class="kw">return</span> <span class="num">0</span>; }
+}
+<span class="kw">class</span> <span class="cls">SBI</span> <span class="kw">extends</span> <span class="cls">Bank</span> {
+    <span class="kw">double</span> <span class="fn">getRate</span>() { <span class="kw">return</span> <span class="num">7.0</span>; }
+}
+<span class="kw">class</span> <span class="cls">HDFC</span> <span class="kw">extends</span> <span class="cls">Bank</span> {
+    <span class="kw">double</span> <span class="fn">getRate</span>() { <span class="kw">return</span> <span class="num">6.5</span>; }
+}
+
+<span class="cls">Bank</span> b = <span class="kw">new</span> <span class="cls">SBI</span>(); <span class="cm">// parent ref → child object</span>
+<span class="cls">System</span>.out.println(b.<span class="fn">getRate</span>()); <span class="cm">// prints 7.0 — decided at runtime</span>
+b = <span class="kw">new</span> <span class="cls">HDFC</span>();
+<span class="cls">System</span>.out.println(b.<span class="fn">getRate</span>()); <span class="cm">// prints 6.5</span></code></pre><div class="note-box"><strong>📌 Key Point</strong>Dynamic binding enables runtime polymorphism. The JVM checks the actual object type at runtime and calls the appropriate overridden method.</div><h2 id="advantages_of_oop" data-icon="✅">Advantages of OOP</h2>
+
+<ul>
+<li><strong>Modularity</strong> — Each object is self-contained; easy to locate and fix bugs</li>
+<li><strong>Reusability</strong> — Classes can be reused in different programs via inheritance</li>
+<li><strong>Security</strong> — Data encapsulation hides internal details from the outside</li>
+<li><strong>Flexibility</strong> — Polymorphism makes code adaptable to different situations</li>
+<li><strong>Maintainability</strong> — OOP code is easier to maintain and upgrade</li>
+<li><strong>Real-world modeling</strong> — Objects map naturally to real-world entities</li>
+</ul>
+
+    <div class="pdf-section">
+      <div class="pdf-icon">📄</div>
+      <div class="pdf-info">
+        <h3>Download PDF Notes</h3>
+        <p>Save these notes as a PDF for offline reference</p>
+      </div>
+      <button class="pdf-btn" onclick="printNotes()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Save as PDF
+      </button>
+    </div>
+    <div class="nav-bottom">
+      <span></span>
+      <a class="nav-btn next" href="java_w03.html">Week 3: Java Language Basics →</a>
+    </div>
+  </main>
+</div>
+<script>
+function printNotes(){window.print()}
+const sections=document.querySelectorAll('h2[id]');
+const links=document.querySelectorAll('.toc-list a');
+function onScroll(){
+  let cur='';
+  sections.forEach(s=>{if(window.scrollY>=s.offsetTop-80)cur=s.id});
+  links.forEach(l=>l.classList.toggle('active',l.getAttribute('href')==='#'+cur));
+}
+window.addEventListener('scroll',onScroll,{passive:true});
+</script>
+</body></html>

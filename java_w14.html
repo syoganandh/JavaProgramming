@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0F1117;--surf:#181C27;--surf2:#1F2333;--bdr:#2A2F42;--acc:#F07C3E;--gold:#E8C06A;--txt:#E8EAF0;--muted:#6B7194;--grn:#4ECBA0;--blu:#5BA8F5;--red:#F05C5C;--prp:#A97DF5}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--txt);line-height:1.7;font-size:15px}
+a{color:var(--acc);text-decoration:none}a:hover{color:var(--gold)}
+.topbar{background:var(--surf);border-bottom:1px solid var(--bdr);padding:12px 32px;display:flex;align-items:center;gap:14px;position:sticky;top:0;z-index:100}
+.back-btn{display:flex;align-items:center;gap:5px;color:var(--muted);font-size:.85em;padding:6px 12px;border:1px solid var(--bdr);border-radius:7px;transition:.2s}
+.back-btn:hover{color:var(--txt);border-color:var(--acc)}
+.brand{margin-left:auto;font-size:.78em;color:var(--muted)}
+.brand span{color:var(--gold);font-weight:700}
+.hero{background:linear-gradient(135deg,#181C27 60%,#1a1530);border-bottom:1px solid var(--bdr);padding:40px 32px 28px}
+.hero .week-badge{display:inline-block;background:rgba(240,124,62,.12);border:1px solid rgba(240,124,62,.3);color:var(--acc);font-size:.75em;font-weight:700;padding:3px 12px;border-radius:20px;letter-spacing:.06em;margin-bottom:12px}
+.hero h1{font-size:2em;font-weight:800;letter-spacing:-.02em;background:linear-gradient(120deg,#E8EAF0 40%,#E8C06A);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px}
+.hero p{color:var(--muted);font-size:.9em}
+.co-pill{display:inline-block;padding:2px 10px;border-radius:5px;font-size:.75em;font-weight:700;margin-left:10px}
+.co1{background:rgba(78,203,160,.12);color:var(--grn)}.co2{background:rgba(91,168,245,.12);color:var(--blu)}
+.co3{background:rgba(169,125,245,.12);color:var(--prp)}.co4{background:rgba(232,192,106,.12);color:var(--gold)}
+.layout{display:grid;grid-template-columns:220px 1fr;gap:0;max-width:1200px;margin:0 auto;min-height:calc(100vh - 180px)}
+.sidebar{padding:24px 16px;border-right:1px solid var(--bdr);position:sticky;top:57px;height:calc(100vh - 57px);overflow-y:auto}
+.sidebar h3{font-size:.7em;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:10px}
+.toc-list{list-style:none}
+.toc-list li a{display:block;padding:5px 8px;font-size:.82em;color:var(--muted);border-radius:6px;transition:.15s}
+.toc-list li a:hover{background:var(--surf2);color:var(--txt)}
+.toc-list li a.active{background:rgba(240,124,62,.1);color:var(--acc)}
+.content{padding:32px 40px 60px;max-width:860px}
+h2{font-size:1.35em;font-weight:700;color:var(--txt);margin:36px 0 14px;padding-bottom:8px;border-bottom:2px solid var(--bdr);display:flex;align-items:center;gap:10px}
+h2::before{content:attr(data-icon);font-size:1.1em}
+h3{font-size:1.05em;font-weight:700;color:var(--gold);margin:22px 0 10px}
+h4{font-size:.95em;font-weight:700;color:var(--acc);margin:16px 0 6px}
+p{margin-bottom:12px;color:#C8CAD8}
+ul,ol{margin:8px 0 12px 22px;color:#C8CAD8}
+li{margin-bottom:5px}
+.note-box{background:rgba(78,203,160,.07);border:1px solid rgba(78,203,160,.25);border-radius:10px;padding:14px 18px;margin:16px 0}
+.warn-box{background:rgba(240,92,92,.07);border:1px solid rgba(240,92,92,.25);border-radius:10px;padding:14px 18px;margin:16px 0}
+.info-box{background:rgba(91,168,245,.07);border:1px solid rgba(91,168,245,.25);border-radius:10px;padding:14px 18px;margin:16px 0}
+.note-box strong,.warn-box strong,.info-box strong{font-size:.78em;text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:6px}
+.note-box strong{color:var(--grn)}.warn-box strong{color:var(--red)}.info-box strong{color:var(--blu)}
+pre{background:var(--surf2);border:1px solid var(--bdr);border-radius:10px;padding:18px 20px;overflow-x:auto;margin:12px 0 20px;font-size:.85em;line-height:1.6}
+code{font-family:'Cascadia Code','Fira Code',Consolas,monospace;color:#C8CAD8}
+pre code{color:#C8CAD8}
+.kw{color:#C792EA}.cm{color:#546E7A;font-style:italic}.str{color:#C3E88D}.num{color:#F78C6C}.cls{color:#FFCB6B}.fn{color:#82AAFF}.ann{color:#F07C3E}
+table{width:100%;border-collapse:collapse;margin:14px 0 20px;font-size:.88em}
+th{background:var(--surf2);color:var(--gold);padding:10px 14px;text-align:left;border-bottom:2px solid var(--bdr)}
+td{padding:9px 14px;border-bottom:1px solid var(--bdr);color:#C8CAD8}
+tr:hover td{background:rgba(255,255,255,.02)}
+.pdf-section{margin-top:48px;padding:24px;background:var(--surf);border:1px solid var(--bdr);border-radius:14px;display:flex;align-items:center;gap:20px}
+.pdf-icon{font-size:2.4em;flex-shrink:0}
+.pdf-info h3{color:var(--txt);font-size:1em;margin-bottom:4px}
+.pdf-info p{color:var(--muted);font-size:.82em;margin:0}
+.pdf-btn{margin-left:auto;padding:11px 24px;background:var(--acc);border:none;border-radius:9px;color:#111;font-weight:700;font-size:.88em;cursor:pointer;display:flex;align-items:center;gap:7px;white-space:nowrap;transition:.15s;flex-shrink:0}
+.pdf-btn:hover{background:var(--gold)}
+.nav-bottom{display:flex;justify-content:space-between;margin-top:40px;padding-top:24px;border-top:1px solid var(--bdr)}
+.nav-btn{display:flex;align-items:center;gap:8px;padding:10px 18px;background:var(--surf);border:1px solid var(--bdr);border-radius:9px;color:var(--muted);font-size:.85em;transition:.2s}
+.nav-btn:hover{border-color:var(--acc);color:var(--txt)}
+.nav-btn.next{flex-direction:row-reverse;text-align:right}
+@media print{
+  .topbar,.sidebar,.pdf-section,.nav-bottom{display:none!important}
+  body{background:#fff;color:#000;font-size:12pt}
+  .hero{background:#f5f5f5;border:none;padding:20px}
+  .hero h1{-webkit-text-fill-color:#1a1a1a;font-size:1.5em}
+  .content{padding:10px;max-width:100%}
+  pre{background:#f5f5f5;border:1px solid #ddd;font-size:9pt}
+  h2{border-bottom:2px solid #ccc;color:#1a1a1a}
+  h3{color:#333}p,li,td{color:#222}
+  .note-box{background:#e8f5e9;border:1px solid #4caf50}
+  .info-box{background:#e3f2fd;border:1px solid #2196f3}
+  .warn-box{background:#fce4ec;border:1px solid #e91e63}
+  .layout{display:block}
+  @page{margin:1.5cm}
+}
+
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a class="back-btn" href="courses.html">← Back to Courses</a>
+  <div class="brand">© 2025 <span>Sampathirao Software Solutions</span></div>
+</div>
+<div class="hero">
+  <div class="week-badge">Week 14 · CO-4</div>
+  <h1>Collection Classes</h1>
+  <p>ArrayList, LinkedList, HashSet, TreeSet, PriorityQueue, HashMap, TreeMap, Collections class &nbsp;<span class="co-pill co4">CO-4</span></p>
+</div>
+<div class="layout">
+  <aside class="sidebar">
+    <h3>Contents</h3>
+    <ul class="toc-list"><li><a href="#arraylist">ArrayList</a></li>
+<li><a href="#linkedlist">LinkedList</a></li>
+<li><a href="#hashset_and_linkedhashset">HashSet & LinkedHashSet</a></li>
+<li><a href="#treeset">TreeSet</a></li>
+<li><a href="#priorityqueue">PriorityQueue</a></li>
+<li><a href="#hashmap_and_linkedhashmap">HashMap & LinkedHashMap</a></li>
+<li><a href="#treemap">TreeMap</a></li>
+<li><a href="#collections_utility_class">Collections Utility Class</a></li></ul>
+  </aside>
+  <main class="content">
+<h2 id="arraylist" data-icon="📋">ArrayList</h2>
+
+<p><code>ArrayList</code> is a <strong>resizable array</strong> implementation of <code>List</code>. It provides fast random access (O(1)) but slow insertions/deletions in the middle (O(n)).</p>
+<pre><code><span class="kw">import</span> java.util.*;
+
+<span class="cls">ArrayList</span>&lt;<span class="cls">String</span>&gt; cities = <span class="kw">new</span> <span class="cls">ArrayList</span>&lt;&gt;();
+cities.<span class="fn">add</span>(<span class="str">"Hyderabad"</span>);
+cities.<span class="fn">add</span>(<span class="str">"Vizag"</span>);
+cities.<span class="fn">add</span>(<span class="str">"Chennai"</span>);
+cities.<span class="fn">add</span>(<span class="num">1</span>, <span class="str">"Vijayawada"</span>);  <span class="cm">// insert at index 1</span>
+
+<span class="cls">Collections</span>.<span class="fn">sort</span>(cities);          <span class="cm">// alphabetical sort</span>
+cities.<span class="fn">remove</span>(<span class="str">"Chennai"</span>);
+<span class="cls">System</span>.out.println(cities);         <span class="cm">// [Hyderabad, Vijayawada, Vizag]</span>
+<span class="cls">System</span>.out.println(cities.<span class="fn">size</span>()); <span class="cm">// 3</span></code></pre><div class="note-box"><strong>📌 Key Point</strong>ArrayList grows automatically when its capacity is exceeded (by 50% each time). Use <code>ArrayList&lt;E&gt;(initialCapacity)</code> when the approximate size is known.</div><h2 id="linkedlist" data-icon="🔗">LinkedList</h2>
+
+<p><code>LinkedList</code> implements both <code>List</code> and <code>Deque</code>. It uses a doubly-linked node structure — fast insertions/deletions (O(1)) but slow random access (O(n)).</p>
+<pre><code><span class="cls">LinkedList</span>&lt;<span class="cls">Integer</span>&gt; ll = <span class="kw">new</span> <span class="cls">LinkedList</span>&lt;&gt;();
+ll.<span class="fn">addFirst</span>(<span class="num">10</span>);  ll.<span class="fn">addLast</span>(<span class="num">30</span>);  ll.<span class="fn">add</span>(<span class="num">1</span>, <span class="num">20</span>);
+<span class="cls">System</span>.out.println(ll);          <span class="cm">// [10, 20, 30]</span>
+<span class="cls">System</span>.out.println(ll.<span class="fn">getFirst</span>()); <span class="cm">// 10</span>
+ll.<span class="fn">removeFirst</span>();
+<span class="cls">System</span>.out.println(ll);          <span class="cm">// [20, 30]</span>
+
+<span class="cm">// Use as Stack (LIFO)</span>
+ll.<span class="fn">push</span>(<span class="num">99</span>); <span class="cls">System</span>.out.println(ll.<span class="fn">pop</span>()); <span class="cm">// 99</span>
+
+<span class="cm">// Use as Queue (FIFO)</span>
+ll.<span class="fn">offer</span>(<span class="num">1</span>); ll.<span class="fn">offer</span>(<span class="num">2</span>); <span class="cls">System</span>.out.println(ll.<span class="fn">poll</span>()); <span class="cm">// 1</span></code></pre><h2 id="hashset_and_linkedhashset" data-icon="🔵">HashSet & LinkedHashSet</h2>
+
+<table>
+<tr><th>Feature</th><th>HashSet</th><th>LinkedHashSet</th></tr>
+<tr><td>Order</td><td>No guaranteed order</td><td>Insertion order maintained</td></tr>
+<tr><td>Performance</td><td>Fastest</td><td>Slightly slower</td></tr>
+<tr><td>Null</td><td>One null allowed</td><td>One null allowed</td></tr>
+<tr><td>Duplicate</td><td>Not allowed</td><td>Not allowed</td></tr>
+</table>
+<pre><code><span class="cls">Set</span>&lt;<span class="cls">Integer</span>&gt; hs = <span class="kw">new</span> <span class="cls">HashSet</span>&lt;&gt;(<span class="cls">Arrays</span>.<span class="fn">asList</span>(<span class="num">5</span>,<span class="num">3</span>,<span class="num">1</span>,<span class="num">4</span>,<span class="num">2</span>,<span class="num">3</span>));
+<span class="cls">System</span>.out.println(hs); <span class="cm">// e.g. [1, 2, 3, 4, 5] — order varies</span>
+
+<span class="cls">Set</span>&lt;<span class="cls">Integer</span>&gt; lhs = <span class="kw">new</span> <span class="cls">LinkedHashSet</span>&lt;&gt;(<span class="cls">Arrays</span>.<span class="fn">asList</span>(<span class="num">5</span>,<span class="num">3</span>,<span class="num">1</span>,<span class="num">4</span>,<span class="num">2</span>,<span class="num">3</span>));
+<span class="cls">System</span>.out.println(lhs); <span class="cm">// [5, 3, 1, 4, 2] — insertion order</span></code></pre><h2 id="treeset" data-icon="🌳">TreeSet</h2>
+
+<p><code>TreeSet</code> stores elements in <strong>sorted (natural) order</strong> using a Red-Black Tree. For custom objects, implement <code>Comparable</code> or pass a <code>Comparator</code>.</p>
+<pre><code><span class="cls">TreeSet</span>&lt;<span class="cls">String</span>&gt; ts = <span class="kw">new</span> <span class="cls">TreeSet</span>&lt;&gt;();
+ts.<span class="fn">add</span>(<span class="str">"Banana"</span>); ts.<span class="fn">add</span>(<span class="str">"Apple"</span>); ts.<span class="fn">add</span>(<span class="str">"Cherry"</span>); ts.<span class="fn">add</span>(<span class="str">"Apple"</span>);
+<span class="cls">System</span>.out.println(ts);           <span class="cm">// [Apple, Banana, Cherry] — sorted, no dup</span>
+<span class="cls">System</span>.out.println(ts.<span class="fn">first</span>());   <span class="cm">// Apple</span>
+<span class="cls">System</span>.out.println(ts.<span class="fn">last</span>());    <span class="cm">// Cherry</span>
+<span class="cls">System</span>.out.println(ts.<span class="fn">headSet</span>(<span class="str">"Cherry"</span>)); <span class="cm">// [Apple, Banana]</span></code></pre><div class="note-box"><strong>📌 Key Point</strong>For custom sorting: <code>TreeSet&lt;Student&gt; set = new TreeSet&lt;&gt;(Comparator.comparing(s -&gt; s.name));</code></div><h2 id="priorityqueue" data-icon="🏆">PriorityQueue</h2>
+
+<p><code>PriorityQueue</code> is a <strong>min-heap</strong> by default — the smallest element is always at the head. Use a custom Comparator for max-heap or other ordering.</p>
+<pre><code><span class="cls">PriorityQueue</span>&lt;<span class="cls">Integer</span>&gt; pq = <span class="kw">new</span> <span class="cls">PriorityQueue</span>&lt;&gt;();
+pq.<span class="fn">offer</span>(<span class="num">30</span>); pq.<span class="fn">offer</span>(<span class="num">10</span>); pq.<span class="fn">offer</span>(<span class="num">20</span>);
+
+<span class="kw">while</span> (!pq.<span class="fn">isEmpty</span>())
+    <span class="cls">System</span>.out.print(pq.<span class="fn">poll</span>() + <span class="str">" "</span>); <span class="cm">// 10 20 30 (min first)</span>
+
+<span class="cm">// Max-heap using Comparator</span>
+<span class="cls">PriorityQueue</span>&lt;<span class="cls">Integer</span>&gt; maxPQ = <span class="kw">new</span> <span class="cls">PriorityQueue</span>&lt;&gt;(<span class="cls">Collections</span>.reverseOrder());
+maxPQ.<span class="fn">addAll</span>(<span class="cls">Arrays</span>.<span class="fn">asList</span>(<span class="num">30</span>,<span class="num">10</span>,<span class="num">20</span>));
+<span class="cls">System</span>.out.print(maxPQ.<span class="fn">poll</span>()); <span class="cm">// 30</span></code></pre><h2 id="hashmap_and_linkedhashmap" data-icon="🗝️">HashMap & LinkedHashMap</h2>
+
+<pre><code><span class="cls">HashMap</span>&lt;<span class="cls">String</span>,<span class="cls">Integer</span>&gt; map = <span class="kw">new</span> <span class="cls">HashMap</span>&lt;&gt;();
+map.<span class="fn">put</span>(<span class="str">"Math"</span>, <span class="num">90</span>); map.<span class="fn">put</span>(<span class="str">"Java"</span>, <span class="num">95</span>); map.<span class="fn">put</span>(<span class="str">"DBMS"</span>, <span class="num">88</span>);
+map.<span class="fn">putIfAbsent</span>(<span class="str">"Java"</span>, <span class="num">70</span>);  <span class="cm">// won't overwrite existing</span>
+
+<span class="cm">// Iterate over key-value pairs</span>
+map.<span class="fn">forEach</span>((k, v) -> <span class="cls">System</span>.out.println(k + <span class="str">": "</span> + v));
+
+<span class="cm">// Get with default</span>
+<span class="kw">int</span> score = map.<span class="fn">getOrDefault</span>(<span class="str">"Physics"</span>, <span class="num">0</span>);
+
+<span class="cm">// LinkedHashMap — maintains insertion order</span>
+<span class="cls">Map</span>&lt;<span class="cls">String</span>,<span class="cls">Integer</span>&gt; lhm = <span class="kw">new</span> <span class="cls">LinkedHashMap</span>&lt;&gt;();</code></pre><h2 id="treemap" data-icon="🌲">TreeMap</h2>
+
+<p><code>TreeMap</code> stores key-value pairs sorted by <strong>key</strong> in natural order.</p>
+<pre><code><span class="cls">TreeMap</span>&lt;<span class="cls">String</span>,<span class="cls">Integer</span>&gt; tm = <span class="kw">new</span> <span class="cls">TreeMap</span>&lt;&gt;();
+tm.<span class="fn">put</span>(<span class="str">"Charlie"</span>, <span class="num">3</span>); tm.<span class="fn">put</span>(<span class="str">"Alice"</span>, <span class="num">1</span>); tm.<span class="fn">put</span>(<span class="str">"Bob"</span>, <span class="num">2</span>);
+<span class="cls">System</span>.out.println(tm);           <span class="cm">// {Alice=1, Bob=2, Charlie=3} — sorted by key</span>
+<span class="cls">System</span>.out.println(tm.<span class="fn">firstKey</span>()); <span class="cm">// Alice</span>
+<span class="cls">System</span>.out.println(tm.<span class="fn">lastKey</span>());  <span class="cm">// Charlie</span></code></pre><h2 id="collections_utility_class" data-icon="🔧">Collections Utility Class</h2>
+
+<p>The <code>java.util.Collections</code> class provides static utility methods for collections.</p>
+<table>
+<tr><th>Method</th><th>Description</th></tr>
+<tr><td>sort(list)</td><td>Sorts list in natural order</td></tr>
+<tr><td>sort(list, comparator)</td><td>Sorts with custom comparator</td></tr>
+<tr><td>binarySearch(list, key)</td><td>Binary search (list must be sorted)</td></tr>
+<tr><td>reverse(list)</td><td>Reverses order of elements</td></tr>
+<tr><td>shuffle(list)</td><td>Randomly shuffles elements</td></tr>
+<tr><td>min(collection)</td><td>Returns minimum element</td></tr>
+<tr><td>max(collection)</td><td>Returns maximum element</td></tr>
+<tr><td>frequency(c, obj)</td><td>Counts occurrences of obj</td></tr>
+<tr><td>unmodifiableList(list)</td><td>Returns read-only view</td></tr>
+<tr><td>synchronizedList(list)</td><td>Returns thread-safe wrapper</td></tr>
+</table>
+<pre><code><span class="cls">List</span>&lt;<span class="cls">Integer</span>&gt; nums = <span class="kw">new</span> <span class="cls">ArrayList</span>&lt;&gt;(<span class="cls">Arrays</span>.<span class="fn">asList</span>(<span class="num">5</span>,<span class="num">2</span>,<span class="num">8</span>,<span class="num">1</span>,<span class="num">9</span>));
+<span class="cls">Collections</span>.<span class="fn">sort</span>(nums);                             <span class="cm">// [1,2,5,8,9]</span>
+<span class="cls">Collections</span>.<span class="fn">reverse</span>(nums);                          <span class="cm">// [9,8,5,2,1]</span>
+<span class="cls">System</span>.out.println(<span class="cls">Collections</span>.<span class="fn">max</span>(nums));          <span class="cm">// 9</span>
+<span class="cls">System</span>.out.println(<span class="cls">Collections</span>.<span class="fn">frequency</span>(nums, <span class="num">5</span>)); <span class="cm">// 1</span>
+
+<span class="cls">List</span>&lt;<span class="cls">Integer</span>&gt; readOnly = <span class="cls">Collections</span>.<span class="fn">unmodifiableList</span>(nums);
+<span class="cm">// readOnly.add(10); // throws UnsupportedOperationException</span></code></pre>
+    <div class="pdf-section">
+      <div class="pdf-icon">📄</div>
+      <div class="pdf-info">
+        <h3>Download PDF Notes</h3>
+        <p>Save these notes as a PDF for offline reference</p>
+      </div>
+      <button class="pdf-btn" onclick="printNotes()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Save as PDF
+      </button>
+    </div>
+    <div class="nav-bottom">
+      <a class="nav-btn" href="java_w13.html">← Week 13: Collection Interfaces</a>
+      <span></span>
+    </div>
+  </main>
+</div>
+<script>
+function printNotes(){window.print()}
+const sections=document.querySelectorAll('h2[id]');
+const links=document.querySelectorAll('.toc-list a');
+function onScroll(){
+  let cur='';
+  sections.forEach(s=>{if(window.scrollY>=s.offsetTop-80)cur=s.id});
+  links.forEach(l=>l.classList.toggle('active',l.getAttribute('href')==='#'+cur));
+}
+window.addEventListener('scroll',onScroll,{passive:true});
+</script>
+</body></html>
