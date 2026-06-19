@@ -7,807 +7,1606 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    :root {
+      --bg:       #111318;
+      --surface:  #1C1F28;
+      --surface2: #252934;
+      --border:   #2E3340;
+      --accent:   #F07C3E;
+      --accent2:  #F5A472;
+      --gold:     #E8C06A;
+      --text:     #E8EAF0;
+      --muted:    #7A8099;
+      --green:    #4ECBA0;
+      --blue:     #5BA8F5;
+      --purple:   #A97DF5;
+      --red:      #F05C5C;
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      background-color: #1A1816;
-      color: #F0EDE8;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
       min-height: 100vh;
-      padding: 48px 60px;
     }
 
-    .back-link {
-      display: inline-block;
-      margin-bottom: 28px;
-      color: #E8834A;
+    /* ── NAV ── */
+    .top-nav {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 40px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .back-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--muted);
       text-decoration: none;
-      font-size: 0.93em;
+      font-size: 0.88em;
+      padding: 6px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      transition: all .2s;
     }
+    .back-btn:hover { color: var(--text); border-color: var(--accent); }
+    .nav-sep { color: var(--border); font-size: 1.3em; }
+    .nav-course { color: var(--muted); font-size: 0.88em; }
 
-    .back-link:hover { color: #F5A472; }
-
-    h1 {
-      font-size: 2.2em;
-      font-weight: bold;
-      color: #F0EDE8;
-      margin-bottom: 6px;
+    /* ── HERO ── */
+    .hero {
+      padding: 48px 40px 0;
+      max-width: 1100px;
+      margin: 0 auto;
     }
-
-    .faculty {
-      color: #9E9A94;
-      font-size: 1em;
-      margin-bottom: 8px;
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(240,124,62,.12);
+      border: 1px solid rgba(240,124,62,.3);
+      color: var(--accent2);
+      font-size: 0.78em;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 14px;
+      letter-spacing: .06em;
     }
-
-    .faculty-title {
-      color: #E8C9A0;
-      font-size: 0.92em;
-      margin-bottom: 32px;
+    .hero h1 {
+      font-size: 2.6em;
+      font-weight: 800;
+      letter-spacing: -.02em;
+      background: linear-gradient(120deg, #F0EDE8 30%, var(--gold));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 10px;
     }
-
-    table {
-      border-collapse: collapse;
-      width: 700px;
-      background-color: #24211E;
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 20px;
+      margin-bottom: 28px;
     }
-
-    th, td {
-      border: 1px solid #3D3835;
-      padding: 11px 20px;
-      text-align: left;
+    .hero-meta span {
+      font-size: 0.88em;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 5px;
     }
+    .hero-meta span strong { color: #C8CADE; }
 
-    th {
-      font-weight: bold;
-      background-color: #2E2A27;
-      color: #E8C9A0;
-      font-size: 0.95em;
-      letter-spacing: 0.04em;
+    /* ── STAT CHIPS ── */
+    .stat-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 36px;
     }
-
-    tr:hover td { background-color: #2A2725; }
-
-    td {
-      color: #D6D2CC;
-      font-size: 0.95em;
+    .stat-chip {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 20px;
+      min-width: 130px;
+      text-align: center;
+      transition: border-color .2s;
     }
+    .stat-chip:hover { border-color: var(--accent); }
+    .stat-chip .num { font-size: 1.6em; font-weight: 800; color: var(--accent); line-height: 1; }
+    .stat-chip .lbl { font-size: 0.75em; color: var(--muted); margin-top: 4px; text-transform: uppercase; letter-spacing: .07em; }
 
-    a {
-      color: #E8834A;
-      text-decoration: underline;
+    /* ── TABS ── */
+    .tabs-wrap {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 56px;
+      z-index: 90;
+    }
+    .tabs {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 40px;
+      display: flex;
+      gap: 4px;
+    }
+    .tab-btn {
+      padding: 14px 20px;
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-size: 0.9em;
+      font-weight: 600;
       cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      transition: all .2s;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      white-space: nowrap;
+    }
+    .tab-btn:hover { color: var(--text); }
+    .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+    .tab-icon { font-size: 1em; }
+
+    /* ── PANELS ── */
+    .panel { display: none; }
+    .panel.active { display: block; }
+    .panel-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 40px 80px;
     }
 
-    a:hover { color: #F5A472; }
+    /* ── TOPIC GRID ── */
+    .search-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 16px;
+      margin-bottom: 28px;
+      max-width: 420px;
+      transition: border-color .2s;
+    }
+    .search-bar:focus-within { border-color: var(--accent); }
+    .search-bar svg { flex-shrink: 0; opacity: .4; }
+    .search-bar input {
+      background: none;
+      border: none;
+      outline: none;
+      color: var(--text);
+      font-size: 0.92em;
+      width: 100%;
+    }
+    .search-bar input::placeholder { color: var(--muted); }
 
-    /* ── Modal ── */
+    .topic-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 16px;
+    }
+    .topic-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 22px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      transition: border-color .2s, transform .15s, box-shadow .2s;
+      cursor: default;
+    }
+    .topic-card:hover {
+      border-color: rgba(240,124,62,.4);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,.3);
+    }
+    .card-top {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+    .topic-num {
+      width: 38px; height: 38px;
+      border-radius: 10px;
+      background: rgba(240,124,62,.12);
+      border: 1px solid rgba(240,124,62,.25);
+      color: var(--accent);
+      font-weight: 800;
+      font-size: 0.88em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .topic-name {
+      font-weight: 700;
+      font-size: 1em;
+      color: var(--text);
+      line-height: 1.35;
+    }
+    .card-actions {
+      display: flex;
+      gap: 8px;
+    }
+    .btn-notes {
+      flex: 1;
+      padding: 9px 0;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--blue);
+      font-size: 0.84em;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      text-align: center;
+      transition: all .15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+    .btn-notes:hover { background: rgba(91,168,245,.1); border-color: var(--blue); }
+    .btn-quiz {
+      flex: 1;
+      padding: 9px 0;
+      background: rgba(240,124,62,.15);
+      border: 1px solid rgba(240,124,62,.3);
+      border-radius: 8px;
+      color: var(--accent);
+      font-size: 0.84em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+    .btn-quiz:hover { background: rgba(240,124,62,.25); border-color: var(--accent); }
+
+    /* ── QUIZ MODAL ── */
     .modal-overlay {
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.65);
-      z-index: 200;
+      background: rgba(0,0,0,.7);
+      backdrop-filter: blur(4px);
+      z-index: 300;
       overflow-y: auto;
+      padding: 40px 16px;
+    }
+    .modal {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+      overflow: hidden;
+      animation: slideUp .25s ease;
+    }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .modal-header {
+      padding: 24px 28px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+    .modal-header-icon {
+      width: 42px; height: 42px;
+      border-radius: 10px;
+      background: rgba(240,124,62,.15);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3em;
+      flex-shrink: 0;
+    }
+    .modal-header-text h2 {
+      font-size: 1.05em;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .modal-header-text p {
+      font-size: 0.8em;
+      color: var(--muted);
+    }
+    .close-btn {
+      margin-left: auto;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--muted);
+      width: 32px; height: 32px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      font-size: 1em;
+      flex-shrink: 0;
+      transition: all .15s;
+    }
+    .close-btn:hover { color: var(--text); border-color: var(--accent); }
+
+    /* Progress bar */
+    .quiz-progress {
+      padding: 16px 28px 0;
+    }
+    .progress-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.78em;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+    .progress-bar-track {
+      height: 4px;
+      background: var(--surface2);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--gold));
+      border-radius: 4px;
+      transition: width .4s ease;
     }
 
-    .modal {
-      background: #24211E;
-      width: 540px;
-      margin: 50px auto 60px;
-      padding: 30px 34px 28px;
+    /* Question navigator */
+    .q-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      padding: 14px 28px 0;
+    }
+    .q-dot {
+      width: 28px; height: 28px;
+      border-radius: 6px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.72em;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: all .15s;
+    }
+    .q-dot:hover { border-color: var(--accent); color: var(--accent); }
+    .q-dot.answered { background: rgba(240,124,62,.15); border-color: rgba(240,124,62,.4); color: var(--accent); }
+    .q-dot.current { background: var(--accent); border-color: var(--accent); color: #111; }
+    .q-dot.correct { background: rgba(78,203,160,.15); border-color: var(--green); color: var(--green); }
+    .q-dot.wrong { background: rgba(240,92,92,.15); border-color: var(--red); color: var(--red); }
+
+    /* Question body */
+    .quiz-body {
+      padding: 20px 28px 28px;
+    }
+    .q-block { display: none; }
+    .q-block.active { display: block; }
+    .q-text {
+      font-size: 0.95em;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 16px;
+      line-height: 1.55;
+    }
+    .options-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .option-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 11px 16px;
+      background: var(--surface2);
+      border: 1.5px solid var(--border);
       border-radius: 10px;
-      border: 1px solid #3D3835;
+      cursor: pointer;
+      transition: all .15s;
+      font-size: 0.89em;
+      color: #C8CADE;
+    }
+    .option-label:hover { border-color: rgba(240,124,62,.4); background: rgba(240,124,62,.06); color: var(--text); }
+    .option-label input[type="radio"] { display: none; }
+    .option-bullet {
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      border: 1.5px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.72em;
+      font-weight: 700;
+      flex-shrink: 0;
+      color: var(--muted);
+      transition: all .15s;
+    }
+    .option-label:hover .option-bullet { border-color: var(--accent); color: var(--accent); }
+    .option-label.selected {
+      border-color: rgba(240,124,62,.5);
+      background: rgba(240,124,62,.1);
+      color: var(--text);
+    }
+    .option-label.selected .option-bullet {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #111;
+    }
+    .option-label.correct-ans {
+      border-color: var(--green);
+      background: rgba(78,203,160,.1);
+      color: var(--text);
+    }
+    .option-label.correct-ans .option-bullet {
+      background: var(--green);
+      border-color: var(--green);
+      color: #111;
+    }
+    .option-label.wrong-ans {
+      border-color: var(--red);
+      background: rgba(240,92,92,.1);
+    }
+    .option-label.wrong-ans .option-bullet {
+      background: var(--red);
+      border-color: var(--red);
+      color: #fff;
+    }
+
+    /* Quiz footer */
+    .quiz-footer {
+      padding: 0 28px 24px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .btn-prev, .btn-next {
+      padding: 10px 20px;
+      border-radius: 9px;
+      font-size: 0.88em;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      transition: all .15s;
+    }
+    .btn-prev { background: var(--surface2); color: var(--muted); }
+    .btn-prev:hover:not(:disabled) { color: var(--text); border-color: var(--accent); }
+    .btn-prev:disabled { opacity: .35; cursor: default; }
+    .btn-next { background: var(--accent); color: #111; border-color: var(--accent); font-weight: 700; }
+    .btn-next:hover { background: var(--accent2); }
+    .btn-submit {
+      padding: 10px 22px;
+      border-radius: 9px;
+      background: linear-gradient(135deg, var(--accent), var(--gold));
+      color: #111;
+      border: none;
+      font-size: 0.88em;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity .15s;
+    }
+    .btn-submit:hover { opacity: .88; }
+
+    /* Result screen */
+    .quiz-result-screen {
+      display: none;
+      padding: 28px;
+      text-align: center;
+    }
+    .result-ring {
+      width: 110px; height: 110px;
+      border-radius: 50%;
+      margin: 0 auto 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      border: 5px solid var(--border);
       position: relative;
     }
-
-    .modal h2 {
-      font-size: 1.1em;
-      color: #E8C9A0;
-      margin-bottom: 18px;
-      padding-right: 28px;
-    }
-
-    .modal .question {
-      margin: 16px 0 8px;
-      font-weight: bold;
-      color: #F0EDE8;
-      font-size: 0.93em;
-    }
-
-    .modal label {
-      display: block;
-      margin: 4px 0;
-      cursor: pointer;
-      color: #C8C4BE;
-      font-size: 0.9em;
-      padding: 4px 8px;
-      border-radius: 4px;
-    }
-
-    .modal label:hover { background: #2E2A27; }
-
-    .modal button.close-btn {
-      position: absolute;
-      top: 14px; right: 16px;
-      background: none;
-      border: none;
-      color: #9E9A94;
-      font-size: 1.3em;
-      cursor: pointer;
+    .result-ring .score-num {
+      font-size: 1.8em;
       line-height: 1;
     }
-
-    .modal button.close-btn:hover { color: #F0EDE8; }
-
-    .modal button.submit-btn {
-      margin-top: 20px;
-      padding: 9px 24px;
-      background-color: #E8834A;
-      color: #1A1816;
-      border: none;
-      border-radius: 6px;
+    .result-ring .score-of {
+      font-size: 0.72em;
+      color: var(--muted);
+    }
+    .result-msg {
+      font-size: 1.1em;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .result-pct {
+      font-size: 0.88em;
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+    .result-breakdown {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    .rb-item { text-align: center; }
+    .rb-item .rb-val { font-size: 1.3em; font-weight: 800; }
+    .rb-item .rb-lbl { font-size: 0.72em; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+    .result-btns {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+    }
+    .btn-review, .btn-retake {
+      padding: 10px 22px;
+      border-radius: 9px;
+      font-size: 0.88em;
+      font-weight: 600;
       cursor: pointer;
-      font-size: 0.92em;
-      font-weight: bold;
+      transition: all .15s;
+    }
+    .btn-review { background: var(--surface2); border: 1px solid var(--border); color: var(--text); }
+    .btn-review:hover { border-color: var(--accent); }
+    .btn-retake { background: var(--accent); border: 1px solid var(--accent); color: #111; font-weight: 700; }
+    .btn-retake:hover { background: var(--accent2); }
+
+    /* ── SYLLABUS ── */
+    .section-title {
+      font-size: 1.25em;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+    .section-sub {
+      font-size: 0.83em;
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+    .info-chip {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 16px;
+    }
+    .info-chip .lbl { color: var(--muted); font-size: 0.73em; text-transform: uppercase; letter-spacing: .07em; margin-bottom: 5px; }
+    .info-chip .val { color: var(--gold); font-weight: 700; font-size: 0.9em; }
+
+    .co-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 32px;
+    }
+    .co-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+    }
+    .co-id {
+      font-size: 0.75em;
+      font-weight: 700;
+      letter-spacing: .06em;
+      margin-bottom: 6px;
+      display: inline-block;
+      padding: 2px 9px;
+      border-radius: 5px;
+    }
+    .co1 { background: rgba(78,203,160,.12); color: var(--green); }
+    .co2 { background: rgba(91,168,245,.12); color: var(--blue); }
+    .co3 { background: rgba(169,125,245,.12); color: var(--purple); }
+    .co4 { background: rgba(232,192,106,.12); color: var(--gold); }
+    .co-text { font-size: 0.83em; color: #A8AABC; line-height: 1.55; }
+
+    .syl-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--surface);
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      margin-bottom: 40px;
+    }
+    .syl-table th {
+      background: var(--surface2);
+      color: var(--gold);
+      padding: 12px 16px;
+      text-align: left;
+      font-size: 0.8em;
+      letter-spacing: .06em;
+      border-bottom: 1px solid var(--border);
+    }
+    .syl-table td {
+      padding: 12px 16px;
+      font-size: 0.85em;
+      color: #C0C4D8;
+      border-bottom: 1px solid rgba(46,51,64,.7);
+      vertical-align: top;
+      line-height: 1.5;
+    }
+    .syl-table tr:last-child td { border-bottom: none; }
+    .syl-table tr:hover td { background: rgba(255,255,255,.025); }
+    .co-tag {
+      display: inline-block;
+      padding: 2px 9px;
+      border-radius: 5px;
+      font-size: 0.74em;
+      font-weight: 700;
+    }
+    .week-label { color: var(--accent); font-weight: 700; white-space: nowrap; }
+
+    /* ── LAB TABLE ── */
+    .lab-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--surface);
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      margin-bottom: 20px;
+    }
+    .lab-table th {
+      background: var(--surface2);
+      color: var(--gold);
+      padding: 12px 16px;
+      text-align: left;
+      font-size: 0.8em;
+      letter-spacing: .06em;
+      border-bottom: 1px solid var(--border);
+    }
+    .lab-table td {
+      padding: 12px 16px;
+      font-size: 0.84em;
+      color: #C0C4D8;
+      border-bottom: 1px solid rgba(46,51,64,.7);
+      vertical-align: top;
+      line-height: 1.5;
+    }
+    .lab-table tr:last-child td { border-bottom: none; }
+    .lab-table tr:hover td { background: rgba(255,255,255,.025); }
+    .exp-num { color: var(--accent); font-weight: 800; font-size: 0.82em; }
+    .exp-title { color: var(--text); font-weight: 600; margin-bottom: 3px; }
+    .footnote {
+      font-size: 0.8em;
+      color: var(--muted);
+      margin-top: 10px;
+      padding: 12px 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
     }
 
-    .modal button.submit-btn:hover { background-color: #F5A472; }
-
-    #quiz-result {
-      margin-top: 14px;
-      font-weight: bold;
-      font-size: 0.95em;
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      .hero { padding: 28px 20px 0; }
+      .panel-inner { padding: 28px 20px 60px; }
+      .tabs { padding: 0 20px; }
+      .top-nav { padding: 14px 20px; }
+      .hero h1 { font-size: 1.9em; }
+      .topic-grid { grid-template-columns: 1fr; }
+      .co-grid { grid-template-columns: 1fr; }
+      .modal { border-radius: 14px; }
     }
   </style>
 </head>
 <body>
 
-  <a class="back-link" href="index.html">← Back to Profile</a>
+  <!-- TOP NAV -->
+  <nav class="top-nav">
+    <a class="back-btn" href="index.html">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      Back
+    </a>
+    <span class="nav-sep">/</span>
+    <span class="nav-course">Java Programming</span>
+  </nav>
 
-  <h1>Java Programming</h1>
-  <p class="faculty">Faculty: Sampathirao Yoganandh</p>
-  <p class="faculty-title">Assistant Professor &nbsp;|&nbsp; CSE (AI & ML) &nbsp;|&nbsp; ANITS Engineering College</p>
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-badge">☕ R23 Regulation &nbsp;·&nbsp; 23CM9201</div>
+    <h1>Java Programming</h1>
+    <div class="hero-meta">
+      <span>👤 <strong>Sampathirao Yoganandh</strong></span>
+      <span>🏛️ <strong>ANITS Engineering College</strong></span>
+      <span>📚 <strong>CSE (AI &amp; ML) · Assistant Professor</strong></span>
+    </div>
+    <div class="stat-row">
+      <div class="stat-chip"><div class="num">11</div><div class="lbl">Topics</div></div>
+      <div class="stat-chip"><div class="num">110</div><div class="lbl">Quiz Questions</div></div>
+      <div class="stat-chip"><div class="num">14</div><div class="lbl">Lab Experiments</div></div>
+      <div class="stat-chip"><div class="num">2.5</div><div class="lbl">Credits</div></div>
+      <div class="stat-chip"><div class="num">75</div><div class="lbl">Total Hours</div></div>
+    </div>
+  </div>
 
-  <table>
-    <thead>
-      <tr>
-        <th>Topic</th>
-        <th>Quiz</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a href="java_01_history.html">1. Introduction &amp; Java History</a></td>
-        <td><a href="#" onclick="openQuiz(0);return false;">Quiz</a></td>
-      </tr>
-      <tr>
-        <td><a href="java_02_first_app.html">2. First Java Application</a></td>
-        <td><a href="#" onclick="openQuiz(1);return false;">Quiz</a></td>
-      </tr>
-      <tr>
-        <td><a href="java_03_lang_fundamentals.html">3. Language Fundamentals</a></td>
-        <td><a href="#" onclick="openQuiz(2);return false;">Quiz</a></td>
-      </tr>
-      <tr>
-        <td><a href="java_04_oops.html">4. Object Oriented Programming (OOPs)</a></td>
-        <td><a href="#" onclick="openQuiz(3);return false;">Quiz</a></td>
-      </tr>
-      <tr>
-        <td><a href="java_05_wrapper.html">5. Wrapper Classes</a></td>
-        <td><a href="#" onclick="openQuiz(4);return false;">Quiz</a></td>
-      </tr>
-      <tr>
-        <td><a href="java_06_packages.html">6. Java Packages</a></td>
-        <td><a href="#" onclick="openQuiz(5);return false;">Quiz</a></td>
-      </tr>
-      <tr>
-        <td><a href="java_07_strings.html">7. String Manipulations</a></td>
-        <td><a href="#" onclick="openQuiz(6);return false;">Quiz</a></td>
-      </tr>
-      <tr>
-        <td><a href="java_08_exceptions.html">8. Exception Handling</a></td>
-        <td><a href="#" onclick="openQuiz(7);return false;">Quiz</a></td>
-      </tr>
-      <tr>
-        <td><a href="java_09_multithreading.html">9. Multi Threading</a></td>
-        <td><a href="#" onclick="openQuiz(8);return false;">Quiz</a></td>
-      </tr>
-      <tr>
-        <td><a href="java_10_io_streams.html">10. IO Streams</a></td>
-        <td><a href="#" onclick="openQuiz(9);return false;">Quiz</a></td>
-      </tr>
-      <tr>
-        <td><a href="java_11_collections.html">11. Collections Framework</a></td>
-        <td><a href="#" onclick="openQuiz(10);return false;">Quiz</a></td>
-      </tr>
-    </tbody>
-  </table>
+  <!-- TABS -->
+  <div class="tabs-wrap">
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab('topics', this)">
+        <span class="tab-icon">📖</span> Topics &amp; Quizzes
+      </button>
+      <button class="tab-btn" onclick="switchTab('syllabus', this)">
+        <span class="tab-icon">📋</span> Syllabus
+      </button>
+      <button class="tab-btn" onclick="switchTab('lab', this)">
+        <span class="tab-icon">🔬</span> Lab Manual
+      </button>
+    </div>
+  </div>
 
-  <!-- Quiz Modal -->
-  <div class="modal-overlay" id="quizModal">
+  <!-- PANEL: TOPICS -->
+  <div id="panel-topics" class="panel active">
+    <div class="panel-inner">
+
+      <div class="search-bar">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+        <input type="text" id="topicSearch" placeholder="Search topics…" oninput="filterTopics(this.value)">
+      </div>
+
+      <div class="topic-grid" id="topicGrid">
+
+        <div class="topic-card" data-topic="introduction java history">
+          <div class="card-top">
+            <div class="topic-num">01</div>
+            <div class="topic-name">Introduction &amp; Java History</div>
+          </div>
+          <div class="card-actions">
+            <a class="btn-notes" href="java_01_history.html">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              Notes
+            </a>
+            <button class="btn-quiz" onclick="openQuiz(0)">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              Take Quiz
+            </button>
+          </div>
+        </div>
+
+        <div class="topic-card" data-topic="first java application">
+          <div class="card-top">
+            <div class="topic-num">02</div>
+            <div class="topic-name">First Java Application</div>
+          </div>
+          <div class="card-actions">
+            <a class="btn-notes" href="java_02_first_app.html">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              Notes
+            </a>
+            <button class="btn-quiz" onclick="openQuiz(1)">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              Take Quiz
+            </button>
+          </div>
+        </div>
+
+        <div class="topic-card" data-topic="language fundamentals">
+          <div class="card-top">
+            <div class="topic-num">03</div>
+            <div class="topic-name">Language Fundamentals</div>
+          </div>
+          <div class="card-actions">
+            <a class="btn-notes" href="java_03_lang_fundamentals.html">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              Notes
+            </a>
+            <button class="btn-quiz" onclick="openQuiz(2)">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              Take Quiz
+            </button>
+          </div>
+        </div>
+
+        <div class="topic-card" data-topic="object oriented programming oops oop">
+          <div class="card-top">
+            <div class="topic-num">04</div>
+            <div class="topic-name">Object Oriented Programming (OOPs)</div>
+          </div>
+          <div class="card-actions">
+            <a class="btn-notes" href="java_04_oops.html">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              Notes
+            </a>
+            <button class="btn-quiz" onclick="openQuiz(3)">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              Take Quiz
+            </button>
+          </div>
+        </div>
+
+        <div class="topic-card" data-topic="wrapper classes">
+          <div class="card-top">
+            <div class="topic-num">05</div>
+            <div class="topic-name">Wrapper Classes</div>
+          </div>
+          <div class="card-actions">
+            <a class="btn-notes" href="java_05_wrapper.html">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              Notes
+            </a>
+            <button class="btn-quiz" onclick="openQuiz(4)">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              Take Quiz
+            </button>
+          </div>
+        </div>
+
+        <div class="topic-card" data-topic="java packages">
+          <div class="card-top">
+            <div class="topic-num">06</div>
+            <div class="topic-name">Java Packages</div>
+          </div>
+          <div class="card-actions">
+            <a class="btn-notes" href="java_06_packages.html">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              Notes
+            </a>
+            <button class="btn-quiz" onclick="openQuiz(5)">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              Take Quiz
+            </button>
+          </div>
+        </div>
+
+        <div class="topic-card" data-topic="string manipulations strings">
+          <div class="card-top">
+            <div class="topic-num">07</div>
+            <div class="topic-name">String Manipulations</div>
+          </div>
+          <div class="card-actions">
+            <a class="btn-notes" href="java_07_strings.html">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              Notes
+            </a>
+            <button class="btn-quiz" onclick="openQuiz(6)">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              Take Quiz
+            </button>
+          </div>
+        </div>
+
+        <div class="topic-card" data-topic="exception handling exceptions errors">
+          <div class="card-top">
+            <div class="topic-num">08</div>
+            <div class="topic-name">Exception Handling</div>
+          </div>
+          <div class="card-actions">
+            <a class="btn-notes" href="java_08_exceptions.html">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              Notes
+            </a>
+            <button class="btn-quiz" onclick="openQuiz(7)">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              Take Quiz
+            </button>
+          </div>
+        </div>
+
+        <div class="topic-card" data-topic="multi threading multithreading concurrency">
+          <div class="card-top">
+            <div class="topic-num">09</div>
+            <div class="topic-name">Multi Threading</div>
+          </div>
+          <div class="card-actions">
+            <a class="btn-notes" href="java_09_multithreading.html">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              Notes
+            </a>
+            <button class="btn-quiz" onclick="openQuiz(8)">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              Take Quiz
+            </button>
+          </div>
+        </div>
+
+        <div class="topic-card" data-topic="io streams input output file">
+          <div class="card-top">
+            <div class="topic-num">10</div>
+            <div class="topic-name">IO Streams</div>
+          </div>
+          <div class="card-actions">
+            <a class="btn-notes" href="java_10_io_streams.html">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              Notes
+            </a>
+            <button class="btn-quiz" onclick="openQuiz(9)">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              Take Quiz
+            </button>
+          </div>
+        </div>
+
+        <div class="topic-card" data-topic="collections framework arraylist hashset">
+          <div class="card-top">
+            <div class="topic-num">11</div>
+            <div class="topic-name">Collections Framework</div>
+          </div>
+          <div class="card-actions">
+            <a class="btn-notes" href="java_11_collections.html">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              Notes
+            </a>
+            <button class="btn-quiz" onclick="openQuiz(10)">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              Take Quiz
+            </button>
+          </div>
+        </div>
+
+      </div><!-- /topic-grid -->
+    </div>
+  </div>
+
+  <!-- PANEL: SYLLABUS -->
+  <div id="panel-syllabus" class="panel">
+    <div class="panel-inner">
+
+      <div class="section-title">📋 Course Syllabus</div>
+      <p class="section-sub">23CM9201 · Java Programming Practices · R23 Regulation · CSE (AI &amp; ML)</p>
+
+      <div class="info-grid">
+        <div class="info-chip"><div class="lbl">Course Code</div><div class="val">23CM9201</div></div>
+        <div class="info-chip"><div class="lbl">Category</div><div class="val">Professional Core</div></div>
+        <div class="info-chip"><div class="lbl">L · T · P</div><div class="val">1 · 0 · 3</div></div>
+        <div class="info-chip"><div class="lbl">Credits</div><div class="val">2.5</div></div>
+        <div class="info-chip"><div class="lbl">Total Hours</div><div class="val">75 hrs</div></div>
+        <div class="info-chip"><div class="lbl">Marks</div><div class="val">100 (60 + 40)</div></div>
+      </div>
+
+      <div style="margin-bottom: 10px; font-size:0.85em; color:var(--muted);">
+        <strong style="color:#C8CADE;">Prerequisites:</strong> Basic computer fundamentals, knowledge of C / C++ programming.
+      </div>
+
+      <div style="margin-bottom: 20px; font-size:0.85em; color:var(--muted);">
+        <strong style="color:#C8CADE;">Sessional Marks:</strong> 60 &nbsp;·&nbsp; <strong style="color:#C8CADE;">End Exam:</strong> 40 &nbsp;·&nbsp; <strong style="color:#C8CADE;">Internal Tests:</strong> 2 (T1 after Week 7, T2 after Week 14)
+      </div>
+
+      <div style="margin-bottom: 14px; color: var(--text); font-weight: 600; font-size: 0.9em;">Course Outcomes</div>
+      <div class="co-grid">
+        <div class="co-card"><div class="co-id co1">CO-1</div><div class="co-text">Develop classes for real-time applications and establish connectivity among classes using inheritance and strings.</div></div>
+        <div class="co-card"><div class="co-id co2">CO-2</div><div class="co-text">Modularize the application using packages, interfaces and file concepts.</div></div>
+        <div class="co-card"><div class="co-id co3">CO-3</div><div class="co-text">Apply threads on classes to achieve parallelism through synchronization and develop test cases using exception handling.</div></div>
+        <div class="co-card"><div class="co-id co4">CO-4</div><div class="co-text">Solve complex problems using the collection framework.</div></div>
+      </div>
+
+      <div style="margin-bottom: 14px; color: var(--text); font-weight: 600; font-size: 0.9em;">Week-wise Schedule</div>
+      <table class="syl-table">
+        <thead>
+          <tr>
+            <th style="width:110px">Week</th>
+            <th>Topics</th>
+            <th>Sample Program</th>
+            <th style="width:60px">CO</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="week-label">Week 1 &amp; 2</span></td>
+            <td>Fundamentals of OOP: Object-oriented paradigm, Objects &amp; Classes, Data Abstraction, Encapsulation, Inheritance, Polymorphism, Dynamic Binding</td>
+            <td>Bank Account Management System (Account, SavingsAccount, CurrentAccount)</td>
+            <td><span class="co-tag co1">CO1</span></td>
+          </tr>
+          <tr>
+            <td><span class="week-label">Week 3</span></td>
+            <td>Java Programming: Buzzwords, Data types, Variables, Operators, Control structures, Arrays, Console I/O</td>
+            <td>Prime Palindrome Check; Command Line Arguments – Marks Total &amp; Average</td>
+            <td><span class="co-tag co1">CO1</span></td>
+          </tr>
+          <tr>
+            <td><span class="week-label">Week 4 &amp; 5</span></td>
+            <td>Classes, Objects, Constructors, Methods, Parameter Passing, Method &amp; Constructor Overloading</td>
+            <td>Farm Animals application; Class Diagram (Customer, Order, SpecialOrder, NormalOrder); Employee data by cadre</td>
+            <td><span class="co-tag co1">CO1</span></td>
+          </tr>
+          <tr>
+            <td><span class="week-label">Week 6</span></td>
+            <td>Static fields &amp; methods, <code style="background:var(--surface2);padding:1px 5px;border-radius:4px;font-size:0.88em">this</code> reference, <code style="background:var(--surface2);padding:1px 5px;border-radius:4px;font-size:0.88em">final</code> keyword, String Handling</td>
+            <td>Longest Substring Without Repeating Characters</td>
+            <td><span class="co-tag co1">CO1</span></td>
+          </tr>
+          <tr>
+            <td><span class="week-label">Week 7</span></td>
+            <td>Inheritance – Types, <code style="background:var(--surface2);padding:1px 5px;border-radius:4px;font-size:0.88em">super</code> keyword, Member Access, final. Polymorphism – Dynamic Binding, Method Overriding, Abstract Classes</td>
+            <td>Banking System: Method Overriding with RBI, SBI, HDFC</td>
+            <td><span class="co-tag co1">CO1</span></td>
+          </tr>
+          <tr>
+            <td><span class="week-label">Week 8</span></td>
+            <td>Interfaces – Defining, Implementing, Accessing via interface references, Extending interfaces</td>
+            <td>Employee Categories – Regular, Contract, Vendor salary calculation</td>
+            <td><span class="co-tag co2">CO2</span></td>
+          </tr>
+          <tr>
+            <td><span class="week-label">Week 9</span></td>
+            <td>Packages – Defining, Creating, Accessing, Importing packages</td>
+            <td>Roman to Integer conversion using a custom package</td>
+            <td><span class="co-tag co2">CO2</span></td>
+          </tr>
+          <tr>
+            <td><span class="week-label">Week 10</span></td>
+            <td>I/O – Reading and writing files</td>
+            <td>Pattern frequency count ('pe', 'pi') in a text file</td>
+            <td><span class="co-tag co2">CO2</span></td>
+          </tr>
+          <tr>
+            <td><span class="week-label">Week 11</span></td>
+            <td>Exception Handling – try/catch, throw, throws, finally, multiple catches, built-in &amp; user-defined exceptions</td>
+            <td>Mobile Number Validator with custom exceptions</td>
+            <td><span class="co-tag co3">CO3</span></td>
+          </tr>
+          <tr>
+            <td><span class="week-label">Week 12</span></td>
+            <td>Multithreading – Thread priorities, synchronization, creating multiple threads</td>
+            <td>Seat Reservation System using synchronization</td>
+            <td><span class="co-tag co3">CO3</span></td>
+          </tr>
+          <tr>
+            <td><span class="week-label">Week 13</span></td>
+            <td>Collection Framework – Collection, List, Set, Queue interfaces</td>
+            <td>Letter Combinations of a Phone Number</td>
+            <td><span class="co-tag co4">CO4</span></td>
+          </tr>
+          <tr>
+            <td><span class="week-label">Week 14</span></td>
+            <td>Collection Classes – ArrayList, LinkedList, HashSet, TreeSet, PriorityQueue</td>
+            <td>Valid Parentheses using Stack and TreeSet</td>
+            <td><span class="co-tag co4">CO4</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+
+  <!-- PANEL: LAB -->
+  <div id="panel-lab" class="panel">
+    <div class="panel-inner">
+
+      <div class="section-title">🔬 Lab Manual</div>
+      <p class="section-sub">Java Programming Practices Lab · 23CM9201 · Academic Year 2026–27 · CSE (AI &amp; ML)</p>
+
+      <div style="margin-bottom:20px; font-size:0.85em; color:var(--muted); line-height:1.7;">
+        <strong style="color:#C8CADE;">Lab Objectives:</strong> Understand OOP concepts and apply them in problem solving using Java; learn Java console programming.<br>
+        <strong style="color:#C8CADE;">Software Required:</strong> JDK 8+, Eclipse / NetBeans / IntelliJ IDEA / VS Code with Java Extension, Windows 10/11 or Ubuntu Linux.
+      </div>
+
+      <div style="margin-bottom:14px; color:var(--text); font-weight:600; font-size:0.9em;">List of Experiments</div>
+      <table class="lab-table">
+        <thead>
+          <tr>
+            <th style="width:72px">#</th>
+            <th style="width:90px">Week</th>
+            <th>Experiment Title &amp; Description</th>
+            <th style="width:58px">CO</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="exp-num">Exp 1</span></td>
+            <td>1 &amp; 2</td>
+            <td><div class="exp-title">Bank Account Management System</div>OOP: Classes, Encapsulation, Inheritance, Polymorphism, Dynamic Binding. Classes: Account, SavingsAccount, CurrentAccount.</td>
+            <td><span class="co-tag co1">CO1</span></td>
+          </tr>
+          <tr>
+            <td><span class="exp-num">Exp 2</span></td>
+            <td>3</td>
+            <td><div class="exp-title">Java Basics – Prime Palindrome Check</div>Check whether a given number is a prime palindrome.</td>
+            <td><span class="co-tag co1">CO1</span></td>
+          </tr>
+          <tr>
+            <td><span class="exp-num">Exp 3</span></td>
+            <td>3</td>
+            <td><div class="exp-title">Java Basics – Command Line Arguments</div>Read marks of five subjects via command line; print total and average.</td>
+            <td><span class="co-tag co1">CO1</span></td>
+          </tr>
+          <tr>
+            <td><span class="exp-num">Exp 4</span></td>
+            <td>4 &amp; 5</td>
+            <td><div class="exp-title">Classes and Objects – Farm Animals Application</div>Design a farm animals app: where they stay, what they eat, the sound they make.</td>
+            <td><span class="co-tag co1">CO1</span></td>
+          </tr>
+          <tr>
+            <td><span class="exp-num">Exp 5</span></td>
+            <td>4 &amp; 5</td>
+            <td><div class="exp-title">Class Diagram – Customer, Order, SpecialOrder, NormalOrder</div>Implement a class diagram with Customer, Order, SpecialOrder, and NormalOrder.</td>
+            <td><span class="co-tag co1">CO1</span></td>
+          </tr>
+          <tr>
+            <td><span class="exp-num">Exp 6</span></td>
+            <td>4 &amp; 5</td>
+            <td><div class="exp-title">Constructor Overloading – Employee Data by Cadre</div>Maintain employee data (name, id, designation, salary, promotion status) using constructor overloading.</td>
+            <td><span class="co-tag co1">CO1</span></td>
+          </tr>
+          <tr>
+            <td><span class="exp-num">Exp 7</span></td>
+            <td>6</td>
+            <td><div class="exp-title">String Handling – Longest Substring Without Repeating Characters</div>"abcabcbb" → 3 ("abc"), "pwwkew" → 3 ("wke").</td>
+            <td><span class="co-tag co1">CO1</span></td>
+          </tr>
+          <tr>
+            <td><span class="exp-num">Exp 8</span></td>
+            <td>7</td>
+            <td><div class="exp-title">Method Overriding – Banking System (RBI, SBI, HDFC)</div>Dynamic polymorphism: RBI 4%, SBI 7%, HDFC rate via overriding.</td>
+            <td><span class="co-tag co1">CO1</span></td>
+          </tr>
+          <tr>
+            <td><span class="exp-num">Exp 9</span></td>
+            <td>8</td>
+            <td><div class="exp-title">Interfaces – Employee Categories</div>Monthly salary for Regular, Contract, and Vendor employees using interfaces.</td>
+            <td><span class="co-tag co2">CO2</span></td>
+          </tr>
+          <tr>
+            <td><span class="exp-num">Exp 10</span></td>
+            <td>9</td>
+            <td><div class="exp-title">Packages – Roman to Integer Conversion</div>Define package <code style="background:var(--surface2);padding:1px 5px;border-radius:4px">number</code> with <code style="background:var(--surface2);padding:1px 5px;border-radius:4px">Roman</code> class; implement <code style="background:var(--surface2);padding:1px 5px;border-radius:4px">romanToInteger()</code>. "LVIII" → 58.</td>
+            <td><span class="co-tag co2">CO2</span></td>
+          </tr>
+          <tr>
+            <td><span class="exp-num">Exp 11</span></td>
+            <td>10</td>
+            <td><div class="exp-title">File Handling – Pattern Frequency Count</div>Count occurrences of 'pe' and 'pi' in sample.txt. Expected: 'pe'=20, 'pi'=12.</td>
+            <td><span class="co-tag co2">CO2</span></td>
+          </tr>
+          <tr>
+            <td><span class="exp-num">Exp 12</span></td>
+            <td>11</td>
+            <td><div class="exp-title">Exception Handling – Mobile Number Validator</div>Validate 10-digit mobile; raise ArrayIndexOutOfBoundsException, LengthNotSufficientException, or NumberFormatException.</td>
+            <td><span class="co-tag co3">CO3</span></td>
+          </tr>
+          <tr>
+            <td><span class="exp-num">Exp 13</span></td>
+            <td>12</td>
+            <td><div class="exp-title">Multithreading – Seat Reservation System</div>Reserve seats from 100 using synchronized threads; only one person thread accesses reserve at a time.</td>
+            <td><span class="co-tag co3">CO3</span></td>
+          </tr>
+          <tr>
+            <td><span class="exp-num">Exp 14</span></td>
+            <td>13</td>
+            <td><div class="exp-title">Collection Framework – Letter Combinations of Phone Number</div>Given digits 2–9, return all letter combinations (T9 keypad). "23" → ["ad","ae","af","bd","be","bf","cd","ce","cf"].</td>
+            <td><span class="co-tag co4">CO4</span></td>
+          </tr>
+          <tr>
+            <td><span class="exp-num">Exp 15</span></td>
+            <td>14</td>
+            <td><div class="exp-title">Collection Classes – Valid Parentheses</div>Check if a string of '()', '{}', '[]' is valid using Stack and TreeSet.</td>
+            <td><span class="co-tag co4">CO4</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="footnote">
+        ℹ️ Observation book must include: Aim · Algorithm/Procedure · Program Code · Output/Screenshots · Viva-Voce Q&amp;A · Errors Observed.
+      </div>
+    </div>
+  </div>
+
+  <!-- QUIZ MODAL -->
+  <div class="modal-overlay" id="quizModal" onclick="handleOverlayClick(event)">
     <div class="modal">
-      <button class="close-btn" onclick="closeQuiz()">&#x2715;</button>
-      <h2 id="quiz-title"></h2>
-      <form id="quizForm"></form>
-      <div id="quiz-result"></div>
+      <div class="modal-header">
+        <div class="modal-header-icon">🎯</div>
+        <div class="modal-header-text">
+          <h2 id="quiz-title"></h2>
+          <p>10 questions · Select the best answer</p>
+        </div>
+        <button class="close-btn" onclick="closeQuiz()">✕</button>
+      </div>
+
+      <!-- Progress -->
+      <div class="quiz-progress" id="quizProgress">
+        <div class="progress-meta">
+          <span id="prog-label">Question 1 of 10</span>
+          <span id="prog-answered">0 answered</span>
+        </div>
+        <div class="progress-bar-track">
+          <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+        </div>
+      </div>
+
+      <!-- Question navigator -->
+      <div class="q-nav" id="qNav"></div>
+
+      <!-- Questions -->
+      <div class="quiz-body" id="quizBody"></div>
+
+      <!-- Nav buttons -->
+      <div class="quiz-footer" id="quizFooter">
+        <button class="btn-prev" id="btnPrev" onclick="goQuestion(-1)" disabled>← Prev</button>
+        <button class="btn-next" id="btnNext" onclick="goQuestion(1)">Next →</button>
+        <button class="btn-submit" id="btnSubmit" style="display:none" onclick="submitQuiz()">Submit Quiz</button>
+      </div>
+
+      <!-- Result screen -->
+      <div class="quiz-result-screen" id="quizResultScreen">
+        <div class="result-ring" id="resultRing">
+          <div class="score-num" id="scoreNum"></div>
+          <div class="score-of" id="scoreOf"></div>
+        </div>
+        <div class="result-msg" id="resultMsg"></div>
+        <div class="result-pct" id="resultPct"></div>
+        <div class="result-breakdown">
+          <div class="rb-item"><div class="rb-val" id="rbCorrect" style="color:var(--green)"></div><div class="rb-lbl">Correct</div></div>
+          <div class="rb-item"><div class="rb-val" id="rbWrong" style="color:var(--red)"></div><div class="rb-lbl">Wrong</div></div>
+          <div class="rb-item"><div class="rb-val" id="rbSkipped" style="color:var(--muted)"></div><div class="rb-lbl">Skipped</div></div>
+        </div>
+        <div class="result-btns">
+          <button class="btn-review" onclick="reviewAnswers()">Review Answers</button>
+          <button class="btn-retake" onclick="retakeQuiz()">Retake Quiz</button>
+        </div>
+      </div>
+
     </div>
   </div>
 
   <script>
+    /* ── TAB SWITCHING ── */
+    function switchTab(id, btn) {
+      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('panel-' + id).classList.add('active');
+      btn.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    /* ── TOPIC SEARCH ── */
+    function filterTopics(q) {
+      const kw = q.toLowerCase().trim();
+      document.querySelectorAll('.topic-card').forEach(card => {
+        const match = !kw || card.dataset.topic.includes(kw) || card.querySelector('.topic-name').textContent.toLowerCase().includes(kw);
+        card.style.display = match ? '' : 'none';
+      });
+    }
+
+    /* ── QUIZ DATA ── */
     const quizData = [
-      // 1. Introduction & Java History
-      {
-        title: "Quiz 1: Introduction & Java History",
-        questions: [
-          { q: "In which year was Java first publicly released?", options: ["1991","1995","1999","2003"], answer: 1 },
-          { q: "Who is the original creator of Java?", options: ["Bjarne Stroustrup","Guido van Rossum","James Gosling","Dennis Ritchie"], answer: 2 },
-          { q: "Java was originally developed at which company?", options: ["Microsoft","Apple","IBM","Sun Microsystems"], answer: 3 },
-          { q: "What was Java's original project name?", options: ["Oak","Pine","Maple","Cedar"], answer: 0 },
-          { q: "Which company later acquired Sun Microsystems?", options: ["Google","Oracle","IBM","Microsoft"], answer: 1 },
-          { q: "Java is referred to as a 'dynamic' language because memory for primitives is allocated at:", options: ["Compile time","Link time","Runtime","Load time"], answer: 2 },
-          { q: "What does WORA stand for in Java?", options: ["Write Once Run Anywhere","Write Once Read Anywhere","Write Online Run Anywhere","Write Once Repeat Anywhere"], answer: 0 },
-          { q: "Which Java edition is used for enterprise-level server-side applications?", options: ["J2SE","J2ME","J2EE","JavaFX"], answer: 2 },
-          { q: "What version of Java introduced auto-boxing and var-args?", options: ["JDK 1.1","JDK 1.2","JDK 5.0","JDK 7"], answer: 2 },
-          { q: "Which Java version introduced Lambda Expressions and the Date-Time API?", options: ["Java 6","Java 7","Java 8","Java 9"], answer: 2 }
-        ]
-      },
-      // 2. First Java Application
-      {
-        title: "Quiz 2: First Java Application",
-        questions: [
-          { q: "Which command is used to compile a Java program?", options: ["java","javac","javarun","compile"], answer: 1 },
-          { q: "Which command is used to run a compiled Java program?", options: ["javac","run","java","execute"], answer: 2 },
-          { q: "What is the file extension of a compiled Java class?", options: [".java",".exe",".class",".jar"], answer: 2 },
-          { q: "Which method is the entry point of every Java application?", options: ["start()","run()","init()","main()"], answer: 3 },
-          { q: "Which statement prints output to the console in Java?", options: ["console.log()","print()","System.out.println()","echo()"], answer: 2 },
-          { q: "How many public classes can be declared in a single .java file?", options: ["Unlimited","Two","One","Zero"], answer: 2 },
-          { q: "If a Java file contains a public class 'Student', what must the filename be?", options: ["Main.java","Program.java","Student.java","Any name"], answer: 2 },
-          { q: "Which of the following is a valid main() signature?", options: ["public void main(String[] args)","static public void main(String[] args)","public static int main(String[] args)","void main()"], answer: 1 },
-          { q: "What does the -d flag do in 'javac -d . MyClass.java'?", options: ["Deletes the source file","Sets the output directory for .class files","Enables debug mode","Disables warnings"], answer: 1 },
-          { q: "Which type of loading does Java use when importing packages?", options: ["Static Loading","Dynamic Loading","Lazy Loading","Eager Loading"], answer: 1 }
-        ]
-      },
-      // 3. Language Fundamentals
-      {
-        title: "Quiz 3: Language Fundamentals",
-        questions: [
-          { q: "Which of these is a valid Java identifier?", options: ["2name","_myVar","my-var","class"], answer: 1 },
-          { q: "What is the size of a `byte` data type in Java?", options: ["4 bits","8 bits","16 bits","32 bits"], answer: 1 },
-          { q: "Which keyword declares a constant in Java?", options: ["const","static","final","fixed"], answer: 2 },
-          { q: "What is the default value of an `int` variable in Java?", options: ["1","null","-1","0"], answer: 3 },
-          { q: "Which of these is NOT a primitive data type in Java?", options: ["int","float","String","boolean"], answer: 2 },
-          { q: "Which identifier is invalid in Java?", options: ["emp_Name","$salary","emp-addr","_id"], answer: 2 },
-          { q: "What is the size of a `char` data type in Java?", options: ["1 byte","2 bytes","4 bytes","8 bytes"], answer: 1 },
-          { q: "Which conversion is done automatically without data loss?", options: ["Narrowing","Explicit casting","Widening","Truncation"], answer: 2 },
-          { q: "What is the default value of a boolean instance variable?", options: ["true","null","0","false"], answer: 3 },
-          { q: "Local variables in Java must be:", options: ["Declared static","Initialised before use","Given default values","Declared at class level"], answer: 1 }
-        ]
-      },
-      // 4. OOPs
-      {
-        title: "Quiz 4: Object Oriented Programming (OOPs)",
-        questions: [
-          { q: "Which OOP concept hides internal implementation details?", options: ["Inheritance","Polymorphism","Encapsulation","Abstraction"], answer: 2 },
-          { q: "What keyword is used to create an object in Java?", options: ["create","object","new","make"], answer: 2 },
-          { q: "A class that cannot be instantiated is called:", options: ["Final class","Static class","Abstract class","Private class"], answer: 2 },
-          { q: "Which concept allows one class to acquire properties of another?", options: ["Encapsulation","Abstraction","Polymorphism","Inheritance"], answer: 3 },
-          { q: "What does a constructor do in Java?", options: ["Destroys an object","Initializes an object","Copies an object","Compares objects"], answer: 1 },
-          { q: "Which keyword refers to the current class object?", options: ["self","super","this","current"], answer: 2 },
-          { q: "Which keyword is used to call the parent class constructor?", options: ["this()","parent()","base()","super()"], answer: 3 },
-          { q: "Method overloading is resolved at:", options: ["Runtime","Link time","Compile time","Load time"], answer: 2 },
-          { q: "Which type of inheritance is NOT supported in Java via classes?", options: ["Single","Multi-level","Hierarchical","Multiple"], answer: 3 },
-          { q: "OOP languages provide better code reuse through:", options: ["Pointers","Goto statements","Inheritance","Macros"], answer: 2 }
-        ]
-      },
-      // 5. Wrapper Classes
-      {
-        title: "Quiz 5: Wrapper Classes",
-        questions: [
-          { q: "What is the wrapper class for `int` in Java?", options: ["Int","INTEGER","Integer","Inte"], answer: 2 },
-          { q: "Which process converts a primitive to its wrapper object?", options: ["Casting","Unboxing","Autoboxing","Wrapping"], answer: 2 },
-          { q: "Which process converts a wrapper object back to a primitive?", options: ["Autoboxing","Unboxing","Casting","Parsing"], answer: 1 },
-          { q: "Which method converts a String to an integer?", options: ["Integer.convert()","Integer.toInt()","Integer.parseInt()","Integer.valueOf()"], answer: 2 },
-          { q: "What is the wrapper class for `char`?", options: ["Char","CHARACTER","Character","Chr"], answer: 2 },
-          { q: "Auto-boxing was introduced in which JDK version?", options: ["JDK 1.0","JDK 1.1","JDK 1.4","JDK 5.0"], answer: 3 },
-          { q: "Wrapper class objects in Java are:", options: ["Mutable","Immutable","Abstract","Final only"], answer: 1 },
-          { q: "Which method converts an integer to its binary string representation?", options: ["Integer.toBinary()","Integer.toBinaryString()","Integer.parseBinary()","Integer.binary()"], answer: 1 },
-          { q: "What does Integer.MAX_VALUE return?", options: ["65535","2147483647","999999999","Long.MAX_VALUE"], answer: 1 },
-          { q: "Which conversion uses the toString() method?", options: ["Primitive to Object","String to Primitive","Object to String","String to Object"], answer: 2 }
-        ]
-      },
-      // 6. Packages
-      {
-        title: "Quiz 6: Java Packages",
-        questions: [
-          { q: "Which keyword is used to define a package in Java?", options: ["import","include","package","namespace"], answer: 2 },
-          { q: "Which keyword is used to import a package?", options: ["include","using","import","require"], answer: 2 },
-          { q: "Which package is automatically imported in every Java program?", options: ["java.io","java.util","java.lang","java.net"], answer: 2 },
-          { q: "Which package contains the Scanner class?", options: ["java.lang","java.io","java.net","java.util"], answer: 3 },
-          { q: "A package is essentially a:", options: ["Class","Method","Directory/folder of classes","Variable"], answer: 2 },
-          { q: "Which import syntax imports only static members of a class?", options: ["import java.lang.Math;","import static java.lang.Math.*;","include Math.*;","using Math.*;"], answer: 1 },
-          { q: "Which flag is used with javac to specify output directory for packages?", options: ["-o","-out","-d","-dir"], answer: 2 },
-          { q: "Which package contains networking classes like Socket and URL?", options: ["java.io","java.net","java.util","java.sql"], answer: 1 },
-          { q: "does 'import java.util.*' import sub-packages of java.util?", options: ["Yes always","Only if requested","No, never","Only in Java 9+"], answer: 2 },
-          { q: "Which package provides JDBC classes for database connectivity?", options: ["java.net","java.io","java.sql","java.db"], answer: 2 }
-        ]
-      },
-      // 7. String Manipulations
-      {
-        title: "Quiz 7: String Manipulations",
-        questions: [
-          { q: "Which method returns the length of a String?", options: ["size()","count()","length()","len()"], answer: 2 },
-          { q: "Which method converts a String to uppercase?", options: ["toUpper()","uppercase()","toUpperCase()","upper()"], answer: 2 },
-          { q: "Which method checks if two Strings are equal (case-sensitive)?", options: ["equals()","==","compare()","equalsTo()"], answer: 0 },
-          { q: "Which method extracts a part of a String?", options: ["slice()","mid()","substring()","extract()"], answer: 2 },
-          { q: "Strings in Java are:", options: ["Mutable","Primitive","Immutable","Dynamic"], answer: 2 },
-          { q: "Which class was introduced in JDK 5.0 as a faster alternative to StringBuffer?", options: ["StringUtil","StringParser","StringBuilder","StringHandler"], answer: 2 },
-          { q: "StringBuffer is thread-safe because its methods are:", options: ["static","final","synchronized","private"], answer: 2 },
-          { q: "Which class is used for splitting a string into tokens?", options: ["StringSplitter","StringParser","StringTokenizer","StringReader"], answer: 2 },
-          { q: "What does 'String s1 = \"Hello\"; String s2 = \"Hello\"; s1 == s2' evaluate to?", options: ["false always","true (same pool object)","Compilation error","Depends on JVM"], answer: 1 },
-          { q: "Which method removes leading and trailing whitespace from a String?", options: ["clean()","strip()","trim()","clear()"], answer: 2 }
-        ]
-      },
-      // 8. Exception Handling
-      {
-        title: "Quiz 8: Exception Handling",
-        questions: [
-          { q: "Which block always executes regardless of an exception?", options: ["try","catch","finally","throw"], answer: 2 },
-          { q: "Which keyword is used to throw an exception manually?", options: ["throws","catch","throw","raise"], answer: 2 },
-          { q: "What is the parent class of all exceptions in Java?", options: ["Error","RuntimeException","Throwable","Exception"], answer: 2 },
-          { q: "A checked exception must be:", options: ["Ignored","Caught or declared with throws","Only thrown","Only caught"], answer: 1 },
-          { q: "Which exception is thrown for division by zero?", options: ["NullPointerException","ArithmeticException","IOException","ClassCastException"], answer: 1 },
-          { q: "Which keyword is used to declare that a method may throw an exception?", options: ["throw","throws","catch","handles"], answer: 1 },
-          { q: "What type of error is 'nit i=10;' (misspelled keyword)?", options: ["Syntax Error","Semantic Error","Lexical Error","Runtime Error"], answer: 2 },
-          { q: "To create a user-defined exception, your class must extend:", options: ["Error","Throwable","RuntimeException","Exception"], answer: 3 },
-          { q: "Which termination is caused by an unhandled exception?", options: ["Smooth termination","Normal termination","Abnormal termination","Graceful shutdown"], answer: 2 },
-          { q: "Which exception is thrown when accessing an array out of bounds?", options: ["IndexException","ArrayException","ArrayIndexOutOfBoundsException","OutOfRangeException"], answer: 2 }
-        ]
-      },
-      // 9. Multi Threading
-      {
-        title: "Quiz 9: Multi Threading",
-        questions: [
-          { q: "Which interface must be implemented to create a thread in Java?", options: ["Thread","Runnable","Callable","Executable"], answer: 1 },
-          { q: "Which method starts a thread's execution?", options: ["run()","init()","start()","execute()"], answer: 2 },
-          { q: "Which method puts a thread to sleep?", options: ["Thread.pause()","Thread.wait()","Thread.sleep()","Thread.stop()"], answer: 2 },
-          { q: "What is synchronization used for in multithreading?", options: ["To speed up threads","To prevent race conditions","To stop threads","To create threads"], answer: 1 },
-          { q: "Which thread state means it is waiting for CPU time?", options: ["New","Running","Runnable","Dead"], answer: 2 },
-          { q: "Context switching between threads is called:", options: ["Heavy weight context switching","Light weight context switching","Thread hopping","Process switching"], answer: 1 },
-          { q: "A process is described as:", options: ["A set of instructions","A hardware component","A flow of execution to perform a task","A memory block"], answer: 2 },
-          { q: "Which is true about multi-threading vs single-threading?", options: ["Single-thread is faster","Multi-thread increases execution time","Multi-thread reduces execution time","They perform identically"], answer: 2 },
-          { q: "Which keyword ensures only one thread accesses a method at a time?", options: ["volatile","static","synchronized","transient"], answer: 2 },
-          { q: "Why is implementing Runnable preferred over extending Thread?", options: ["Runnable is faster","Java supports only single inheritance","Thread is deprecated","Runnable has more methods"], answer: 1 }
-        ]
-      },
-      // 10. IO Streams
-      {
-        title: "Quiz 10: IO Streams",
-        questions: [
-          { q: "Which class is used to read text from a file in Java?", options: ["FileWriter","BufferedWriter","FileReader","PrintWriter"], answer: 2 },
-          { q: "Which class wraps FileReader for efficient reading?", options: ["Scanner","BufferedReader","DataReader","StreamReader"], answer: 1 },
-          { q: "Which class is used to write text to a file?", options: ["FileReader","BufferedReader","FileWriter","Scanner"], answer: 2 },
-          { q: "Which stream reads raw bytes?", options: ["InputStream","Reader","Writer","OutputStream"], answer: 0 },
-          { q: "Which class is used for reading user input from the console?", options: ["System.in","InputReader","Scanner","BufferedInput"], answer: 2 },
-          { q: "What is the data unit size of a byte-oriented stream?", options: ["1 bit","2 bytes","1 byte","4 bytes"], answer: 2 },
-          { q: "What is the data unit size of a character-oriented stream?", options: ["1 byte","2 bytes","4 bytes","8 bytes"], answer: 1 },
-          { q: "All byte-oriented stream class names end with:", options: ["Reader","Writer","Stream","Buffer"], answer: 2 },
-          { q: "Which FileWriter constructor argument enables append mode?", options: ["FileWriter(file, false)","FileWriter(file, true)","FileWriter(file, 'a')","FileWriter(file, APPEND)"], answer: 1 },
-          { q: "Which package contains all Java IO stream classes?", options: ["java.lang","java.net","java.util","java.io"], answer: 3 }
-        ]
-      },
-      // 11. Collections Framework
-      {
-        title: "Quiz 11: Collections Framework",
-        questions: [
-          { q: "Which interface is the root of the Collection hierarchy?", options: ["List","Set","Collection","Map"], answer: 2 },
-          { q: "Which class implements a resizable array?", options: ["LinkedList","HashMap","ArrayList","TreeSet"], answer: 2 },
-          { q: "Which collection does NOT allow duplicate elements?", options: ["ArrayList","LinkedList","HashSet","Vector"], answer: 2 },
-          { q: "Which collection stores key-value pairs?", options: ["List","Set","Queue","Map"], answer: 3 },
-          { q: "Which List implementation is best for frequent insertions/deletions?", options: ["ArrayList","Vector","LinkedList","Stack"], answer: 2 },
-          { q: "What happens when you add an element beyond the size of an array?", options: ["It auto-expands","It wraps around","ArrayIndexOutOfBoundsException","NullPointerException"], answer: 2 },
-          { q: "Which collection maintains elements in sorted order automatically?", options: ["ArrayList","HashSet","LinkedList","TreeSet"], answer: 3 },
-          { q: "Which interface must a class implement to use with TreeSet for natural sorting?", options: ["Comparator","Serializable","Comparable","Sortable"], answer: 2 },
-          { q: "What does Collections.unmodifiableList() return?", options: ["A sorted list","A synchronized list","A read-only view of the list","A copy of the list"], answer: 2 },
-          { q: "By default, Collections allow which types of elements?", options: ["Homogeneous only","Primitive only","Heterogeneous (any type)","Only Strings"], answer: 2 }
-        ]
-      }
+      { title: "Quiz 1: Introduction & Java History", questions: [
+        { q: "In which year was Java first publicly released?", options: ["1991","1995","1999","2003"], answer: 1 },
+        { q: "Who is the original creator of Java?", options: ["Bjarne Stroustrup","Guido van Rossum","James Gosling","Dennis Ritchie"], answer: 2 },
+        { q: "Java was originally developed at which company?", options: ["Microsoft","Apple","IBM","Sun Microsystems"], answer: 3 },
+        { q: "What was Java's original project name?", options: ["Oak","Pine","Maple","Cedar"], answer: 0 },
+        { q: "Which company later acquired Sun Microsystems?", options: ["Google","Oracle","IBM","Microsoft"], answer: 1 },
+        { q: "Java is referred to as a 'dynamic' language because memory for primitives is allocated at:", options: ["Compile time","Link time","Runtime","Load time"], answer: 2 },
+        { q: "What does WORA stand for in Java?", options: ["Write Once Run Anywhere","Write Once Read Anywhere","Write Online Run Anywhere","Write Once Repeat Anywhere"], answer: 0 },
+        { q: "Which Java edition is used for enterprise-level server-side applications?", options: ["J2SE","J2ME","J2EE","JavaFX"], answer: 2 },
+        { q: "What version of Java introduced auto-boxing and var-args?", options: ["JDK 1.1","JDK 1.2","JDK 5.0","JDK 7"], answer: 2 },
+        { q: "Which Java version introduced Lambda Expressions and the Date-Time API?", options: ["Java 6","Java 7","Java 8","Java 9"], answer: 2 }
+      ]},
+      { title: "Quiz 2: First Java Application", questions: [
+        { q: "Which command is used to compile a Java program?", options: ["java","javac","javarun","compile"], answer: 1 },
+        { q: "Which command is used to run a compiled Java program?", options: ["javac","run","java","execute"], answer: 2 },
+        { q: "What is the file extension of a compiled Java class?", options: [".java",".exe",".class",".jar"], answer: 2 },
+        { q: "Which method is the entry point of every Java application?", options: ["start()","run()","init()","main()"], answer: 3 },
+        { q: "Which statement prints output to the console in Java?", options: ["console.log()","print()","System.out.println()","echo()"], answer: 2 },
+        { q: "How many public classes can be declared in a single .java file?", options: ["Unlimited","Two","One","Zero"], answer: 2 },
+        { q: "If a Java file contains a public class 'Student', what must the filename be?", options: ["Main.java","Program.java","Student.java","Any name"], answer: 2 },
+        { q: "Which of the following is a valid main() signature?", options: ["public void main(String[] args)","static public void main(String[] args)","public static int main(String[] args)","void main()"], answer: 1 },
+        { q: "What does the -d flag do in 'javac -d . MyClass.java'?", options: ["Deletes the source file","Sets the output directory for .class files","Enables debug mode","Disables warnings"], answer: 1 },
+        { q: "Which type of loading does Java use when importing packages?", options: ["Static Loading","Dynamic Loading","Lazy Loading","Eager Loading"], answer: 1 }
+      ]},
+      { title: "Quiz 3: Language Fundamentals", questions: [
+        { q: "Which of these is a valid Java identifier?", options: ["2name","_myVar","my-var","class"], answer: 1 },
+        { q: "What is the size of a `byte` data type in Java?", options: ["4 bits","8 bits","16 bits","32 bits"], answer: 1 },
+        { q: "Which keyword declares a constant in Java?", options: ["const","static","final","fixed"], answer: 2 },
+        { q: "What is the default value of an `int` variable in Java?", options: ["1","null","-1","0"], answer: 3 },
+        { q: "Which of these is NOT a primitive data type in Java?", options: ["int","float","String","boolean"], answer: 2 },
+        { q: "Which identifier is invalid in Java?", options: ["emp_Name","$salary","emp-addr","_id"], answer: 2 },
+        { q: "What is the size of a `char` data type in Java?", options: ["1 byte","2 bytes","4 bytes","8 bytes"], answer: 1 },
+        { q: "Which conversion is done automatically without data loss?", options: ["Narrowing","Explicit casting","Widening","Truncation"], answer: 2 },
+        { q: "What is the default value of a boolean instance variable?", options: ["true","null","0","false"], answer: 3 },
+        { q: "Local variables in Java must be:", options: ["Declared static","Initialised before use","Given default values","Declared at class level"], answer: 1 }
+      ]},
+      { title: "Quiz 4: Object Oriented Programming (OOPs)", questions: [
+        { q: "Which OOP concept hides internal implementation details?", options: ["Inheritance","Polymorphism","Encapsulation","Abstraction"], answer: 2 },
+        { q: "What keyword is used to create an object in Java?", options: ["create","object","new","make"], answer: 2 },
+        { q: "A class that cannot be instantiated is called:", options: ["Final class","Static class","Abstract class","Private class"], answer: 2 },
+        { q: "Which concept allows one class to acquire properties of another?", options: ["Encapsulation","Abstraction","Polymorphism","Inheritance"], answer: 3 },
+        { q: "What does a constructor do in Java?", options: ["Destroys an object","Initializes an object","Copies an object","Compares objects"], answer: 1 },
+        { q: "Which keyword refers to the current class object?", options: ["self","super","this","current"], answer: 2 },
+        { q: "Which keyword is used to call the parent class constructor?", options: ["this()","parent()","base()","super()"], answer: 3 },
+        { q: "Method overloading is resolved at:", options: ["Runtime","Link time","Compile time","Load time"], answer: 2 },
+        { q: "Which type of inheritance is NOT supported in Java via classes?", options: ["Single","Multi-level","Hierarchical","Multiple"], answer: 3 },
+        { q: "OOP languages provide better code reuse through:", options: ["Pointers","Goto statements","Inheritance","Macros"], answer: 2 }
+      ]},
+      { title: "Quiz 5: Wrapper Classes", questions: [
+        { q: "What is the wrapper class for `int` in Java?", options: ["Int","INTEGER","Integer","Inte"], answer: 2 },
+        { q: "Which process converts a primitive to its wrapper object?", options: ["Casting","Unboxing","Autoboxing","Wrapping"], answer: 2 },
+        { q: "Which process converts a wrapper object back to a primitive?", options: ["Autoboxing","Unboxing","Casting","Parsing"], answer: 1 },
+        { q: "Which method converts a String to an integer?", options: ["Integer.convert()","Integer.toInt()","Integer.parseInt()","Integer.valueOf()"], answer: 2 },
+        { q: "What is the wrapper class for `char`?", options: ["Char","CHARACTER","Character","Chr"], answer: 2 },
+        { q: "Auto-boxing was introduced in which JDK version?", options: ["JDK 1.0","JDK 1.1","JDK 1.4","JDK 5.0"], answer: 3 },
+        { q: "Wrapper class objects in Java are:", options: ["Mutable","Immutable","Abstract","Final only"], answer: 1 },
+        { q: "Which method converts an integer to its binary string representation?", options: ["Integer.toBinary()","Integer.toBinaryString()","Integer.parseBinary()","Integer.binary()"], answer: 1 },
+        { q: "What does Integer.MAX_VALUE return?", options: ["65535","2147483647","999999999","Long.MAX_VALUE"], answer: 1 },
+        { q: "Which conversion uses the toString() method?", options: ["Primitive to Object","String to Primitive","Object to String","String to Object"], answer: 2 }
+      ]},
+      { title: "Quiz 6: Java Packages", questions: [
+        { q: "Which keyword is used to define a package in Java?", options: ["import","include","package","namespace"], answer: 2 },
+        { q: "Which keyword is used to import a package?", options: ["include","using","import","require"], answer: 2 },
+        { q: "Which package is automatically imported in every Java program?", options: ["java.io","java.util","java.lang","java.net"], answer: 2 },
+        { q: "Which package contains the Scanner class?", options: ["java.lang","java.io","java.net","java.util"], answer: 3 },
+        { q: "A package is essentially a:", options: ["Class","Method","Directory/folder of classes","Variable"], answer: 2 },
+        { q: "Which import syntax imports only static members of a class?", options: ["import java.lang.Math;","import static java.lang.Math.*;","include Math.*;","using Math.*;"], answer: 1 },
+        { q: "Which flag is used with javac to specify output directory for packages?", options: ["-o","-out","-d","-dir"], answer: 2 },
+        { q: "Which package contains networking classes like Socket and URL?", options: ["java.io","java.net","java.util","java.sql"], answer: 1 },
+        { q: "Does 'import java.util.*' import sub-packages of java.util?", options: ["Yes always","Only if requested","No, never","Only in Java 9+"], answer: 2 },
+        { q: "Which package provides JDBC classes for database connectivity?", options: ["java.net","java.io","java.sql","java.db"], answer: 2 }
+      ]},
+      { title: "Quiz 7: String Manipulations", questions: [
+        { q: "Which method returns the length of a String?", options: ["size()","count()","length()","len()"], answer: 2 },
+        { q: "Which method converts a String to uppercase?", options: ["toUpper()","uppercase()","toUpperCase()","upper()"], answer: 2 },
+        { q: "Which method checks if two Strings are equal (case-sensitive)?", options: ["equals()","==","compare()","equalsTo()"], answer: 0 },
+        { q: "Which method extracts a part of a String?", options: ["slice()","mid()","substring()","extract()"], answer: 2 },
+        { q: "Strings in Java are:", options: ["Mutable","Primitive","Immutable","Dynamic"], answer: 2 },
+        { q: "Which class was introduced in JDK 5.0 as a faster alternative to StringBuffer?", options: ["StringUtil","StringParser","StringBuilder","StringHandler"], answer: 2 },
+        { q: "StringBuffer is thread-safe because its methods are:", options: ["static","final","synchronized","private"], answer: 2 },
+        { q: "Which class is used for splitting a string into tokens?", options: ["StringSplitter","StringParser","StringTokenizer","StringReader"], answer: 2 },
+        { q: "What does 'String s1 = \"Hello\"; String s2 = \"Hello\"; s1 == s2' evaluate to?", options: ["false always","true (same pool object)","Compilation error","Depends on JVM"], answer: 1 },
+        { q: "Which method removes leading and trailing whitespace from a String?", options: ["clean()","strip()","trim()","clear()"], answer: 2 }
+      ]},
+      { title: "Quiz 8: Exception Handling", questions: [
+        { q: "Which block always executes regardless of an exception?", options: ["try","catch","finally","throw"], answer: 2 },
+        { q: "Which keyword is used to throw an exception manually?", options: ["throws","catch","throw","raise"], answer: 2 },
+        { q: "What is the parent class of all exceptions in Java?", options: ["Error","RuntimeException","Throwable","Exception"], answer: 2 },
+        { q: "A checked exception must be:", options: ["Ignored","Caught or declared with throws","Only thrown","Only caught"], answer: 1 },
+        { q: "Which exception is thrown for division by zero?", options: ["NullPointerException","ArithmeticException","IOException","ClassCastException"], answer: 1 },
+        { q: "Which keyword is used to declare that a method may throw an exception?", options: ["throw","throws","catch","handles"], answer: 1 },
+        { q: "What type of error is 'nit i=10;' (misspelled keyword)?", options: ["Syntax Error","Semantic Error","Lexical Error","Runtime Error"], answer: 2 },
+        { q: "To create a user-defined exception, your class must extend:", options: ["Error","Throwable","RuntimeException","Exception"], answer: 3 },
+        { q: "Which termination is caused by an unhandled exception?", options: ["Smooth termination","Normal termination","Abnormal termination","Graceful shutdown"], answer: 2 },
+        { q: "Which exception is thrown when accessing an array out of bounds?", options: ["IndexException","ArrayException","ArrayIndexOutOfBoundsException","OutOfRangeException"], answer: 2 }
+      ]},
+      { title: "Quiz 9: Multi Threading", questions: [
+        { q: "Which interface must be implemented to create a thread in Java?", options: ["Thread","Runnable","Callable","Executable"], answer: 1 },
+        { q: "Which method starts a thread's execution?", options: ["run()","init()","start()","execute()"], answer: 2 },
+        { q: "Which method puts a thread to sleep?", options: ["Thread.pause()","Thread.wait()","Thread.sleep()","Thread.stop()"], answer: 2 },
+        { q: "What is synchronization used for in multithreading?", options: ["To speed up threads","To prevent race conditions","To stop threads","To create threads"], answer: 1 },
+        { q: "Which thread state means it is waiting for CPU time?", options: ["New","Running","Runnable","Dead"], answer: 2 },
+        { q: "Context switching between threads is called:", options: ["Heavy weight context switching","Light weight context switching","Thread hopping","Process switching"], answer: 1 },
+        { q: "A process is described as:", options: ["A set of instructions","A hardware component","A flow of execution to perform a task","A memory block"], answer: 2 },
+        { q: "Which is true about multi-threading vs single-threading?", options: ["Single-thread is faster","Multi-thread increases execution time","Multi-thread reduces execution time","They perform identically"], answer: 2 },
+        { q: "Which keyword ensures only one thread accesses a method at a time?", options: ["volatile","static","synchronized","transient"], answer: 2 },
+        { q: "Why is implementing Runnable preferred over extending Thread?", options: ["Runnable is faster","Java supports only single inheritance","Thread is deprecated","Runnable has more methods"], answer: 1 }
+      ]},
+      { title: "Quiz 10: IO Streams", questions: [
+        { q: "Which class is used to read text from a file in Java?", options: ["FileWriter","BufferedWriter","FileReader","PrintWriter"], answer: 2 },
+        { q: "Which class wraps FileReader for efficient reading?", options: ["Scanner","BufferedReader","DataReader","StreamReader"], answer: 1 },
+        { q: "Which class is used to write text to a file?", options: ["FileReader","BufferedReader","FileWriter","Scanner"], answer: 2 },
+        { q: "Which stream reads raw bytes?", options: ["InputStream","Reader","Writer","OutputStream"], answer: 0 },
+        { q: "Which class is used for reading user input from the console?", options: ["System.in","InputReader","Scanner","BufferedInput"], answer: 2 },
+        { q: "What is the data unit size of a byte-oriented stream?", options: ["1 bit","2 bytes","1 byte","4 bytes"], answer: 2 },
+        { q: "What is the data unit size of a character-oriented stream?", options: ["1 byte","2 bytes","4 bytes","8 bytes"], answer: 1 },
+        { q: "All byte-oriented stream class names end with:", options: ["Reader","Writer","Stream","Buffer"], answer: 2 },
+        { q: "Which FileWriter constructor argument enables append mode?", options: ["FileWriter(file, false)","FileWriter(file, true)","FileWriter(file, 'a')","FileWriter(file, APPEND)"], answer: 1 },
+        { q: "Which package contains all Java IO stream classes?", options: ["java.lang","java.net","java.util","java.io"], answer: 3 }
+      ]},
+      { title: "Quiz 11: Collections Framework", questions: [
+        { q: "Which interface is the root of the Collection hierarchy?", options: ["List","Set","Collection","Map"], answer: 2 },
+        { q: "Which class implements a resizable array?", options: ["LinkedList","HashMap","ArrayList","TreeSet"], answer: 2 },
+        { q: "Which collection does NOT allow duplicate elements?", options: ["ArrayList","LinkedList","HashSet","Vector"], answer: 2 },
+        { q: "Which collection stores key-value pairs?", options: ["List","Set","Queue","Map"], answer: 3 },
+        { q: "Which List implementation is best for frequent insertions/deletions?", options: ["ArrayList","Vector","LinkedList","Stack"], answer: 2 },
+        { q: "What happens when you add an element beyond the size of an array?", options: ["It auto-expands","It wraps around","ArrayIndexOutOfBoundsException","NullPointerException"], answer: 2 },
+        { q: "Which collection maintains elements in sorted order automatically?", options: ["ArrayList","HashSet","LinkedList","TreeSet"], answer: 3 },
+        { q: "Which interface must a class implement to use with TreeSet for natural sorting?", options: ["Comparator","Serializable","Comparable","Sortable"], answer: 2 },
+        { q: "What does Collections.unmodifiableList() return?", options: ["A sorted list","A synchronized list","A read-only view of the list","A copy of the list"], answer: 2 },
+        { q: "By default, Collections allow which types of elements?", options: ["Homogeneous only","Primitive only","Heterogeneous (any type)","Only Strings"], answer: 2 }
+      ]}
     ];
 
+    /* ── QUIZ STATE ── */
     let currentQuizIndex = 0;
+    let currentQ = 0;
+    let userAnswers = [];
+    let quizSubmitted = false;
+
+    const ALPHA = ['A','B','C','D'];
 
     function openQuiz(index) {
       currentQuizIndex = index;
+      currentQ = 0;
+      quizSubmitted = false;
+      userAnswers = new Array(10).fill(null);
+
       const data = quizData[index];
       document.getElementById('quiz-title').textContent = data.title;
-      document.getElementById('quiz-result').textContent = '';
 
-      let formHtml = '';
-      data.questions.forEach((q, qi) => {
-        formHtml += `<div class="question">${qi + 1}. ${q.q}</div>`;
-        q.options.forEach((opt, oi) => {
-          formHtml += `<label><input type="radio" name="q${qi}" value="${oi}"> ${opt}</label>`;
-        });
-      });
-      formHtml += `<button type="button" class="submit-btn" onclick="submitQuiz()">Submit</button>`;
-      document.getElementById('quizForm').innerHTML = formHtml;
+      // Build question nav dots
+      const navEl = document.getElementById('qNav');
+      navEl.innerHTML = data.questions.map((_, i) =>
+        `<div class="q-dot" id="qdot-${i}" onclick="jumpTo(${i})">${i+1}</div>`
+      ).join('');
+
+      // Build question blocks
+      const bodyEl = document.getElementById('quizBody');
+      bodyEl.innerHTML = data.questions.map((q, qi) => `
+        <div class="q-block" id="qb-${qi}">
+          <div class="q-text">${qi+1}. ${q.q}</div>
+          <div class="options-list">
+            ${q.options.map((opt, oi) => `
+              <label class="option-label" id="opt-${qi}-${oi}" onclick="selectOption(${qi},${oi})">
+                <input type="radio" name="q${qi}" value="${oi}">
+                <span class="option-bullet">${ALPHA[oi]}</span>
+                ${opt}
+              </label>
+            `).join('')}
+          </div>
+        </div>
+      `).join('');
+
+      document.getElementById('quizResultScreen').style.display = 'none';
+      document.getElementById('quizProgress').style.display = '';
+      document.getElementById('qNav').style.display = '';
+      document.getElementById('quizBody').style.display = '';
+      document.getElementById('quizFooter').style.display = '';
       document.getElementById('quizModal').style.display = 'block';
+      document.body.style.overflow = 'hidden';
+
+      renderQuestion(0);
+    }
+
+    function renderQuestion(qi) {
+      document.querySelectorAll('.q-block').forEach(b => b.classList.remove('active'));
+      document.getElementById('qb-' + qi).classList.add('active');
+
+      // Update nav dots
+      document.querySelectorAll('.q-dot').forEach((d, i) => {
+        d.className = 'q-dot' + (i === qi ? ' current' : (userAnswers[i] !== null ? ' answered' : ''));
+      });
+
+      // Update progress
+      const answered = userAnswers.filter(a => a !== null).length;
+      document.getElementById('prog-label').textContent = `Question ${qi+1} of 10`;
+      document.getElementById('prog-answered').textContent = `${answered} answered`;
+      document.getElementById('progressFill').style.width = (answered / 10 * 100) + '%';
+
+      // Buttons
+      document.getElementById('btnPrev').disabled = (qi === 0);
+      const isLast = (qi === 9);
+      document.getElementById('btnNext').style.display = isLast ? 'none' : '';
+      document.getElementById('btnSubmit').style.display = isLast ? '' : 'none';
+
+      currentQ = qi;
+    }
+
+    function selectOption(qi, oi) {
+      if (quizSubmitted) return;
+      userAnswers[qi] = oi;
+      // Update visual
+      for (let i = 0; i < 4; i++) {
+        const el = document.getElementById(`opt-${qi}-${i}`);
+        el.classList.toggle('selected', i === oi);
+      }
+      // Update dot
+      const dot = document.getElementById('qdot-' + qi);
+      if (dot && !dot.classList.contains('current')) dot.classList.add('answered');
+      // Update progress
+      const answered = userAnswers.filter(a => a !== null).length;
+      document.getElementById('prog-answered').textContent = `${answered} answered`;
+      document.getElementById('progressFill').style.width = (answered / 10 * 100) + '%';
+    }
+
+    function goQuestion(dir) {
+      const next = currentQ + dir;
+      if (next >= 0 && next < 10) renderQuestion(next);
+    }
+
+    function jumpTo(qi) { renderQuestion(qi); }
+
+    function submitQuiz() {
+      const data = quizData[currentQuizIndex];
+      let score = 0, skipped = 0;
+      userAnswers.forEach((ans, qi) => {
+        if (ans === null) { skipped++; return; }
+        if (ans === data.questions[qi].answer) score++;
+      });
+      const wrong = 10 - score - skipped;
+      const pct = Math.round(score / 10 * 100);
+
+      quizSubmitted = true;
+
+      // Hide quiz UI
+      document.getElementById('quizProgress').style.display = 'none';
+      document.getElementById('qNav').style.display = 'none';
+      document.getElementById('quizBody').style.display = 'none';
+      document.getElementById('quizFooter').style.display = 'none';
+
+      // Show result
+      const rs = document.getElementById('quizResultScreen');
+      rs.style.display = 'block';
+
+      const ring = document.getElementById('resultRing');
+      ring.style.borderColor = pct >= 70 ? 'var(--green)' : pct >= 40 ? 'var(--gold)' : 'var(--red)';
+      document.getElementById('scoreNum').textContent = score;
+      document.getElementById('scoreOf').textContent = '/ 10';
+      document.getElementById('resultMsg').textContent = pct >= 80 ? '🎉 Excellent!' : pct >= 60 ? '👍 Good job!' : pct >= 40 ? '📚 Keep practicing!' : '💪 Try again!';
+      document.getElementById('resultMsg').style.color = pct >= 70 ? 'var(--green)' : pct >= 40 ? 'var(--gold)' : 'var(--red)';
+      document.getElementById('resultPct').textContent = `You scored ${pct}% on this quiz`;
+      document.getElementById('rbCorrect').textContent = score;
+      document.getElementById('rbWrong').textContent = wrong;
+      document.getElementById('rbSkipped').textContent = skipped;
+    }
+
+    function reviewAnswers() {
+      const data = quizData[currentQuizIndex];
+      // Show quiz body again with answers revealed
+      document.getElementById('quizResultScreen').style.display = 'none';
+      document.getElementById('quizProgress').style.display = '';
+      document.getElementById('qNav').style.display = '';
+      document.getElementById('quizBody').style.display = '';
+      document.getElementById('quizFooter').style.display = '';
+
+      // Color all options
+      data.questions.forEach((q, qi) => {
+        for (let oi = 0; oi < 4; oi++) {
+          const el = document.getElementById(`opt-${qi}-${oi}`);
+          el.classList.remove('selected');
+          if (oi === q.answer) {
+            el.classList.add('correct-ans');
+          } else if (userAnswers[qi] === oi) {
+            el.classList.add('wrong-ans');
+          }
+        }
+        // Update dots
+        const dot = document.getElementById('qdot-' + qi);
+        dot.classList.remove('answered', 'current');
+        if (userAnswers[qi] === q.answer) dot.classList.add('correct');
+        else dot.classList.add('wrong');
+      });
+
+      document.getElementById('btnPrev').disabled = false;
+      document.getElementById('btnNext').style.display = '';
+      document.getElementById('btnSubmit').style.display = 'none';
+      renderQuestion(0);
+      // Prevent re-selection
+    }
+
+    function retakeQuiz() {
+      openQuiz(currentQuizIndex);
     }
 
     function closeQuiz() {
       document.getElementById('quizModal').style.display = 'none';
+      document.body.style.overflow = '';
     }
 
-    function submitQuiz() {
-      const data = quizData[currentQuizIndex];
-      let score = 0;
-      let allAnswered = true;
-
-      for (let qi = 0; qi < data.questions.length; qi++) {
-        const sel = document.querySelector(`input[name="q${qi}"]:checked`);
-        if (!sel) { allAnswered = false; break; }
-        if (parseInt(sel.value) === data.questions[qi].answer) score++;
-      }
-
-      const result = document.getElementById('quiz-result');
-      if (!allAnswered) {
-        result.style.color = '#E85050';
-        result.textContent = 'Please answer all questions before submitting.';
-      } else {
-        const pct = Math.round((score / data.questions.length) * 100);
-        result.style.color = score >= 3 ? '#6ECA8F' : '#E8834A';
-        result.textContent = `Your score: ${score} / ${data.questions.length}  (${pct}%)`;
-      }
+    function handleOverlayClick(e) {
+      if (e.target === document.getElementById('quizModal')) closeQuiz();
     }
 
-    document.getElementById('quizModal').addEventListener('click', function(e) {
-      if (e.target === this) closeQuiz();
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeQuiz();
+      if (!document.getElementById('quizModal').style.display || document.getElementById('quizModal').style.display === 'none') return;
+      if (e.key === 'ArrowRight') goQuestion(1);
+      if (e.key === 'ArrowLeft') goQuestion(-1);
     });
   </script>
-
-  <!-- Syllabus & Lab Manual Sections -->
-  <style>
-    .section-block {
-      max-width: 860px;
-      margin: 56px auto 0;
-    }
-    .section-heading {
-      font-size: 1.55em;
-      font-weight: bold;
-      color: #E8C9A0;
-      border-left: 4px solid #E8834A;
-      padding-left: 14px;
-      margin-bottom: 20px;
-    }
-    .section-sub {
-      color: #9E9A94;
-      font-size: 0.88em;
-      margin-bottom: 20px;
-    }
-    .syl-table {
-      width: 100%;
-      border-collapse: collapse;
-      background: #24211E;
-      border-radius: 10px;
-      overflow: hidden;
-      margin-bottom: 36px;
-    }
-    .syl-table th {
-      background: #2F2B27;
-      color: #E8C9A0;
-      padding: 11px 14px;
-      text-align: left;
-      font-size: 0.88em;
-      letter-spacing: 0.04em;
-      border-bottom: 1px solid #3D3835;
-    }
-    .syl-table td {
-      padding: 10px 14px;
-      font-size: 0.88em;
-      color: #DDD9D3;
-      border-bottom: 1px solid #2E2B28;
-      vertical-align: top;
-    }
-    .syl-table tr:last-child td { border-bottom: none; }
-    .syl-table tr:hover td { background: #29251F; }
-    .co-tag {
-      display: inline-block;
-      padding: 2px 8px;
-      border-radius: 4px;
-      font-size: 0.78em;
-      font-weight: bold;
-      background: #3A2E1E;
-      color: #E8834A;
-      white-space: nowrap;
-    }
-    .co1 { background:#1E2E2A; color:#6ECA8F; }
-    .co2 { background:#1E2638; color:#6AB4E8; }
-    .co3 { background:#2E1E2E; color:#C87AE0; }
-    .co4 { background:#2E2A1E; color:#E8C96E; }
-    .info-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-      margin-bottom: 24px;
-    }
-    .info-chip {
-      background: #24211E;
-      border: 1px solid #3D3835;
-      border-radius: 8px;
-      padding: 10px 18px;
-      font-size: 0.84em;
-    }
-    .info-chip .lbl { color: #9E9A94; display: block; font-size: 0.82em; margin-bottom: 3px; }
-    .info-chip .val { color: #E8C9A0; font-weight: bold; }
-    .lab-table {
-      width: 100%;
-      border-collapse: collapse;
-      background: #24211E;
-      border-radius: 10px;
-      overflow: hidden;
-      margin-bottom: 14px;
-    }
-    .lab-table th {
-      background: #2F2B27;
-      color: #E8C9A0;
-      padding: 11px 14px;
-      text-align: left;
-      font-size: 0.88em;
-      border-bottom: 1px solid #3D3835;
-    }
-    .lab-table td {
-      padding: 10px 14px;
-      font-size: 0.87em;
-      color: #DDD9D3;
-      border-bottom: 1px solid #2E2B28;
-      vertical-align: top;
-    }
-    .lab-table tr:last-child td { border-bottom: none; }
-    .lab-table tr:hover td { background: #29251F; }
-    .exp-title { color: #F0EDE8; font-weight: 600; }
-    .exp-num { color: #E8834A; font-weight: bold; font-size: 0.82em; }
-    .co-outcome-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-bottom: 32px;
-    }
-    .co-card {
-      background: #24211E;
-      border: 1px solid #3D3835;
-      border-radius: 8px;
-      padding: 14px 16px;
-    }
-    .co-card .co-id { font-weight: bold; font-size: 0.82em; margin-bottom: 5px; }
-    .co-card .co-text { font-size: 0.83em; color: #C8C4BE; line-height: 1.5; }
-  </style>
-
-  <div class="section-block">
-    <div class="section-heading">&#128203; Course Syllabus</div>
-    <p class="section-sub">23CM9201 &middot; Java Programming Practices &middot; R23 Regulation &middot; CSE (AI &amp; ML) &middot; ANITS Engineering College</p>
-
-    <div class="info-row">
-      <div class="info-chip"><span class="lbl">Course Code</span><span class="val">23CM9201</span></div>
-      <div class="info-chip"><span class="lbl">Category</span><span class="val">PC (Professional Core)</span></div>
-      <div class="info-chip"><span class="lbl">L&middot;T&middot;P</span><span class="val">1 &middot; 0 &middot; 3</span></div>
-      <div class="info-chip"><span class="lbl">Credits</span><span class="val">2.5</span></div>
-      <div class="info-chip"><span class="lbl">Total Hours</span><span class="val">75 (30 Theory + 45 Lab)</span></div>
-      <div class="info-chip"><span class="lbl">Marks</span><span class="val">100 (60 Sessional + 40 End Exam)</span></div>
-    </div>
-
-    <div style="margin-bottom:18px; font-size:0.88em; color:#9E9A94;">
-      <strong style="color:#E8C9A0;">Prerequisites:</strong> Basic computer fundamentals, knowledge of C / C++ programming.
-    </div>
-
-    <div style="margin-bottom:8px; color:#E8C9A0; font-weight:600; font-size:0.93em;">Course Outcomes</div>
-    <div class="co-outcome-grid">
-      <div class="co-card"><div class="co-id co1">CO-1</div><div class="co-text">Develop classes for real-time applications and establish connectivity among classes using inheritance and strings.</div></div>
-      <div class="co-card"><div class="co-id co2">CO-2</div><div class="co-text">Modularize the application using packages, interfaces and file concepts.</div></div>
-      <div class="co-card"><div class="co-id co3">CO-3</div><div class="co-text">Apply threads on classes to achieve parallelism through synchronization and develop test cases using exception handling.</div></div>
-      <div class="co-card"><div class="co-id co4">CO-4</div><div class="co-text">Solve complex problems using the collection framework.</div></div>
-    </div>
-
-    <div style="margin-bottom:14px; color:#E8C9A0; font-weight:600; font-size:0.93em;">Week-wise Schedule</div>
-    <table class="syl-table">
-      <thead>
-        <tr>
-          <th style="width:100px">Week</th>
-          <th>Topics</th>
-          <th>Sample Program</th>
-          <th style="width:60px">CO</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Week 1 &amp; 2</td>
-          <td>Fundamentals of OOP: Object-oriented paradigm, Objects &amp; Classes, Data Abstraction, Encapsulation, Inheritance, Polymorphism, Dynamic Binding</td>
-          <td>Bank Account Management System (Account, SavingsAccount, CurrentAccount)</td>
-          <td><span class="co-tag co1">CO1</span></td>
-        </tr>
-        <tr>
-          <td>Week 3</td>
-          <td>Java Programming: Buzzwords, Data types, Variables, Operators, Control structures, Arrays, Console I/O</td>
-          <td>Prime Palindrome Check; Command Line Arguments &ndash; Marks Total &amp; Average</td>
-          <td><span class="co-tag co1">CO1</span></td>
-        </tr>
-        <tr>
-          <td>Week 4 &amp; 5</td>
-          <td>Classes, Objects, Constructors, Methods, Parameter Passing, Method &amp; Constructor Overloading</td>
-          <td>Farm Animals application; Class Diagram (Customer, Order, SpecialOrder, NormalOrder); Employee data by cadre</td>
-          <td><span class="co-tag co1">CO1</span></td>
-        </tr>
-        <tr>
-          <td>Week 6</td>
-          <td>Static fields &amp; methods, <code>this</code> reference, <code>final</code> keyword, String Handling</td>
-          <td>Longest Substring Without Repeating Characters</td>
-          <td><span class="co-tag co1">CO1</span></td>
-        </tr>
-        <tr>
-          <td>Week 7</td>
-          <td>Inheritance &ndash; Types, <code>super</code> keyword, Member Access, <code>final</code>. Polymorphism &ndash; Dynamic Binding, Method Overriding, Abstract Classes</td>
-          <td>Banking System: Method Overriding with RBI, SBI, HDFC</td>
-          <td><span class="co-tag co1">CO1</span></td>
-        </tr>
-        <tr>
-          <td>Week 8</td>
-          <td>Interfaces &ndash; Defining, Implementing, Accessing via interface references, Extending interfaces</td>
-          <td>Employee Categories &ndash; Regular, Contract, Vendor salary calculation</td>
-          <td><span class="co-tag co2">CO2</span></td>
-        </tr>
-        <tr>
-          <td>Week 9</td>
-          <td>Packages &ndash; Defining, Creating, Accessing, Importing packages</td>
-          <td>Roman to Integer conversion using a custom package</td>
-          <td><span class="co-tag co2">CO2</span></td>
-        </tr>
-        <tr>
-          <td>Week 10</td>
-          <td>I/O &ndash; Reading and writing files</td>
-          <td>Pattern frequency count ('pe', 'pi') in a text file</td>
-          <td><span class="co-tag co2">CO2</span></td>
-        </tr>
-        <tr>
-          <td>Week 11</td>
-          <td>Exception Handling &ndash; try/catch, throw, throws, finally, multiple catches, built-in &amp; user-defined exceptions</td>
-          <td>Mobile Number Validator with custom exceptions</td>
-          <td><span class="co-tag co3">CO3</span></td>
-        </tr>
-        <tr>
-          <td>Week 12</td>
-          <td>Multithreading &ndash; Thread priorities, synchronization, creating multiple threads</td>
-          <td>Seat Reservation System using synchronization</td>
-          <td><span class="co-tag co3">CO3</span></td>
-        </tr>
-        <tr>
-          <td>Week 13</td>
-          <td>Collection Framework &ndash; Collection, List, Set, Queue interfaces</td>
-          <td>Letter Combinations of a Phone Number</td>
-          <td><span class="co-tag co4">CO4</span></td>
-        </tr>
-        <tr>
-          <td>Week 14</td>
-          <td>Collection Classes &ndash; ArrayList, LinkedList, HashSet, TreeSet, PriorityQueue</td>
-          <td>Valid Parentheses using Stack and TreeSet</td>
-          <td><span class="co-tag co4">CO4</span></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="section-block" style="margin-bottom: 60px;">
-    <div class="section-heading">&#129514; Lab Manual</div>
-    <p class="section-sub">Java Programming Practices Lab &middot; 23CM9201 &middot; Academic Year 2026&ndash;27 &middot; CSE (AI &amp; ML)</p>
-
-    <div style="margin-bottom:16px; font-size:0.87em; color:#9E9A94; line-height:1.7;">
-      <strong style="color:#E8C9A0;">Lab Objectives:</strong> Understand OOP concepts and apply them in problem solving using Java; learn Java console programming.<br>
-      <strong style="color:#E8C9A0;">Software Required:</strong> JDK 8+, Eclipse / NetBeans / IntelliJ IDEA / VS Code with Java Extension, Windows 10/11 or Ubuntu Linux.
-    </div>
-
-    <div style="margin-bottom:14px; color:#E8C9A0; font-weight:600; font-size:0.93em;">List of Experiments</div>
-    <table class="lab-table">
-      <thead>
-        <tr>
-          <th style="width:70px">#</th>
-          <th style="width:100px">Week</th>
-          <th>Experiment Title &amp; Description</th>
-          <th style="width:60px">CO</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><span class="exp-num">Exp 1</span></td>
-          <td>1 &amp; 2</td>
-          <td><div class="exp-title">Bank Account Management System</div>OOP: Classes, Encapsulation, Inheritance, Polymorphism, Dynamic Binding. Classes: Account, SavingsAccount, CurrentAccount.</td>
-          <td><span class="co-tag co1">CO1</span></td>
-        </tr>
-        <tr>
-          <td><span class="exp-num">Exp 2</span></td>
-          <td>3</td>
-          <td><div class="exp-title">Java Basics &ndash; Prime Palindrome Check</div>Check whether a given number is a prime palindrome.</td>
-          <td><span class="co-tag co1">CO1</span></td>
-        </tr>
-        <tr>
-          <td><span class="exp-num">Exp 3</span></td>
-          <td>3</td>
-          <td><div class="exp-title">Java Basics &ndash; Command Line Arguments</div>Read marks of five subjects via command line; print total and average.</td>
-          <td><span class="co-tag co1">CO1</span></td>
-        </tr>
-        <tr>
-          <td><span class="exp-num">Exp 4</span></td>
-          <td>4 &amp; 5</td>
-          <td><div class="exp-title">Classes and Objects &ndash; Farm Animals Application</div>Design a farm animals app: where they stay, what they eat, the sound they make.</td>
-          <td><span class="co-tag co1">CO1</span></td>
-        </tr>
-        <tr>
-          <td><span class="exp-num">Exp 5</span></td>
-          <td>4 &amp; 5</td>
-          <td><div class="exp-title">Class Diagram &ndash; Customer, Order, SpecialOrder, NormalOrder</div>Implement a class diagram with Customer, Order, SpecialOrder, and NormalOrder.</td>
-          <td><span class="co-tag co1">CO1</span></td>
-        </tr>
-        <tr>
-          <td><span class="exp-num">Exp 6</span></td>
-          <td>4 &amp; 5</td>
-          <td><div class="exp-title">Constructor Overloading &ndash; Employee Data by Cadre</div>Maintain employee data (name, id, designation, salary, promotion status) using constructor overloading.</td>
-          <td><span class="co-tag co1">CO1</span></td>
-        </tr>
-        <tr>
-          <td><span class="exp-num">Exp 7</span></td>
-          <td>6</td>
-          <td><div class="exp-title">String Handling &ndash; Longest Substring Without Repeating Characters</div>"abcabcbb" &rarr; 3 ("abc"), "pwwkew" &rarr; 3 ("wke").</td>
-          <td><span class="co-tag co1">CO1</span></td>
-        </tr>
-        <tr>
-          <td><span class="exp-num">Exp 8</span></td>
-          <td>7</td>
-          <td><div class="exp-title">Method Overriding &ndash; Banking System (RBI, SBI, HDFC)</div>Dynamic polymorphism: RBI 4%, SBI 7%, HDFC rate via overriding.</td>
-          <td><span class="co-tag co1">CO1</span></td>
-        </tr>
-        <tr>
-          <td><span class="exp-num">Exp 9</span></td>
-          <td>8</td>
-          <td><div class="exp-title">Interfaces &ndash; Employee Categories</div>Monthly salary for Regular, Contract, and Vendor employees using interfaces.</td>
-          <td><span class="co-tag co2">CO2</span></td>
-        </tr>
-        <tr>
-          <td><span class="exp-num">Exp 10</span></td>
-          <td>9</td>
-          <td><div class="exp-title">Packages &ndash; Roman to Integer Conversion</div>Define package <code>number</code> with <code>Roman</code> class; implement <code>romanToInteger()</code>. "LVIII" &rarr; 58.</td>
-          <td><span class="co-tag co2">CO2</span></td>
-        </tr>
-        <tr>
-          <td><span class="exp-num">Exp 11</span></td>
-          <td>10</td>
-          <td><div class="exp-title">File Handling &ndash; Pattern Frequency Count</div>Count occurrences of 'pe' and 'pi' in sample.txt. Expected: 'pe'=20, 'pi'=12.</td>
-          <td><span class="co-tag co2">CO2</span></td>
-        </tr>
-        <tr>
-          <td><span class="exp-num">Exp 12</span></td>
-          <td>11</td>
-          <td><div class="exp-title">Exception Handling &ndash; Mobile Number Validator</div>Validate 10-digit mobile; raise ArrayIndexOutOfBoundsException, LengthNotSufficientException, or NumberFormatException.</td>
-          <td><span class="co-tag co3">CO3</span></td>
-        </tr>
-        <tr>
-          <td><span class="exp-num">Exp 13</span></td>
-          <td>12</td>
-          <td><div class="exp-title">Multithreading &ndash; Seat Reservation System</div>Reserve seats from 100 using synchronized threads; only one person thread accesses reserve at a time.</td>
-          <td><span class="co-tag co3">CO3</span></td>
-        </tr>
-        <tr>
-          <td><span class="exp-num">Exp 14</span></td>
-          <td>13</td>
-          <td><div class="exp-title">Collection Framework &ndash; Letter Combinations of Phone Number</div>Given digits 2&ndash;9, return all letter combinations (T9 keypad). "23" &rarr; ["ad","ae","af","bd","be","bf","cd","ce","cf"].</td>
-          <td><span class="co-tag co4">CO4</span></td>
-        </tr>
-        <tr>
-          <td><span class="exp-num">Exp 15</span></td>
-          <td>14</td>
-          <td><div class="exp-title">Collection Classes &ndash; Valid Parentheses</div>Check if a string of '()', '{}', '[]' is valid using Stack and TreeSet.</td>
-          <td><span class="co-tag co4">CO4</span></td>
-        </tr>
-      </tbody>
-    </table>
-
-    <div style="font-size:0.82em; color:#6E6A64; margin-top:8px;">
-      &#8505;&#65039; Observation book must include: Aim &middot; Algorithm/Procedure &middot; Program Code &middot; Output/Screenshots &middot; Viva-Voce Q&amp;A &middot; Errors Observed.
-    </div>
-  </div>
 </body>
 </html>
