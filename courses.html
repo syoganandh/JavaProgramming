@@ -462,5 +462,352 @@
       if (e.target === this) closeQuiz();
     });
   </script>
+
+  <!-- Syllabus & Lab Manual Sections -->
+  <style>
+    .section-block {
+      max-width: 860px;
+      margin: 56px auto 0;
+    }
+    .section-heading {
+      font-size: 1.55em;
+      font-weight: bold;
+      color: #E8C9A0;
+      border-left: 4px solid #E8834A;
+      padding-left: 14px;
+      margin-bottom: 20px;
+    }
+    .section-sub {
+      color: #9E9A94;
+      font-size: 0.88em;
+      margin-bottom: 20px;
+    }
+    .syl-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #24211E;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 36px;
+    }
+    .syl-table th {
+      background: #2F2B27;
+      color: #E8C9A0;
+      padding: 11px 14px;
+      text-align: left;
+      font-size: 0.88em;
+      letter-spacing: 0.04em;
+      border-bottom: 1px solid #3D3835;
+    }
+    .syl-table td {
+      padding: 10px 14px;
+      font-size: 0.88em;
+      color: #DDD9D3;
+      border-bottom: 1px solid #2E2B28;
+      vertical-align: top;
+    }
+    .syl-table tr:last-child td { border-bottom: none; }
+    .syl-table tr:hover td { background: #29251F; }
+    .co-tag {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.78em;
+      font-weight: bold;
+      background: #3A2E1E;
+      color: #E8834A;
+      white-space: nowrap;
+    }
+    .co1 { background:#1E2E2A; color:#6ECA8F; }
+    .co2 { background:#1E2638; color:#6AB4E8; }
+    .co3 { background:#2E1E2E; color:#C87AE0; }
+    .co4 { background:#2E2A1E; color:#E8C96E; }
+    .info-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+    .info-chip {
+      background: #24211E;
+      border: 1px solid #3D3835;
+      border-radius: 8px;
+      padding: 10px 18px;
+      font-size: 0.84em;
+    }
+    .info-chip .lbl { color: #9E9A94; display: block; font-size: 0.82em; margin-bottom: 3px; }
+    .info-chip .val { color: #E8C9A0; font-weight: bold; }
+    .lab-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #24211E;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 14px;
+    }
+    .lab-table th {
+      background: #2F2B27;
+      color: #E8C9A0;
+      padding: 11px 14px;
+      text-align: left;
+      font-size: 0.88em;
+      border-bottom: 1px solid #3D3835;
+    }
+    .lab-table td {
+      padding: 10px 14px;
+      font-size: 0.87em;
+      color: #DDD9D3;
+      border-bottom: 1px solid #2E2B28;
+      vertical-align: top;
+    }
+    .lab-table tr:last-child td { border-bottom: none; }
+    .lab-table tr:hover td { background: #29251F; }
+    .exp-title { color: #F0EDE8; font-weight: 600; }
+    .exp-num { color: #E8834A; font-weight: bold; font-size: 0.82em; }
+    .co-outcome-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+    .co-card {
+      background: #24211E;
+      border: 1px solid #3D3835;
+      border-radius: 8px;
+      padding: 14px 16px;
+    }
+    .co-card .co-id { font-weight: bold; font-size: 0.82em; margin-bottom: 5px; }
+    .co-card .co-text { font-size: 0.83em; color: #C8C4BE; line-height: 1.5; }
+  </style>
+
+  <div class="section-block">
+    <div class="section-heading">&#128203; Course Syllabus</div>
+    <p class="section-sub">23CM9201 &middot; Java Programming Practices &middot; R23 Regulation &middot; CSE (AI &amp; ML) &middot; ANITS Engineering College</p>
+
+    <div class="info-row">
+      <div class="info-chip"><span class="lbl">Course Code</span><span class="val">23CM9201</span></div>
+      <div class="info-chip"><span class="lbl">Category</span><span class="val">PC (Professional Core)</span></div>
+      <div class="info-chip"><span class="lbl">L&middot;T&middot;P</span><span class="val">1 &middot; 0 &middot; 3</span></div>
+      <div class="info-chip"><span class="lbl">Credits</span><span class="val">2.5</span></div>
+      <div class="info-chip"><span class="lbl">Total Hours</span><span class="val">75 (30 Theory + 45 Lab)</span></div>
+      <div class="info-chip"><span class="lbl">Marks</span><span class="val">100 (60 Sessional + 40 End Exam)</span></div>
+    </div>
+
+    <div style="margin-bottom:18px; font-size:0.88em; color:#9E9A94;">
+      <strong style="color:#E8C9A0;">Prerequisites:</strong> Basic computer fundamentals, knowledge of C / C++ programming.
+    </div>
+
+    <div style="margin-bottom:8px; color:#E8C9A0; font-weight:600; font-size:0.93em;">Course Outcomes</div>
+    <div class="co-outcome-grid">
+      <div class="co-card"><div class="co-id co1">CO-1</div><div class="co-text">Develop classes for real-time applications and establish connectivity among classes using inheritance and strings.</div></div>
+      <div class="co-card"><div class="co-id co2">CO-2</div><div class="co-text">Modularize the application using packages, interfaces and file concepts.</div></div>
+      <div class="co-card"><div class="co-id co3">CO-3</div><div class="co-text">Apply threads on classes to achieve parallelism through synchronization and develop test cases using exception handling.</div></div>
+      <div class="co-card"><div class="co-id co4">CO-4</div><div class="co-text">Solve complex problems using the collection framework.</div></div>
+    </div>
+
+    <div style="margin-bottom:14px; color:#E8C9A0; font-weight:600; font-size:0.93em;">Week-wise Schedule</div>
+    <table class="syl-table">
+      <thead>
+        <tr>
+          <th style="width:100px">Week</th>
+          <th>Topics</th>
+          <th>Sample Program</th>
+          <th style="width:60px">CO</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Week 1 &amp; 2</td>
+          <td>Fundamentals of OOP: Object-oriented paradigm, Objects &amp; Classes, Data Abstraction, Encapsulation, Inheritance, Polymorphism, Dynamic Binding</td>
+          <td>Bank Account Management System (Account, SavingsAccount, CurrentAccount)</td>
+          <td><span class="co-tag co1">CO1</span></td>
+        </tr>
+        <tr>
+          <td>Week 3</td>
+          <td>Java Programming: Buzzwords, Data types, Variables, Operators, Control structures, Arrays, Console I/O</td>
+          <td>Prime Palindrome Check; Command Line Arguments &ndash; Marks Total &amp; Average</td>
+          <td><span class="co-tag co1">CO1</span></td>
+        </tr>
+        <tr>
+          <td>Week 4 &amp; 5</td>
+          <td>Classes, Objects, Constructors, Methods, Parameter Passing, Method &amp; Constructor Overloading</td>
+          <td>Farm Animals application; Class Diagram (Customer, Order, SpecialOrder, NormalOrder); Employee data by cadre</td>
+          <td><span class="co-tag co1">CO1</span></td>
+        </tr>
+        <tr>
+          <td>Week 6</td>
+          <td>Static fields &amp; methods, <code>this</code> reference, <code>final</code> keyword, String Handling</td>
+          <td>Longest Substring Without Repeating Characters</td>
+          <td><span class="co-tag co1">CO1</span></td>
+        </tr>
+        <tr>
+          <td>Week 7</td>
+          <td>Inheritance &ndash; Types, <code>super</code> keyword, Member Access, <code>final</code>. Polymorphism &ndash; Dynamic Binding, Method Overriding, Abstract Classes</td>
+          <td>Banking System: Method Overriding with RBI, SBI, HDFC</td>
+          <td><span class="co-tag co1">CO1</span></td>
+        </tr>
+        <tr>
+          <td>Week 8</td>
+          <td>Interfaces &ndash; Defining, Implementing, Accessing via interface references, Extending interfaces</td>
+          <td>Employee Categories &ndash; Regular, Contract, Vendor salary calculation</td>
+          <td><span class="co-tag co2">CO2</span></td>
+        </tr>
+        <tr>
+          <td>Week 9</td>
+          <td>Packages &ndash; Defining, Creating, Accessing, Importing packages</td>
+          <td>Roman to Integer conversion using a custom package</td>
+          <td><span class="co-tag co2">CO2</span></td>
+        </tr>
+        <tr>
+          <td>Week 10</td>
+          <td>I/O &ndash; Reading and writing files</td>
+          <td>Pattern frequency count ('pe', 'pi') in a text file</td>
+          <td><span class="co-tag co2">CO2</span></td>
+        </tr>
+        <tr>
+          <td>Week 11</td>
+          <td>Exception Handling &ndash; try/catch, throw, throws, finally, multiple catches, built-in &amp; user-defined exceptions</td>
+          <td>Mobile Number Validator with custom exceptions</td>
+          <td><span class="co-tag co3">CO3</span></td>
+        </tr>
+        <tr>
+          <td>Week 12</td>
+          <td>Multithreading &ndash; Thread priorities, synchronization, creating multiple threads</td>
+          <td>Seat Reservation System using synchronization</td>
+          <td><span class="co-tag co3">CO3</span></td>
+        </tr>
+        <tr>
+          <td>Week 13</td>
+          <td>Collection Framework &ndash; Collection, List, Set, Queue interfaces</td>
+          <td>Letter Combinations of a Phone Number</td>
+          <td><span class="co-tag co4">CO4</span></td>
+        </tr>
+        <tr>
+          <td>Week 14</td>
+          <td>Collection Classes &ndash; ArrayList, LinkedList, HashSet, TreeSet, PriorityQueue</td>
+          <td>Valid Parentheses using Stack and TreeSet</td>
+          <td><span class="co-tag co4">CO4</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section-block" style="margin-bottom: 60px;">
+    <div class="section-heading">&#129514; Lab Manual</div>
+    <p class="section-sub">Java Programming Practices Lab &middot; 23CM9201 &middot; Academic Year 2026&ndash;27 &middot; CSE (AI &amp; ML)</p>
+
+    <div style="margin-bottom:16px; font-size:0.87em; color:#9E9A94; line-height:1.7;">
+      <strong style="color:#E8C9A0;">Lab Objectives:</strong> Understand OOP concepts and apply them in problem solving using Java; learn Java console programming.<br>
+      <strong style="color:#E8C9A0;">Software Required:</strong> JDK 8+, Eclipse / NetBeans / IntelliJ IDEA / VS Code with Java Extension, Windows 10/11 or Ubuntu Linux.
+    </div>
+
+    <div style="margin-bottom:14px; color:#E8C9A0; font-weight:600; font-size:0.93em;">List of Experiments</div>
+    <table class="lab-table">
+      <thead>
+        <tr>
+          <th style="width:70px">#</th>
+          <th style="width:100px">Week</th>
+          <th>Experiment Title &amp; Description</th>
+          <th style="width:60px">CO</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="exp-num">Exp 1</span></td>
+          <td>1 &amp; 2</td>
+          <td><div class="exp-title">Bank Account Management System</div>OOP: Classes, Encapsulation, Inheritance, Polymorphism, Dynamic Binding. Classes: Account, SavingsAccount, CurrentAccount.</td>
+          <td><span class="co-tag co1">CO1</span></td>
+        </tr>
+        <tr>
+          <td><span class="exp-num">Exp 2</span></td>
+          <td>3</td>
+          <td><div class="exp-title">Java Basics &ndash; Prime Palindrome Check</div>Check whether a given number is a prime palindrome.</td>
+          <td><span class="co-tag co1">CO1</span></td>
+        </tr>
+        <tr>
+          <td><span class="exp-num">Exp 3</span></td>
+          <td>3</td>
+          <td><div class="exp-title">Java Basics &ndash; Command Line Arguments</div>Read marks of five subjects via command line; print total and average.</td>
+          <td><span class="co-tag co1">CO1</span></td>
+        </tr>
+        <tr>
+          <td><span class="exp-num">Exp 4</span></td>
+          <td>4 &amp; 5</td>
+          <td><div class="exp-title">Classes and Objects &ndash; Farm Animals Application</div>Design a farm animals app: where they stay, what they eat, the sound they make.</td>
+          <td><span class="co-tag co1">CO1</span></td>
+        </tr>
+        <tr>
+          <td><span class="exp-num">Exp 5</span></td>
+          <td>4 &amp; 5</td>
+          <td><div class="exp-title">Class Diagram &ndash; Customer, Order, SpecialOrder, NormalOrder</div>Implement a class diagram with Customer, Order, SpecialOrder, and NormalOrder.</td>
+          <td><span class="co-tag co1">CO1</span></td>
+        </tr>
+        <tr>
+          <td><span class="exp-num">Exp 6</span></td>
+          <td>4 &amp; 5</td>
+          <td><div class="exp-title">Constructor Overloading &ndash; Employee Data by Cadre</div>Maintain employee data (name, id, designation, salary, promotion status) using constructor overloading.</td>
+          <td><span class="co-tag co1">CO1</span></td>
+        </tr>
+        <tr>
+          <td><span class="exp-num">Exp 7</span></td>
+          <td>6</td>
+          <td><div class="exp-title">String Handling &ndash; Longest Substring Without Repeating Characters</div>"abcabcbb" &rarr; 3 ("abc"), "pwwkew" &rarr; 3 ("wke").</td>
+          <td><span class="co-tag co1">CO1</span></td>
+        </tr>
+        <tr>
+          <td><span class="exp-num">Exp 8</span></td>
+          <td>7</td>
+          <td><div class="exp-title">Method Overriding &ndash; Banking System (RBI, SBI, HDFC)</div>Dynamic polymorphism: RBI 4%, SBI 7%, HDFC rate via overriding.</td>
+          <td><span class="co-tag co1">CO1</span></td>
+        </tr>
+        <tr>
+          <td><span class="exp-num">Exp 9</span></td>
+          <td>8</td>
+          <td><div class="exp-title">Interfaces &ndash; Employee Categories</div>Monthly salary for Regular, Contract, and Vendor employees using interfaces.</td>
+          <td><span class="co-tag co2">CO2</span></td>
+        </tr>
+        <tr>
+          <td><span class="exp-num">Exp 10</span></td>
+          <td>9</td>
+          <td><div class="exp-title">Packages &ndash; Roman to Integer Conversion</div>Define package <code>number</code> with <code>Roman</code> class; implement <code>romanToInteger()</code>. "LVIII" &rarr; 58.</td>
+          <td><span class="co-tag co2">CO2</span></td>
+        </tr>
+        <tr>
+          <td><span class="exp-num">Exp 11</span></td>
+          <td>10</td>
+          <td><div class="exp-title">File Handling &ndash; Pattern Frequency Count</div>Count occurrences of 'pe' and 'pi' in sample.txt. Expected: 'pe'=20, 'pi'=12.</td>
+          <td><span class="co-tag co2">CO2</span></td>
+        </tr>
+        <tr>
+          <td><span class="exp-num">Exp 12</span></td>
+          <td>11</td>
+          <td><div class="exp-title">Exception Handling &ndash; Mobile Number Validator</div>Validate 10-digit mobile; raise ArrayIndexOutOfBoundsException, LengthNotSufficientException, or NumberFormatException.</td>
+          <td><span class="co-tag co3">CO3</span></td>
+        </tr>
+        <tr>
+          <td><span class="exp-num">Exp 13</span></td>
+          <td>12</td>
+          <td><div class="exp-title">Multithreading &ndash; Seat Reservation System</div>Reserve seats from 100 using synchronized threads; only one person thread accesses reserve at a time.</td>
+          <td><span class="co-tag co3">CO3</span></td>
+        </tr>
+        <tr>
+          <td><span class="exp-num">Exp 14</span></td>
+          <td>13</td>
+          <td><div class="exp-title">Collection Framework &ndash; Letter Combinations of Phone Number</div>Given digits 2&ndash;9, return all letter combinations (T9 keypad). "23" &rarr; ["ad","ae","af","bd","be","bf","cd","ce","cf"].</td>
+          <td><span class="co-tag co4">CO4</span></td>
+        </tr>
+        <tr>
+          <td><span class="exp-num">Exp 15</span></td>
+          <td>14</td>
+          <td><div class="exp-title">Collection Classes &ndash; Valid Parentheses</div>Check if a string of '()', '{}', '[]' is valid using Stack and TreeSet.</td>
+          <td><span class="co-tag co4">CO4</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div style="font-size:0.82em; color:#6E6A64; margin-top:8px;">
+      &#8505;&#65039; Observation book must include: Aim &middot; Algorithm/Procedure &middot; Program Code &middot; Output/Screenshots &middot; Viva-Voce Q&amp;A &middot; Errors Observed.
+    </div>
+  </div>
 </body>
 </html>
